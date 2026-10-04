@@ -58,7 +58,7 @@ export const VendorDashboard = () => {
   const completedCount = reservations.filter(r => r.status === 'picked_up').length
 
   return (
-    <div className="min-h-screen bg-[#06060a] text-white px-4 py-8 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-white px-4 py-8 relative">
       {/* Ambient background glows */}
       <div className="absolute top-10 right-1/4 w-[500px] h-[350px] bg-teal-600/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 left-1/4 w-[450px] h-[350px] bg-primary-600/10 rounded-full blur-[140px] pointer-events-none" />

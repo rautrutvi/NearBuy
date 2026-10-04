@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ParticleCanvas } from '../components/ui/ParticleCanvas'
 import { CyberCard } from '../components/ui/CyberCard'
 import { Counter } from '../components/ui/Counter'
 import { MarqueeTicker } from '../components/ui/MarqueeTicker'
@@ -9,6 +8,7 @@ import { InteractiveTimeline } from '../components/ui/InteractiveTimeline'
 import { LiveRadarSimulator } from '../components/ui/LiveRadarSimulator'
 import { Hologram3DCube } from '../components/ui/Hologram3DCube'
 import { TiltCard3D } from '../components/ui/TiltCard3D'
+import { Hero3DShoppingStage } from '../components/ui/Hero3DShoppingStage'
 import { Button } from '../components/ui/Button'
 import { useAuthStore } from '../store/useAuthStore'
 import {
@@ -34,9 +34,7 @@ export const LandingPage = () => {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#050508] text-white overflow-x-hidden selection:bg-primary-500 selection:text-white font-sans">
-      {/* Background Interactive Store Constellation Canvas */}
-      <ParticleCanvas />
+    <div className="relative min-h-screen bg-transparent text-white overflow-x-hidden selection:bg-primary-500 selection:text-white font-sans">
 
       {/* Cinematic Ambient Glow Beams */}
       <div className="absolute top-10 left-1/4 w-[600px] h-[400px] bg-gradient-to-r from-primary-600/20 via-amber-500/15 to-teal-500/20 rounded-full blur-[140px] pointer-events-none" />
@@ -119,12 +117,9 @@ export const LandingPage = () => {
             </motion.div>
           </div>
 
-          {/* Right Live Interactive Simulator Card & 3D Hologram Cube */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="flex justify-center -mb-6">
-              <Hologram3DCube size={150} />
-            </div>
-            <LiveRadarSimulator />
+          {/* Right Live Interactive 3D Shopping Stage */}
+          <div className="lg:col-span-5">
+            <Hero3DShoppingStage />
           </div>
         </motion.div>
       </section>
