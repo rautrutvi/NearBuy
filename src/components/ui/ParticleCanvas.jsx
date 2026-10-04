@@ -18,50 +18,73 @@ export const ParticleCanvas = () => {
     }
     window.addEventListener('resize', handleResize)
 
-    // Mouse position tracking for particle interaction
-    const mouse = { x: null, y: null, radius: 150 }
+    // Track mouse for interactive radar ripple ring
+    const mouse = { x: width / 2, y: height / 2, ripples: [] }
 
     const handleMouseMove = (e) => {
       mouse.x = e.clientX
       mouse.y = e.clientY
     }
-    const handleMouseLeave = () => {
-      mouse.x = null
-      mouse.y = null
-    }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('mouseleave', handleMouseLeave)
-
-    // Create particles
-    const particleCount = Math.min(Math.floor((width * height) / 12000), 90)
-    const particles = []
-
-    const colors = ['#E05236', '#0D9488', '#38BDF8', '#F59E0B', '#818CF8']
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.8,
-        vy: (Math.random() - 0.5) * 0.8,
-        radius: Math.random() * 2.2 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: Math.random() * 0.6 + 0.2,
+    const handleClick = (e) => {
+      mouse.ripples.push({
+        x: e.clientX,
+        y: e.clientY,
+        radius: 5,
+        maxRadius: 160,
+        alpha: 0.8,
+        color: '#0D9488', // Safety Teal
       })
     }
 
-    // Grid pulse variables
-    let gridOffset = 0
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('click', handleClick)
+
+    // 1. Monsoon Raindrops
+    const raindropCount = 50
+    const raindrops = []
+    for (let i = 0; i < raindropCount; i++) {
+      raindrops.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        length: Math.random() * 18 + 10,
+        speed: Math.random() * 4 + 3,
+        opacity: Math.random() * 0.25 + 0.1,
+      })
+    }
+
+    // 2. Shop Location Radar Nodes (Hyperlocal store pins)
+    const nodeCount = 18
+    const shopNodes = []
+    const nodeTypes = [
+      { color: '#0D9488', label: 'SAFE SHOP' }, // Teal
+      { color: '#F59E0B', label: 'WATCH ZONE' }, // Amber
+      { color: '#E05236', label: 'FLOOD ALERT' }, // Terracotta / Red
+    ]
+
+    for (let i = 0; i < nodeCount; i++) {
+      const type = nodeTypes[Math.floor(Math.random() * nodeTypes.length)]
+      shopNodes.push({
+        x: Math.random() * (width - 100) + 50,
+        y: Math.random() * (height - 100) + 50,
+        radius: Math.random() * 2.5 + 3.5,
+        pulseRadius: 0,
+        maxPulse: Math.random() * 45 + 30,
+        color: type.color,
+        pulseSpeed: Math.random() * 0.4 + 0.2,
+      })
+    }
+
+    // 3. Central Animated Radar Sweeper Beam
+    let sweepAngle = 0
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // Draw subtle cyber grid
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)'
+      // A. Dark City Map Grid Lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)'
       ctx.lineWidth = 1
-      const gridSize = 60
-      gridOffset = (gridOffset + 0.2) % gridSize
+      const gridSize = 75
 
       for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath()
@@ -69,68 +92,133 @@ export const ParticleCanvas = () => {
         ctx.lineTo(x, height)
         ctx.stroke()
       }
-      for (let y = gridOffset; y < height; y += gridSize) {
+      for (let y = 0; y < height; y += gridSize) {
         ctx.beginPath()
         ctx.moveTo(0, y)
         ctx.lineTo(width, y)
         ctx.stroke()
       }
 
-      // Update and draw particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i]
+      // B. Draw Monsoon Raindrops falling downwards
+      ctx.lineWidth = 1.2
+      for (let i = 0; i < raindrops.length; i++) {
+        const drop = raindrops[i]
+        ctx.beginPath()
+        ctx.moveTo(drop.x, drop.y)
+        ctx.lineTo(drop.x - 2, drop.y + drop.length)
+        ctx.strokeStyle = `rgba(147, 197, 253, ${drop.opacity})` // Light sky blue rain streak
+        ctx.stroke()
 
-        p.x += p.vx
-        p.y += p.vy
+        drop.y += drop.speed
+        drop.x -= 0.5 // Slanted wind effect
 
-        // Bounce on boundaries
-        if (p.x < 0 || p.x > width) p.vx *= -1
-        if (p.y < 0 || p.y > height) p.vy *= -1
-
-        // Mouse attraction / repulsion effect
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = mouse.x - p.x
-          const dy = mouse.y - p.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < mouse.radius) {
-            const force = (mouse.radius - dist) / mouse.radius
-            p.x -= (dx / dist) * force * 3
-            p.y -= (dy / dist) * force * 3
+        // Reset raindrop when it reaches bottom
+        if (drop.y > height) {
+          drop.y = -20
+          drop.x = Math.random() * width
+          // Spawn a small water ripple at splash location
+          if (Math.random() > 0.6) {
+            mouse.ripples.push({
+              x: drop.x,
+              y: height - 10,
+              radius: 2,
+              maxRadius: 35,
+              alpha: 0.4,
+              color: '#38BDF8',
+            })
           }
         }
+      }
 
-        // Draw particle
+      // C. Render Interactive Mouse Radar Ripples
+      for (let i = mouse.ripples.length - 1; i >= 0; i--) {
+        const r = mouse.ripples[i]
+        ctx.beginPath()
+        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2)
+        ctx.strokeStyle = r.color
+        ctx.globalAlpha = r.alpha
+        ctx.lineWidth = 1.5
+        ctx.stroke()
+        ctx.globalAlpha = 1.0
+
+        r.radius += 1.2
+        r.alpha -= 0.012
+
+        if (r.alpha <= 0 || r.radius >= r.maxRadius) {
+          mouse.ripples.splice(i, 1)
+        }
+      }
+
+      // D. Draw Shop Location Radar Nodes & Pulsing Waves
+      for (let i = 0; i < shopNodes.length; i++) {
+        const node = shopNodes[i]
+
+        // Animate radar pulse expanding from shop
+        node.pulseRadius += node.pulseSpeed
+        if (node.pulseRadius > node.maxPulse) {
+          node.pulseRadius = 0
+        }
+
+        const pulseAlpha = Math.max(0, 1 - node.pulseRadius / node.maxPulse) * 0.4
+
+        // Radar wave circle around shop pin
         ctx.save()
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = p.color
-        ctx.globalAlpha = p.alpha
-        ctx.shadowBlur = 12
-        ctx.shadowColor = p.color
+        ctx.arc(node.x, node.y, node.pulseRadius, 0, Math.PI * 2)
+        ctx.strokeStyle = node.color
+        ctx.globalAlpha = pulseAlpha
+        ctx.lineWidth = 1
+        ctx.stroke()
+        ctx.restore()
+
+        // Shop Pin Core
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2)
+        ctx.fillStyle = node.color
+        ctx.shadowBlur = 10
+        ctx.shadowColor = node.color
         ctx.fill()
         ctx.restore()
 
-        // Connect nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p.x - p2.x
-          const dy = p.y - p2.y
+        // Connect shop nodes near cursor
+        if (mouse.x && mouse.y) {
+          const dx = mouse.x - node.x
+          const dy = mouse.y - node.y
           const dist = Math.sqrt(dx * dx + dy * dy)
-
-          if (dist < 130) {
+          if (dist < 160) {
             ctx.save()
             ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(p2.x, p2.y)
-            const connAlpha = (1 - dist / 130) * 0.25
-            ctx.strokeStyle = p.color
-            ctx.globalAlpha = connAlpha
-            ctx.lineWidth = 0.8
+            ctx.moveTo(node.x, node.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.strokeStyle = node.color
+            ctx.globalAlpha = (1 - dist / 160) * 0.35
+            ctx.lineWidth = 1
+            ctx.setLineDash([4, 4])
             ctx.stroke()
             ctx.restore()
           }
         }
       }
+
+      // E. Rotating Radar Radar Beam Sweep Effect (Originating from center)
+      sweepAngle += 0.008
+      const cx = width / 2
+      const cy = height / 2
+      const sweepRadius = Math.max(width, height) * 0.8
+
+      ctx.save()
+      ctx.beginPath()
+      ctx.moveTo(cx, cy)
+      ctx.arc(cx, cy, sweepRadius, sweepAngle, sweepAngle + 0.3)
+      ctx.closePath()
+
+      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, sweepRadius)
+      grad.addColorStop(0, 'rgba(13, 148, 136, 0.08)')
+      grad.addColorStop(1, 'rgba(13, 148, 136, 0)')
+      ctx.fillStyle = grad
+      ctx.fill()
+      ctx.restore()
 
       animationFrameId = requestAnimationFrame(render)
     }
@@ -141,7 +229,7 @@ export const ParticleCanvas = () => {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('click', handleClick)
     }
   }, [])
 
@@ -149,7 +237,7 @@ export const ParticleCanvas = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.85 }}
+      style={{ opacity: 0.9 }}
     />
   )
 }
