@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from './store/useAuthStore'
+import { useCartStore } from './store/useCartStore'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { CartDrawer } from './components/buyer/CartDrawer'
 import { StylePreviewPage } from './pages/StylePreviewPage'
 import { LoginPage } from './pages/LoginPage'
 import { SignupPage } from './pages/SignupPage'
 import { BuyerDashboard } from './pages/buyer/BuyerDashboard'
 import { VendorDashboard } from './pages/vendor/VendorDashboard'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
-import { Store, UserCheck, ShieldCheck, LogOut, Palette, LogIn } from 'lucide-react'
+import { Store, UserCheck, ShieldCheck, LogOut, Palette, LogIn, ShoppingCart } from 'lucide-react'
 
 export default function App() {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, role, isAuthenticated, logout } = useAuthStore()
+  const { items } = useCartStore()
+  const [isCartOpen, setIsCartOpen] = useState(false)
+
+  const cartCount = items.reduce((s, i) => s + i.quantity, 0)
 
   const handleLogout = () => {
     logout()
@@ -81,7 +87,23 @@ export default function App() {
           </nav>
 
           {/* Auth State & User Pill */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* Cart Button — only for buyers */}
+            {isAuthenticated && role === 'buyer' && (
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-100 transition-colors"
+                title="View Cart"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <div className="text-right hidden sm:block">
@@ -108,6 +130,13 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        onCheckout={() => { setIsCartOpen(false); navigate('/buyer') }}
+      />
 
       {/* Main Page Routing Body */}
       <main className="flex-1">

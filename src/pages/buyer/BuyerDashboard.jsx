@@ -9,6 +9,8 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { FloodMap } from '../../components/map/FloodMap'
 import { ProductModal } from '../../components/buyer/ProductModal'
 import { ReservationCard } from '../../components/buyer/ReservationCard'
+import { ReviewSection } from '../../components/buyer/ReviewSection'
+import { useCartStore } from '../../store/useCartStore'
 
 import { shopService } from '../../api/shopService'
 import { productService } from '../../api/productService'
@@ -16,33 +18,24 @@ import { reservationService } from '../../api/reservationService'
 import { floodService } from '../../api/floodService'
 
 import {
-  Search,
-  MapPin,
-  Grid,
-  Map as MapIcon,
-  ShieldAlert,
-  ShoppingBag,
-  Sparkles,
-  Store,
-  Umbrella,
-  Pill,
-  Wrench,
-  ShoppingBasket,
-  X,
+  Search, MapPin, Grid, Map as MapIcon, ShieldAlert, ShoppingBag,
+  Sparkles, Store, Umbrella, Pill, Wrench, ShoppingBasket, X, Plus, Star
 } from 'lucide-react'
 
 export const BuyerDashboard = () => {
   const location = useLocation()
   const [accessAlert, setAccessAlert] = useState(location.state?.message || null)
+  const { addItem } = useCartStore()
 
   const [shops, setShops] = useState([])
   const [products, setProducts] = useState([])
   const [reservations, setReservations] = useState([])
   const [floodReports, setFloodReports] = useState([])
+  const [selectedShopForReviews, setSelectedShopForReviews] = useState(null)
 
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [activeTab, setActiveTab] = useState('grid') // 'grid' or 'map'
+  const [activeTab, setActiveTab] = useState('grid')
 
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -253,16 +246,27 @@ export const BuyerDashboard = () => {
                         <span className="text-[10px] text-slate-400 block">Price</span>
                         <span className="text-xl font-extrabold font-display text-slate-900">₹{product.price}</span>
                       </div>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        icon={ShoppingBag}
-                        disabled={product.stockCount <= 0}
-                        onClick={() => handleOpenReserveModal(product)}
-                      >
-                        Reserve
-                      </Button>
+                      <div className="flex gap-1.5">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          icon={Plus}
+                          disabled={product.stockCount <= 0}
+                          onClick={() => addItem(product)}
+                          title="Add to Cart"
+                        >
+                          Cart
+                        </Button>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          icon={ShoppingBag}
+                          disabled={product.stockCount <= 0}
+                          onClick={() => handleOpenReserveModal(product)}
+                        >
+                          Reserve
+                        </Button>
+                      </div>
                     </div>
                   </Card>
                 ))}
@@ -290,11 +294,32 @@ export const BuyerDashboard = () => {
                         {shop.isOpen ? 'Open Now' : 'Closed'}
                       </span>
                     </div>
+                    <button
+                      onClick={() => setSelectedShopForReviews(selectedShopForReviews?.id === shop.id ? null : shop)}
+                      className="text-[11px] font-semibold text-primary-600 hover:text-primary-800 flex items-center gap-1 mt-1"
+                    >
+                      <Star className="w-3 h-3" />
+                      {selectedShopForReviews?.id === shop.id ? 'Hide Reviews' : 'View & Write Reviews'}
+                    </button>
                   </div>
                 </Card>
               ))}
             </div>
           </div>
+
+          {/* Reviews Section for selected shop */}
+          {selectedShopForReviews && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="pt-6 border-t border-slate-200 space-y-3"
+            >
+              <h2 className="text-lg font-bold font-display text-slate-900">
+                Reviews — {selectedShopForReviews.name}
+              </h2>
+              <ReviewSection shopId={selectedShopForReviews.id} />
+            </motion.div>
+          )}
         </section>
       )}
 
