@@ -12,6 +12,12 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
   }
+
+  @media (min-width: 640px) {
+    *, *::before, *::after, body, button, a, input, select, textarea {
+      cursor: none !important;
+    }
+  }
 }
 
 /* Custom Scrollbar */

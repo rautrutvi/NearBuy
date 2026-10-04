@@ -18,8 +18,8 @@ export const ParticleCanvas = () => {
     }
     window.addEventListener('resize', handleResize)
 
-    // Track mouse for interactive radar ripple ring
-    const mouse = { x: width / 2, y: height / 2, ripples: [] }
+    // Interactive mouse state & click pulses
+    const mouse = { x: width / 2, y: height / 2, pulses: [] }
 
     const handleMouseMove = (e) => {
       mouse.x = e.clientX
@@ -27,64 +27,57 @@ export const ParticleCanvas = () => {
     }
 
     const handleClick = (e) => {
-      mouse.ripples.push({
+      mouse.pulses.push({
         x: e.clientX,
         y: e.clientY,
         radius: 5,
-        maxRadius: 160,
+        maxRadius: 150,
         alpha: 0.8,
-        color: '#0D9488', // Safety Teal
+        color: '#E05236', // Terracotta Primary
       })
     }
 
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('click', handleClick)
 
-    // 1. Monsoon Raindrops
-    const raindropCount = 50
-    const raindrops = []
-    for (let i = 0; i < raindropCount; i++) {
-      raindrops.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        length: Math.random() * 18 + 10,
-        speed: Math.random() * 4 + 3,
-        opacity: Math.random() * 0.25 + 0.1,
-      })
-    }
+    // Hyperlocal Store Nodes & Floating Inventory Badges
+    const storeNodeCount = Math.min(Math.floor((width * height) / 15000), 40)
+    const storeNodes = []
 
-    // 2. Shop Location Radar Nodes (Hyperlocal store pins)
-    const nodeCount = 18
-    const shopNodes = []
-    const nodeTypes = [
-      { color: '#0D9488', label: 'SAFE SHOP' }, // Teal
-      { color: '#F59E0B', label: 'WATCH ZONE' }, // Amber
-      { color: '#E05236', label: 'FLOOD ALERT' }, // Terracotta / Red
+    const shopCategories = [
+      { name: 'KIRANA', color: '#E05236' },   // Terracotta / Grocery
+      { name: 'PHARMACY', color: '#0D9488' }, // Safety Teal / Medical
+      { name: 'HARDWARE', color: '#F59E0B' }, // Amber / Tools
+      { name: 'ELECTRONICS', color: '#6366F1' }, // Indigo
     ]
 
-    for (let i = 0; i < nodeCount; i++) {
-      const type = nodeTypes[Math.floor(Math.random() * nodeTypes.length)]
-      shopNodes.push({
-        x: Math.random() * (width - 100) + 50,
-        y: Math.random() * (height - 100) + 50,
-        radius: Math.random() * 2.5 + 3.5,
+    for (let i = 0; i < storeNodeCount; i++) {
+      const category = shopCategories[i % shopCategories.length]
+      storeNodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        radius: Math.random() * 3 + 3,
         pulseRadius: 0,
-        maxPulse: Math.random() * 45 + 30,
-        color: type.color,
-        pulseSpeed: Math.random() * 0.4 + 0.2,
+        maxPulse: Math.random() * 35 + 25,
+        category: category.name,
+        color: category.color,
+        pulseSpeed: Math.random() * 0.3 + 0.15,
       })
     }
 
-    // 3. Central Animated Radar Sweeper Beam
-    let sweepAngle = 0
+    // Grid animation offset
+    let gridOffset = 0
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // A. Dark City Map Grid Lines
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)'
+      // A. Modern Vibrant Hyperlocal Grid Mesh
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)'
       ctx.lineWidth = 1
-      const gridSize = 75
+      const gridSize = 70
+      gridOffset = (gridOffset + 0.15) % gridSize
 
       for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath()
@@ -92,133 +85,110 @@ export const ParticleCanvas = () => {
         ctx.lineTo(x, height)
         ctx.stroke()
       }
-      for (let y = 0; y < height; y += gridSize) {
+      for (let y = gridOffset; y < height; y += gridSize) {
         ctx.beginPath()
         ctx.moveTo(0, y)
         ctx.lineTo(width, y)
         ctx.stroke()
       }
 
-      // B. Draw Monsoon Raindrops falling downwards
-      ctx.lineWidth = 1.2
-      for (let i = 0; i < raindrops.length; i++) {
-        const drop = raindrops[i]
+      // B. Render Interactive Click Inventory Pulses
+      for (let i = mouse.pulses.length - 1; i >= 0; i--) {
+        const p = mouse.pulses[i]
         ctx.beginPath()
-        ctx.moveTo(drop.x, drop.y)
-        ctx.lineTo(drop.x - 2, drop.y + drop.length)
-        ctx.strokeStyle = `rgba(147, 197, 253, ${drop.opacity})` // Light sky blue rain streak
-        ctx.stroke()
-
-        drop.y += drop.speed
-        drop.x -= 0.5 // Slanted wind effect
-
-        // Reset raindrop when it reaches bottom
-        if (drop.y > height) {
-          drop.y = -20
-          drop.x = Math.random() * width
-          // Spawn a small water ripple at splash location
-          if (Math.random() > 0.6) {
-            mouse.ripples.push({
-              x: drop.x,
-              y: height - 10,
-              radius: 2,
-              maxRadius: 35,
-              alpha: 0.4,
-              color: '#38BDF8',
-            })
-          }
-        }
-      }
-
-      // C. Render Interactive Mouse Radar Ripples
-      for (let i = mouse.ripples.length - 1; i >= 0; i--) {
-        const r = mouse.ripples[i]
-        ctx.beginPath()
-        ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2)
-        ctx.strokeStyle = r.color
-        ctx.globalAlpha = r.alpha
-        ctx.lineWidth = 1.5
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.strokeStyle = p.color
+        ctx.globalAlpha = p.alpha
+        ctx.lineWidth = 2
         ctx.stroke()
         ctx.globalAlpha = 1.0
 
-        r.radius += 1.2
-        r.alpha -= 0.012
+        p.radius += 1.6
+        p.alpha -= 0.015
 
-        if (r.alpha <= 0 || r.radius >= r.maxRadius) {
-          mouse.ripples.splice(i, 1)
+        if (p.alpha <= 0 || p.radius >= p.maxRadius) {
+          mouse.pulses.splice(i, 1)
         }
       }
 
-      // D. Draw Shop Location Radar Nodes & Pulsing Waves
-      for (let i = 0; i < shopNodes.length; i++) {
-        const node = shopNodes[i]
+      // C. Render Store Inventory Nodes & Constellation Connections
+      for (let i = 0; i < storeNodes.length; i++) {
+        const node = storeNodes[i]
 
-        // Animate radar pulse expanding from shop
+        node.x += node.vx
+        node.y += node.vy
+
+        // Bounce at boundaries
+        if (node.x < 0 || node.x > width) node.vx *= -1
+        if (node.y < 0 || node.y > height) node.vy *= -1
+
+        // Pulsing store aura
         node.pulseRadius += node.pulseSpeed
         if (node.pulseRadius > node.maxPulse) {
           node.pulseRadius = 0
         }
 
-        const pulseAlpha = Math.max(0, 1 - node.pulseRadius / node.maxPulse) * 0.4
+        const auraAlpha = Math.max(0, 1 - node.pulseRadius / node.maxPulse) * 0.3
 
-        // Radar wave circle around shop pin
+        // Store Aura Circle
         ctx.save()
         ctx.beginPath()
         ctx.arc(node.x, node.y, node.pulseRadius, 0, Math.PI * 2)
         ctx.strokeStyle = node.color
-        ctx.globalAlpha = pulseAlpha
+        ctx.globalAlpha = auraAlpha
         ctx.lineWidth = 1
         ctx.stroke()
         ctx.restore()
 
-        // Shop Pin Core
+        // Store Node Core Pin
         ctx.save()
         ctx.beginPath()
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2)
         ctx.fillStyle = node.color
-        ctx.shadowBlur = 10
+        ctx.shadowBlur = 12
         ctx.shadowColor = node.color
         ctx.fill()
         ctx.restore()
 
-        // Connect shop nodes near cursor
+        // Connect store nodes to each other
+        for (let j = i + 1; j < storeNodes.length; j++) {
+          const n2 = storeNodes[j]
+          const dx = node.x - n2.x
+          const dy = node.y - n2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < 140) {
+            ctx.save()
+            ctx.beginPath()
+            ctx.moveTo(node.x, node.y)
+            ctx.lineTo(n2.x, n2.y)
+            ctx.strokeStyle = node.color
+            ctx.globalAlpha = (1 - dist / 140) * 0.2
+            ctx.lineWidth = 0.8
+            ctx.stroke()
+            ctx.restore()
+          }
+        }
+
+        // Connect store node to Shopping Bag Cursor
         if (mouse.x && mouse.y) {
           const dx = mouse.x - node.x
           const dy = mouse.y - node.y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 160) {
+          if (dist < 180) {
             ctx.save()
             ctx.beginPath()
             ctx.moveTo(node.x, node.y)
             ctx.lineTo(mouse.x, mouse.y)
             ctx.strokeStyle = node.color
-            ctx.globalAlpha = (1 - dist / 160) * 0.35
-            ctx.lineWidth = 1
-            ctx.setLineDash([4, 4])
+            ctx.globalAlpha = (1 - dist / 180) * 0.4
+            ctx.lineWidth = 1.2
+            ctx.setLineDash([3, 3])
             ctx.stroke()
             ctx.restore()
           }
         }
       }
-
-      // E. Rotating Radar Radar Beam Sweep Effect (Originating from center)
-      sweepAngle += 0.008
-      const cx = width / 2
-      const cy = height / 2
-      const sweepRadius = Math.max(width, height) * 0.8
-
-      ctx.save()
-      ctx.beginPath()
-      ctx.moveTo(cx, cy)
-      ctx.arc(cx, cy, sweepRadius, sweepAngle, sweepAngle + 0.3)
-      ctx.closePath()
-
-      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, sweepRadius)
-      grad.addColorStop(0, 'rgba(13, 148, 136, 0.08)')
-      grad.addColorStop(1, 'rgba(13, 148, 136, 0)')
-      ctx.fillStyle = grad
-      ctx.fill()
-      ctx.restore()
 
       animationFrameId = requestAnimationFrame(render)
     }
@@ -237,7 +207,7 @@ export const ParticleCanvas = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.9 }}
+      style={{ opacity: 0.95 }}
     />
   )
 }
