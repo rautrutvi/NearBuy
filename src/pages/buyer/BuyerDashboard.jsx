@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/Button'
 import { StockBadge, FloodBadge } from '../../components/ui/Badge'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { FloodMap } from '../../components/map/FloodMap'
+import { TiltCard3D } from '../../components/ui/TiltCard3D'
 import { ProductModal } from '../../components/buyer/ProductModal'
 import { ReservationCard } from '../../components/buyer/ReservationCard'
 import { ReviewSection } from '../../components/buyer/ReviewSection'
@@ -260,23 +261,28 @@ export const BuyerDashboard = () => {
                   onAction={() => { setSelectedCategory('All'); setSearchQuery('') }}
                 />
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.map((product) => (
-                    <motion.div
+                    <TiltCard3D
                       key={product.id}
-                      whileHover={{ y: -6, scale: 1.02 }}
-                      transition={{ duration: 0.25 }}
-                      className="rounded-3xl p-[1px] bg-gradient-to-b from-white/15 to-white/5 shadow-xl hover:shadow-[0_0_30px_rgba(224,82,54,0.3)] transition-all duration-300"
+                      glowColor="primary"
+                      maxTilt={14}
+                      scale={1.03}
+                      depth={25}
+                      className="h-full"
                     >
-                      <div className="bg-[#0d0d16] rounded-[23px] p-5 space-y-4 border border-white/10 flex flex-col justify-between h-full">
-                        {/* Image & Stock Badge */}
-                        <div className="relative h-44 rounded-2xl overflow-hidden bg-slate-900 border border-white/10 group">
+                      <div className="bg-[#0d0d16] rounded-3xl p-5 space-y-4 border border-white/10 flex flex-col justify-between h-full shadow-2xl">
+                        {/* Image & Stock Badge with 3D Pop */}
+                        <div
+                          style={{ transform: 'translateZ(20px)' }}
+                          className="relative h-48 rounded-2xl overflow-hidden bg-slate-900 border border-white/10 group shadow-lg"
+                        >
                           <img
                             src={product.image}
                             alt={product.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
-                          <div className="absolute top-3 right-3">
+                          <div className="absolute top-3 right-3 shadow-md">
                             <StockBadge count={product.stockCount} />
                           </div>
                           <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono text-amber-400">
@@ -285,28 +291,33 @@ export const BuyerDashboard = () => {
                         </div>
 
                         {/* Title & Shop Details */}
-                        <div className="space-y-1">
+                        <div style={{ transform: 'translateZ(15px)' }} className="space-y-1">
                           <h3 className="font-bold text-base font-display text-white truncate">
                             {product.name}
                           </h3>
-                          <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                          <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
                             <Store className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                             <span className="truncate">{product.shopName}</span>
                           </p>
                         </div>
 
-                        {/* Price & Actions */}
-                        <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                        {/* Price & Actions with 3D Elevation */}
+                        <div
+                          style={{ transform: 'translateZ(20px)' }}
+                          className="pt-3 border-t border-white/10 flex items-center justify-between gap-2"
+                        >
                           <div>
                             <span className="text-[10px] font-mono text-slate-400 block">Price</span>
-                            <span className="text-xl font-extrabold font-display text-white">₹{product.price}</span>
+                            <span className="text-xl font-extrabold font-display text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                              ₹{product.price}
+                            </span>
                           </div>
 
                           <div className="flex gap-2">
                             <button
                               onClick={() => addItem(product)}
                               disabled={product.stockCount <= 0}
-                              className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/15 border border-white/15 text-white font-mono text-xs font-bold transition-all flex items-center gap-1 hover:scale-105"
+                              className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/15 border border-white/15 text-white font-mono text-xs font-bold transition-all flex items-center gap-1 hover:scale-105 active:scale-95"
                               title="Add to Cart"
                             >
                               <Plus className="w-3.5 h-3.5 text-primary-400" />
@@ -316,14 +327,14 @@ export const BuyerDashboard = () => {
                             <button
                               onClick={() => handleOpenReserveModal(product)}
                               disabled={product.stockCount <= 0}
-                              className="px-4 py-2 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono text-xs font-bold shadow-[0_0_15px_rgba(224,82,54,0.4)] hover:shadow-[0_0_25px_rgba(224,82,54,0.7)] transition-all hover:scale-105"
+                              className="px-4 py-2 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono text-xs font-bold shadow-[0_0_15px_rgba(224,82,54,0.4)] hover:shadow-[0_0_25px_rgba(224,82,54,0.7)] transition-all hover:scale-105 active:scale-95"
                             >
                               Reserve
                             </button>
                           </div>
                         </div>
                       </div>
-                    </motion.div>
+                    </TiltCard3D>
                   ))}
                 </div>
               )}
@@ -334,35 +345,39 @@ export const BuyerDashboard = () => {
               <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
                 <Store className="w-5 h-5 text-teal-400" /> Verified Neighborhood Shops
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {shops.map((shop) => (
-                  <div
-                    key={shop.id}
-                    className="rounded-2xl p-4 bg-[#0d0d16] border border-white/10 flex gap-4 items-center shadow-lg hover:border-teal-500/50 transition-all"
-                  >
-                    <img src={shop.image} alt={shop.name} className="w-20 h-20 rounded-xl object-cover shrink-0 border border-white/10" />
-                    <div className="space-y-1.5 flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <h3 className="font-bold text-sm text-white font-display truncate">{shop.name}</h3>
-                        <FloodBadge level={shop.floodStatus} />
+                  <TiltCard3D key={shop.id} glowColor="teal" maxTilt={10} scale={1.02} depth={15}>
+                    <div className="rounded-3xl p-5 bg-[#0d0d16] border border-white/10 flex gap-4 items-center shadow-xl">
+                      <img
+                        src={shop.image}
+                        alt={shop.name}
+                        style={{ transform: 'translateZ(15px)' }}
+                        className="w-24 h-24 rounded-2xl object-cover shrink-0 border border-white/10 shadow-md"
+                      />
+                      <div className="space-y-1.5 flex-1 min-w-0" style={{ transform: 'translateZ(10px)' }}>
+                        <div className="flex items-center justify-between gap-1">
+                          <h3 className="font-bold text-sm text-white font-display truncate">{shop.name}</h3>
+                          <FloodBadge level={shop.floodStatus} />
+                        </div>
+                        <p className="text-xs text-slate-400 truncate font-mono">{shop.address}</p>
+                        <div className="flex items-center gap-3 text-xs font-mono text-slate-300">
+                          <span>📍 {shop.distanceKm} km</span>
+                          <span className="text-amber-400 font-bold">★ {shop.rating} ({shop.reviewsCount})</span>
+                          <span className={shop.isOpen ? 'text-emerald-400 font-bold' : 'text-rose-400'}>
+                            {shop.isOpen ? '● Open Now' : '○ Closed'}
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => setSelectedShopForReviews(selectedShopForReviews?.id === shop.id ? null : shop)}
+                          className="text-xs font-mono font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-1"
+                        >
+                          <Star className="w-3.5 h-3.5" />
+                          {selectedShopForReviews?.id === shop.id ? 'Hide Reviews' : 'View & Write Reviews'}
+                        </button>
                       </div>
-                      <p className="text-xs text-slate-400 truncate">{shop.address}</p>
-                      <div className="flex items-center gap-3 text-xs font-mono text-slate-300">
-                        <span>📍 {shop.distanceKm} km</span>
-                        <span className="text-amber-400 font-bold">★ {shop.rating} ({shop.reviewsCount})</span>
-                        <span className={shop.isOpen ? 'text-emerald-400 font-bold' : 'text-rose-400'}>
-                          {shop.isOpen ? '● Open Now' : '○ Closed'}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => setSelectedShopForReviews(selectedShopForReviews?.id === shop.id ? null : shop)}
-                        className="text-xs font-mono font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-1"
-                      >
-                        <Star className="w-3.5 h-3.5" />
-                        {selectedShopForReviews?.id === shop.id ? 'Hide Reviews' : 'View & Write Reviews'}
-                      </button>
                     </div>
-                  </div>
+                  </TiltCard3D>
                 ))}
               </div>
             </div>

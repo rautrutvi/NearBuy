@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { StockBadge } from '../../components/ui/Badge'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { ProgressTracker } from '../../components/ui/ProgressTracker'
+import { TiltCard3D } from '../../components/ui/TiltCard3D'
 import { reservationService } from '../../api/reservationService'
 import {
   QrCode, Package, ShieldAlert, X, CheckCircle2,
@@ -131,24 +132,31 @@ export const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Telemetry Stats Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Telemetry Stats Row with 3D Physics */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {[
-            { label: 'Pending Pickup Orders', value: pendingCount, icon: Clock, color: 'text-amber-400', border: 'border-amber-500/30', bg: 'bg-amber-950/20' },
-            { label: 'Ready for Counter Pickup', value: readyCount, icon: PackageCheck, color: 'text-teal-400', border: 'border-teal-500/30', bg: 'bg-teal-950/20' },
-            { label: 'Completed Today', value: completedCount, icon: CheckCircle2, color: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-950/20' },
+            { label: 'Pending Pickup Orders', value: pendingCount, icon: Clock, color: 'text-amber-400', border: 'border-amber-500/30', bg: 'bg-amber-950/20', glow: 'amber' },
+            { label: 'Ready for Counter Pickup', value: readyCount, icon: PackageCheck, color: 'text-teal-400', border: 'border-teal-500/30', bg: 'bg-teal-950/20', glow: 'teal' },
+            { label: 'Completed Today', value: completedCount, icon: CheckCircle2, color: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-950/20', glow: 'teal' },
           ].map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.label} className={`p-5 rounded-2xl bg-[#0d0d16] border ${stat.border} shadow-lg flex items-center gap-4`}>
-                <div className={`w-12 h-12 rounded-xl ${stat.bg} ${stat.color} flex items-center justify-center shrink-0 border border-white/10`}>
-                  <Icon className="w-6 h-6" />
+              <TiltCard3D key={stat.label} glowColor={stat.glow} maxTilt={12} scale={1.03} depth={15}>
+                <div className={`p-5 rounded-2xl bg-[#0d0d16] border ${stat.border} shadow-xl flex items-center gap-4`}>
+                  <div
+                    style={{ transform: 'translateZ(15px)' }}
+                    className={`w-14 h-14 rounded-2xl ${stat.bg} ${stat.color} flex items-center justify-center shrink-0 border border-white/10 shadow-lg`}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <div style={{ transform: 'translateZ(10px)' }}>
+                    <p className="text-3xl font-extrabold font-display text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs font-mono text-slate-400">{stat.label}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-3xl font-extrabold font-display text-white">{stat.value}</p>
-                  <p className="text-xs font-mono text-slate-400">{stat.label}</p>
-                </div>
-              </div>
+              </TiltCard3D>
             )
           })}
         </div>
@@ -237,21 +245,26 @@ export const VendorDashboard = () => {
               <span className="text-xs font-mono text-slate-400">Real-Time Sync</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {products.map((product) => (
-                <div key={product.id} className="p-5 rounded-2xl bg-[#0d0d16] border border-white/10 flex items-center gap-4 shadow-lg hover:border-teal-500/40 transition-all">
-                  <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-teal-400 shrink-0">
-                    <Package className="w-7 h-7" />
+                <TiltCard3D key={product.id} glowColor="teal" maxTilt={10} scale={1.02} depth={15}>
+                  <div className="p-5 rounded-2xl bg-[#0d0d16] border border-white/10 flex items-center gap-4 shadow-xl">
+                    <div
+                      style={{ transform: 'translateZ(15px)' }}
+                      className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-teal-400 shrink-0 shadow-md"
+                    >
+                      <Package className="w-7 h-7" />
+                    </div>
+                    <div style={{ transform: 'translateZ(10px)' }} className="flex-1 min-w-0 space-y-1">
+                      <h3 className="font-bold text-base font-display text-white truncate">{product.name}</h3>
+                      <p className="text-xs font-mono text-slate-400">₹{product.price} · {product.category}</p>
+                      <p className="text-[10px] font-mono text-amber-400/80">BARCODE: {product.barcode}</p>
+                    </div>
+                    <div style={{ transform: 'translateZ(15px)' }} className="shrink-0">
+                      <StockBadge count={product.stockCount} />
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <h3 className="font-bold text-base font-display text-white truncate">{product.name}</h3>
-                    <p className="text-xs font-mono text-slate-400">₹{product.price} · {product.category}</p>
-                    <p className="text-[10px] font-mono text-amber-400/80">BARCODE: {product.barcode}</p>
-                  </div>
-                  <div className="shrink-0">
-                    <StockBadge count={product.stockCount} />
-                  </div>
-                </div>
+                </TiltCard3D>
               ))}
             </div>
           </section>

@@ -7,6 +7,8 @@ import { Counter } from '../components/ui/Counter'
 import { MarqueeTicker } from '../components/ui/MarqueeTicker'
 import { InteractiveTimeline } from '../components/ui/InteractiveTimeline'
 import { LiveRadarSimulator } from '../components/ui/LiveRadarSimulator'
+import { Hologram3DCube } from '../components/ui/Hologram3DCube'
+import { TiltCard3D } from '../components/ui/TiltCard3D'
 import { Button } from '../components/ui/Button'
 import { useAuthStore } from '../store/useAuthStore'
 import {
@@ -114,8 +116,11 @@ export const LandingPage = () => {
             </motion.div>
           </div>
 
-          {/* Right Live Interactive Simulator Card */}
-          <div className="lg:col-span-5">
+          {/* Right Live Interactive Simulator Card & 3D Hologram Cube */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="flex justify-center -mb-6">
+              <Hologram3DCube size={150} />
+            </div>
             <LiveRadarSimulator />
           </div>
         </motion.div>
@@ -183,67 +188,73 @@ export const LandingPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Buyer Portal Card */}
-          <CyberCard tag="BUYER.PORTAL" glowColor="primary">
-            <div className="space-y-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-amber-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(224,82,54,0.5)]">
-                <Users className="w-7 h-7" />
+          <TiltCard3D glowColor="primary" maxTilt={12} scale={1.03} depth={20}>
+            <CyberCard tag="BUYER.PORTAL" glowColor="primary">
+              <div className="space-y-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-amber-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(224,82,54,0.5)]">
+                  <Users className="w-7 h-7" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold font-display text-white">Customer / Buyer</h3>
+                  <p className="text-xs text-slate-400 mt-1">Locate live stock, reserve for 30-min pickup, and view flood radar.</p>
+                </div>
+                <ul className="space-y-2 text-xs font-mono text-slate-300">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> 3D Holographic Monsoon Radar</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Multi-item Cart Drawer</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Unique Verification Codes</li>
+                </ul>
+                <Button variant="primary" className="w-full py-3 font-mono font-bold" icon={ArrowRight} onClick={() => goToRole('buyer')}>
+                  OPEN BUYER SHOP
+                </Button>
               </div>
-              <div>
-                <h3 className="text-2xl font-extrabold font-display text-white">Customer / Buyer</h3>
-                <p className="text-xs text-slate-400 mt-1">Locate live stock, reserve for 30-min pickup, and view flood radar.</p>
-              </div>
-              <ul className="space-y-2 text-xs font-mono text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Interactive Leaflet Flood Map</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Multi-item Cart Drawer</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Unique Verification Codes</li>
-              </ul>
-              <Button variant="primary" className="w-full py-3 font-mono font-bold" icon={ArrowRight} onClick={() => goToRole('buyer')}>
-                OPEN BUYER SHOP
-              </Button>
-            </div>
-          </CyberCard>
+            </CyberCard>
+          </TiltCard3D>
 
           {/* Vendor Portal Card */}
-          <CyberCard tag="VENDOR.PORTAL" glowColor="teal">
-            <div className="space-y-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(13,148,136,0.5)]">
-                <Store className="w-7 h-7" />
+          <TiltCard3D glowColor="teal" maxTilt={12} scale={1.03} depth={20}>
+            <CyberCard tag="VENDOR.PORTAL" glowColor="teal">
+              <div className="space-y-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(13,148,136,0.5)]">
+                  <Store className="w-7 h-7" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold font-display text-white">Shopkeeper / Vendor</h3>
+                  <p className="text-xs text-slate-400 mt-1">Manage stock in real-time, scan barcodes, and fulfill pickup orders.</p>
+                </div>
+                <ul className="space-y-2 text-xs font-mono text-slate-300">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Camera Barcode Scanner UI</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Live Inventory Adjuster</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Order Fulfillment Queue</li>
+                </ul>
+                <Button variant="safety" className="w-full py-3 font-mono font-bold" icon={QrCode} onClick={() => goToRole('vendor')}>
+                  OPEN VENDOR PORTAL
+                </Button>
               </div>
-              <div>
-                <h3 className="text-2xl font-extrabold font-display text-white">Shopkeeper / Vendor</h3>
-                <p className="text-xs text-slate-400 mt-1">Manage stock in real-time, scan barcodes, and fulfill pickup orders.</p>
-              </div>
-              <ul className="space-y-2 text-xs font-mono text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Camera Barcode Scanner UI</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Live Inventory Adjuster</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Order Fulfillment Queue</li>
-              </ul>
-              <Button variant="safety" className="w-full py-3 font-mono font-bold" icon={QrCode} onClick={() => goToRole('vendor')}>
-                OPEN VENDOR PORTAL
-              </Button>
-            </div>
-          </CyberCard>
+            </CyberCard>
+          </TiltCard3D>
 
           {/* Admin Portal Card */}
-          <CyberCard tag="ADMIN.PORTAL" glowColor="violet">
-            <div className="space-y-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(139,92,246,0.5)]">
-                <ShieldCheck className="w-7 h-7" />
+          <TiltCard3D glowColor="violet" maxTilt={12} scale={1.03} depth={20}>
+            <CyberCard tag="ADMIN.PORTAL" glowColor="violet">
+              <div className="space-y-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(139,92,246,0.5)]">
+                  <ShieldCheck className="w-7 h-7" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold font-display text-white">Super Admin</h3>
+                  <p className="text-xs text-slate-400 mt-1">Verify new merchant applications and publish community flood reports.</p>
+                </div>
+                <ul className="space-y-2 text-xs font-mono text-slate-300">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Shop Approval Queue</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Flood Telemetry Verification</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Platform Analytics Charts</li>
+                </ul>
+                <Button variant="secondary" className="w-full py-3 font-mono font-bold" icon={ShieldAlert} onClick={() => goToRole('admin')}>
+                  OPEN ADMIN PANEL
+                </Button>
               </div>
-              <div>
-                <h3 className="text-2xl font-extrabold font-display text-white">Super Admin</h3>
-                <p className="text-xs text-slate-400 mt-1">Verify new merchant applications and publish community flood reports.</p>
-              </div>
-              <ul className="space-y-2 text-xs font-mono text-slate-300">
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Shop Approval Queue</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Flood Telemetry Verification</li>
-                <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Platform Analytics Charts</li>
-              </ul>
-              <Button variant="secondary" className="w-full py-3 font-mono font-bold" icon={ShieldAlert} onClick={() => goToRole('admin')}>
-                OPEN ADMIN PANEL
-              </Button>
-            </div>
-          </CyberCard>
+            </CyberCard>
+          </TiltCard3D>
         </div>
       </section>
     </div>

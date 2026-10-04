@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { StockBadge, FloodBadge } from './Badge'
+import { TiltCard3D } from './TiltCard3D'
 import { Store, MapPin, QrCode, ShieldAlert, CheckCircle2, Umbrella, Package, Search } from 'lucide-react'
 
 export const LiveRadarSimulator = () => {
   const [activeTab, setActiveTab] = useState('map') // 'map' | 'stock' | 'barcode'
 
   return (
-    <div className="relative rounded-3xl p-1 bg-gradient-to-r from-primary-500 via-teal-400 to-amber-500 shadow-2xl overflow-hidden max-w-xl mx-auto">
-      {/* Outer Card Wrapper */}
-      <div className="bg-slate-950/95 backdrop-blur-2xl p-6 rounded-[22px] border border-white/10 text-white space-y-5">
+    <TiltCard3D maxTilt={10} scale={1.02} depth={20} glowColor="teal">
+      <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-primary-500 via-teal-400 to-amber-500 shadow-2xl overflow-hidden max-w-xl mx-auto">
+        {/* Outer Card Wrapper */}
+        <div className="bg-[#0b0b14]/95 backdrop-blur-2xl p-6 rounded-[23px] border border-white/10 text-white space-y-5">
 
         {/* Card Header with Live Selector */}
         <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-4">
@@ -139,5 +141,6 @@ export const LiveRadarSimulator = () => {
         </AnimatePresence>
       </div>
     </div>
+  </TiltCard3D>
   )
 }

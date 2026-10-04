@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FloodBadge } from '../../components/ui/Badge'
+import { TiltCard3D } from '../../components/ui/TiltCard3D'
 import {
   ShieldCheck, AlertTriangle, Building2, Activity, Users,
   CheckCircle2, XCircle, MapPin, Clock, X, AlertCircle,
@@ -139,19 +140,25 @@ export const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Stats Row */}
+        {/* Stats Row with 3D Physics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {PLATFORM_STATS.map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.label} className={`p-5 rounded-2xl bg-[#0d0d16] border ${stat.border} shadow-lg space-y-2`}>
-                <div className="flex items-center justify-between">
-                  <Icon className={`w-5 h-5 ${stat.color}`} />
-                  <span className="text-[10px] font-mono text-emerald-400">{stat.trend}</span>
+              <TiltCard3D key={stat.label} glowColor="violet" maxTilt={14} scale={1.03} depth={15}>
+                <div className={`p-5 rounded-2xl bg-[#0d0d16] border ${stat.border} shadow-xl space-y-2 h-full`}>
+                  <div style={{ transform: 'translateZ(15px)' }} className="flex items-center justify-between">
+                    <Icon className={`w-5 h-5 ${stat.color}`} />
+                    <span className="text-[10px] font-mono text-emerald-400">{stat.trend}</span>
+                  </div>
+                  <p style={{ transform: 'translateZ(20px)' }} className="text-3xl font-extrabold font-display text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]">
+                    {stat.value}
+                  </p>
+                  <p style={{ transform: 'translateZ(10px)' }} className="text-xs font-mono text-slate-400">
+                    {stat.label}
+                  </p>
                 </div>
-                <p className="text-3xl font-extrabold font-display text-white">{stat.value}</p>
-                <p className="text-xs font-mono text-slate-400">{stat.label}</p>
-              </div>
+              </TiltCard3D>
             )
           })}
         </div>
