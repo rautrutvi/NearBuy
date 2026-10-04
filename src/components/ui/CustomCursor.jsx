@@ -1,89 +1,139 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-// Happy Cartoon Shopping Bag Illustration SVG
-const CartoonShoppingBag = ({ isHovered, isClicking }) => (
+// Multicolored Rainbow Monsoon Umbrella Cursor SVG
+const MulticoloredUmbrellaCursor = ({ isHovered, isClicking }) => (
   <svg
-    width="44"
-    height="48"
-    viewBox="0 0 44 48"
+    width="52"
+    height="54"
+    viewBox="0 0 52 54"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     style={{ pointerEvents: 'none' }}
-    className="drop-shadow-[0_8px_16px_rgba(224,82,54,0.4)] pointer-events-none select-none"
+    className="drop-shadow-[0_10px_20px_rgba(168,85,247,0.5)] pointer-events-none select-none"
   >
-    {/* Bag Handles */}
-    <path
-      d="M15 12V8C15 4.68629 17.6863 2 21 2V2C24.3137 2 27 4.68629 27 8V12"
-      stroke="#D97706"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-    <path
-      d="M17 12V9C17 6.79086 18.7909 5 21 5V5C23.2091 5 25 6.79086 25 9V12"
-      stroke="#F59E0B"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-
-    {/* Bag Main Body Gradient */}
     <defs>
-      <linearGradient id="bagGrad" x1="0" y1="10" x2="44" y2="48" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#FF6B4A" />
+      {/* Segment Gradients for realistic 3D depth */}
+      <linearGradient id="segRed" x1="4" y1="26" x2="16" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#FF7A59" />
         <stop offset="1" stopColor="#E05236" />
       </linearGradient>
-      <linearGradient id="foldGrad" x1="0" y1="10" x2="44" y2="16" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#FF856B" />
-        <stop offset="1" stopColor="#FF6B4A" />
+      <linearGradient id="segYellow" x1="14" y1="26" x2="22" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#FDE047" />
+        <stop offset="1" stopColor="#EAB308" />
+      </linearGradient>
+      <linearGradient id="segGreen" x1="22" y1="26" x2="26" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#34D399" />
+        <stop offset="1" stopColor="#059669" />
+      </linearGradient>
+      <linearGradient id="segCyan" x1="26" y1="26" x2="30" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#38BDF8" />
+        <stop offset="1" stopColor="#0284C7" />
+      </linearGradient>
+      <linearGradient id="segPurple" x1="30" y1="26" x2="38" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#C084FC" />
+        <stop offset="1" stopColor="#7E22CE" />
+      </linearGradient>
+      <linearGradient id="segPink" x1="36" y1="26" x2="48" y2="8" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#F472B6" />
+        <stop offset="1" stopColor="#DB2777" />
       </linearGradient>
     </defs>
 
-    {/* Bag Body Shadow & Main Shape */}
-    <rect x="4" y="12" width="36" height="34" rx="6" fill="url(#bagGrad)" />
+    {/* Silver Tip Top Spike */}
+    <path d="M26 2V8" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
+    <circle cx="26" cy="3" r="2" fill="#F8FAFC" />
 
-    {/* Folded Top Paper Edge */}
-    <path d="M4 12C4 10.8954 4.89543 10 6 10H38C39.1046 10 40 10.8954 40 12V16H4V12Z" fill="url(#foldGrad)" />
+    {/* MULTICOLORED RAINBOW CANOPY PANELS */}
+    {/* Panel 1: Coral Red (Far Left) */}
+    <path
+      d="M4 26C4 16 13 8 26 8V26C18.5 24 10 26 4 26Z"
+      fill="url(#segRed)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Side Fold Lines */}
-    <path d="M8 16L10 44" stroke="#C23B22" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-    <path d="M36 16L34 44" stroke="#C23B22" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+    {/* Panel 2: Gold Yellow (Mid Left) */}
+    <path
+      d="M13 24.5C13 16 18 8 26 8V26C21.5 24.5 17 24.5 13 24.5Z"
+      fill="url(#segYellow)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Cartoon Happy Face */}
-    {/* Left Eye */}
-    <circle cx="16" cy="24" r="3" fill="#1E293B" />
-    <circle cx="15" cy="23" r="1" fill="white" />
+    {/* Panel 3: Emerald Green (Center Left) */}
+    <path
+      d="M20 24.5C20 16 23 8 26 8V26C24 24.5 22 24.5 20 24.5Z"
+      fill="url(#segGreen)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Right Eye */}
-    <circle cx="28" cy="24" r="3" fill="#1E293B" />
-    <circle cx="27" cy="23" r="1" fill="white" />
+    {/* Panel 4: Sky Cyan (Center Right) */}
+    <path
+      d="M26 8C29 8 32 16 32 24.5C30 24.5 28 24.5 26 26V8Z"
+      fill="url(#segCyan)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Rosy Cheeks */}
-    <ellipse cx="12" cy="28" rx="2.5" ry="1.5" fill="#FF8A9B" opacity="0.8" />
-    <ellipse cx="32" cy="28" rx="2.5" ry="1.5" fill="#FF8A9B" opacity="0.8" />
+    {/* Panel 5: Lavender Purple (Mid Right) */}
+    <path
+      d="M26 8C34 8 39 16 39 24.5C35 24.5 30.5 24.5 26 26V8Z"
+      fill="url(#segPurple)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Happy Smile Mouth */}
-    {isHovered ? (
-      // Big open joyful mouth on hover!
-      <path
-        d="M17 29C17 29 19 34 22 34C25 34 27 29 27 29H17Z"
-        fill="#1E293B"
-      />
-    ) : (
-      // Friendly smile curve
-      <path
-        d="M17 29C17 29 19 32 22 32C25 32 27 29 27 29"
-        stroke="#1E293B"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    )}
+    {/* Panel 6: Magenta Rose (Far Right) */}
+    <path
+      d="M26 8C39 8 48 16 48 26C42 26 33.5 24 26 26V8Z"
+      fill="url(#segPink)"
+      stroke="#ffffff"
+      strokeWidth="0.8"
+      strokeOpacity="0.4"
+    />
 
-    {/* Star Sparkle on Hover */}
+    {/* Scalloped Rim Outline */}
+    <path
+      d="M4 26Q8.5 23.5 13 24.5Q16.5 25 20 24.5Q23 24 26 26Q29 24 32 24.5Q35.5 25 39 24.5Q43.5 23.5 48 26"
+      stroke="#FFFFFF"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+
+    {/* Central Shaft & Wooden J-Hook Handle */}
+    <path
+      d="M26 26V44C26 48 22 51 18 51C14 51 11 48 11 44"
+      stroke="#D97706"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M26 26V44C26 48 22 51 18 51C14 51 11 48 11 44"
+      stroke="#F59E0B"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeDasharray="10 4"
+    />
+
+    {/* Dripping Water Droplets from Canopy Edge */}
+    <circle cx="8" cy="30" r="1.5" fill="#38BDF8" opacity="0.85" />
+    <circle cx="20" cy="28.5" r="1.2" fill="#C084FC" opacity="0.85" />
+    <circle cx="33" cy="28.5" r="1.2" fill="#FDE047" opacity="0.85" />
+    <circle cx="44" cy="30" r="1.5" fill="#34D399" opacity="0.85" />
+
+    {/* Sparkles on Hover */}
     {isHovered && (
-      <path
-        d="M38 6L39 8L41 9L39 10L38 12L37 10L35 9L37 8L38 6Z"
-        fill="#F59E0B"
-      />
+      <>
+        <path d="M44 6L45 8L47 9L45 10L44 12L43 10L41 9L43 8L44 6Z" fill="#FDE047" />
+        <path d="M6 10L7 11.5L8.5 12.5L7 13.5L6 15L5 13.5L3.5 12.5L5 11.5L6 10Z" fill="#C084FC" />
+      </>
     )}
   </svg>
 )
@@ -95,7 +145,7 @@ export const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    // Enable custom happy shopping bag cursor on desktop screens
+    // Enable custom umbrella cursor on desktop screens
     if (window.innerWidth < 640) return
 
     const handleMouseMove = (e) => {
@@ -144,19 +194,19 @@ export const CustomCursor = () => {
 
   return (
     <>
-      {/* Happy Cartoon Shopping Bag Cursor */}
+      {/* Multicolored Rainbow Monsoon Umbrella Cursor */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none select-none z-[99999]"
         style={{ pointerEvents: 'none' }}
         animate={{
-          x: mousePosition.x - 22,
-          y: mousePosition.y - 20,
+          x: mousePosition.x - 24,
+          y: mousePosition.y - 18,
           scale: isClicking ? 0.85 : isHovered ? 1.25 : 1,
-          rotate: isHovered ? -12 : 0,
+          rotate: isHovered ? -15 : 0,
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+        transition={{ type: 'spring', stiffness: 550, damping: 28, mass: 0.1 }}
       >
-        <CartoonShoppingBag isHovered={isHovered} isClicking={isClicking} />
+        <MulticoloredUmbrellaCursor isHovered={isHovered} isClicking={isClicking} />
       </motion.div>
     </>
   )
