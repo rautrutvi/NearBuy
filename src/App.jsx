@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from './store/useAuthStore'
 import { useCartStore } from './store/useCartStore'
@@ -14,7 +14,7 @@ import { BuyerProfile } from './pages/buyer/BuyerProfile'
 import { VendorDashboard } from './pages/vendor/VendorDashboard'
 import { BarcodeScanner } from './pages/vendor/BarcodeScanner'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
-import { Store, UserCheck, ShieldCheck, LogOut, LogIn, ShoppingCart, QrCode, User, Home, Palette } from 'lucide-react'
+import { Store, UserCheck, ShieldCheck, LogOut, LogIn, ShoppingCart, QrCode, User, Home, Palette, Menu, X } from 'lucide-react'
 
 export default function App() {
   const navigate = useNavigate()
@@ -22,8 +22,13 @@ export default function App() {
   const { user, role, isAuthenticated, login, logout } = useAuthStore()
   const { items } = useCartStore()
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const cartCount = items.reduce((s, i) => s + i.quantity, 0)
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [location.pathname])
 
   const handleLogout = () => {
     logout()
@@ -32,9 +37,6 @@ export default function App() {
 
   const handleQuickRole = (newRole) => {
     login({ name: `Demo ${newRole.toUpperCase()}`, email: `${newRole}@nearbuy.in` }, newRole)
-    if (newRole === 'buyer') navigate('/buyer')
-    else if (newRole === 'vendor') navigate('/vendor')
-    else if (newRole === 'admin') navigate('/admin')
   }
 
   return (
@@ -181,8 +183,100 @@ export default function App() {
                 </Link>
               </div>
             )}
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 border border-white/10 transition-colors"
+              title="Toggle Menu"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5 text-amber-400" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden border-t border-white/10 bg-[#0c0c16]/98 backdrop-blur-2xl px-4 py-4 space-y-2 animate-fadeIn shadow-2xl">
+            <Link
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <Home className="w-4 h-4 text-slate-400" />
+              <span>Home</span>
+            </Link>
+
+            <Link
+              to="/buyer"
+              onClick={() => { handleQuickRole('buyer'); setIsMobileMenuOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/buyer' ? 'bg-primary-600/30 text-primary-300 border border-primary-500/40' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <UserCheck className="w-4 h-4 text-primary-400" />
+              <span>Buyer Shop</span>
+            </Link>
+
+            <Link
+              to="/vendor"
+              onClick={() => { handleQuickRole('vendor'); setIsMobileMenuOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/vendor' ? 'bg-teal-600/30 text-teal-300 border border-teal-500/40' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <Store className="w-4 h-4 text-teal-400" />
+              <span>Vendor Portal</span>
+            </Link>
+
+            <Link
+              to="/admin"
+              onClick={() => { handleQuickRole('admin'); setIsMobileMenuOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/admin' ? 'bg-violet-600/30 text-violet-300 border border-violet-500/40' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4 text-violet-400" />
+              <span>Admin Panel</span>
+            </Link>
+
+            <Link
+              to="/buyer/profile"
+              onClick={() => { handleQuickRole('buyer'); setIsMobileMenuOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/buyer/profile' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <User className="w-4 h-4 text-amber-400" />
+              <span>Profile</span>
+            </Link>
+
+            <Link
+              to="/vendor/scan"
+              onClick={() => { handleQuickRole('vendor'); setIsMobileMenuOpen(false) }}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/vendor/scan' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <QrCode className="w-4 h-4 text-teal-400" />
+              <span>Barcode Scanner</span>
+            </Link>
+
+            <Link
+              to="/style-preview"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
+                location.pathname === '/style-preview' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
+              }`}
+            >
+              <Palette className="w-4 h-4 text-pink-400" />
+              <span>Theme / Design System</span>
+            </Link>
+          </div>
+        )}
       </header>
 
       {/* Cart Drawer Panel */}

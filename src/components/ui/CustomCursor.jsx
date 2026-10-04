@@ -9,7 +9,8 @@ const CartoonShoppingBag = ({ isHovered, isClicking }) => (
     viewBox="0 0 44 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="drop-shadow-[0_8px_16px_rgba(224,82,54,0.4)]"
+    style={{ pointerEvents: 'none' }}
+    className="drop-shadow-[0_8px_16px_rgba(224,82,54,0.4)] pointer-events-none select-none"
   >
     {/* Bag Handles */}
     <path
@@ -145,7 +146,8 @@ export const CustomCursor = () => {
     <>
       {/* Happy Cartoon Shopping Bag Cursor */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[99999]"
+        className="fixed top-0 left-0 pointer-events-none select-none z-[99999]"
+        style={{ pointerEvents: 'none' }}
         animate={{
           x: mousePosition.x - 22,
           y: mousePosition.y - 20,
