@@ -53,17 +53,22 @@ export default {
       },
       keyframes: {
         pulseSubtle: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.65' },
+          '0%, 100%': { opacity: '0.15', transform: 'scale(1)' },
+          '50%': { opacity: '0.28', transform: 'scale(1.1)' },
         },
         liveDot: {
           '0%, 100%': { transform: 'scale(1)', opacity: '1' },
           '50%': { transform: 'scale(1.4)', opacity: '0.4' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-14px)' },
+        },
       },
       animation: {
-        'pulse-subtle': 'pulseSubtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-subtle': 'pulseSubtle 5s ease-in-out infinite',
         'live-dot': 'liveDot 1.8s ease-in-out infinite',
+        'float': 'float 4s ease-in-out infinite',
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
