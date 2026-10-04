@@ -1,98 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-
-// Multicolored Rainbow Glossy Shopping Bag Cursor SVG
-const MulticoloredShoppingBagCursor = ({ isHovered, isClicking }) => (
-  <svg
-    width="50"
-    height="54"
-    viewBox="0 0 50 54"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    style={{ pointerEvents: 'none' }}
-    className="drop-shadow-[0_10px_20px_rgba(168,85,247,0.5)] pointer-events-none select-none"
-  >
-    <defs>
-      {/* Vibrant Multicolored Rainbow Body Gradient */}
-      <linearGradient id="rainbowBagGrad" x1="0" y1="12" x2="50" y2="52" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#FF5E36" />   {/* Coral Red */}
-        <stop offset="25%" stopColor="#F59E0B" />  {/* Amber Gold */}
-        <stop offset="50%" stopColor="#10B981" />  {/* Emerald Green */}
-        <stop offset="75%" stopColor="#38BDF8" />  {/* Sky Blue */}
-        <stop offset="100%" stopColor="#A855F7" /> {/* Electric Purple */}
-      </linearGradient>
-
-      {/* Folded Rim Top Gradient */}
-      <linearGradient id="rainbowFoldGrad" x1="0" y1="10" x2="50" y2="18" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#FF886C" />
-        <stop offset="50%" stopColor="#FCD34D" />
-        <stop offset="100%" stopColor="#C084FC" />
-      </linearGradient>
-    </defs>
-
-    {/* Twisted Rope Handles (Back & Front Arcs) */}
-    <path
-      d="M17 14V8C17 4.68629 19.6863 2 23 2C26.3137 2 29 4.68629 29 8V14"
-      stroke="#F59E0B"
-      strokeWidth="3.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M19 14V9C19 6.79086 20.7909 5 23 5C25.2091 5 27 6.79086 27 9V14"
-      stroke="#FEF08A"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-
-    {/* Main Bag Body with Multicolored Rainbow Fill */}
-    <rect x="5" y="14" width="36" height="34" rx="6" fill="url(#rainbowBagGrad)" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.4" />
-
-    {/* Folded Top Paper Edge */}
-    <path d="M5 14C5 12.8954 5.89543 12 7 12H39C40.1046 12 41 12.8954 41 14V18H5V14Z" fill="url(#rainbowFoldGrad)" />
-
-    {/* Vertical Multicolored Decorative Accent Stripes */}
-    <rect x="13" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.25" />
-    <rect x="22" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.35" />
-    <rect x="31" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.25" />
-
-    {/* Happy Cute Face or Nearbuy Badge */}
-    <circle cx="16" cy="27" r="2.5" fill="#ffffff" />
-    <circle cx="30" cy="27" r="2.5" fill="#ffffff" />
-
-    {/* Joyful Smile Curve */}
-    {isHovered ? (
-      <path d="M18 32C18 32 20 37 23 37C26 37 28 32 28 32H18Z" fill="#ffffff" />
-    ) : (
-      <path d="M19 32C19 32 21 34.5 23 34.5C25 34.5 27 32 27 32" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
-    )}
-
-    {/* Rosy Cheeks */}
-    <ellipse cx="12" cy="31" rx="2" ry="1.2" fill="#FEF08A" opacity="0.9" />
-    <ellipse cx="34" cy="31" rx="2" ry="1.2" fill="#FEF08A" opacity="0.9" />
-
-    {/* Sparkles on Hover */}
-    {isHovered && (
-      <>
-        <path d="M42 6L43 8L45 9L43 10L42 12L41 10L39 9L41 8L42 6Z" fill="#FDE047" />
-        <path d="M6 8L7 9.5L8.5 10.5L7 11.5L6 13L5 11.5L3.5 10.5L5 9.5L6 8Z" fill="#C084FC" />
-      </>
-    )}
-  </svg>
-)
+import { motion, AnimatePresence } from 'framer-motion'
 
 export const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 })
   const [isHovered, setIsHovered] = useState(false)
   const [isClicking, setIsClicking] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [particles, setParticles] = useState([])
 
   useEffect(() => {
-    // Enable custom shopping bag cursor on desktop screens
     if (window.innerWidth < 640) return
 
+    let particleId = 0
+
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      const { clientX: x, clientY: y } = e
+      setMousePosition({ x, y })
       if (!isVisible) setIsVisible(true)
+
+      // Emit animated rainbow sparkle trail on mouse move
+      if (Math.random() > 0.4) {
+        const colors = ['#FF5E36', '#F59E0B', '#10B981', '#38BDF8', '#A855F7', '#EC4899']
+        const newParticle = {
+          id: particleId++,
+          x: x + (Math.random() - 0.5) * 16,
+          y: y + (Math.random() - 0.5) * 16,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 6 + 4,
+        }
+
+        setParticles((prev) => [...prev.slice(-12), newParticle])
+      }
     }
 
     const handleMouseLeave = () => setIsVisible(false)
@@ -132,24 +70,98 @@ export const CustomCursor = () => {
     }
   }, [isVisible])
 
+  // Auto clean stale particles
+  useEffect(() => {
+    if (particles.length === 0) return
+    const timer = setTimeout(() => {
+      setParticles((prev) => prev.slice(1))
+    }, 400)
+    return () => clearTimeout(timer)
+  }, [particles])
+
   if (!isVisible) return null
 
   return (
-    <>
-      {/* Multicolored Rainbow Glossy Shopping Bag Cursor */}
+    <div className="fixed inset-0 pointer-events-none select-none z-[99999]">
+      {/* Animated Floating Rainbow Sparkle Trail */}
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          initial={{ opacity: 0.9, scale: 1, y: 0 }}
+          animate={{ opacity: 0, scale: 0.2, y: 14 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+          className="absolute rounded-full pointer-events-none"
+          style={{
+            left: p.x,
+            top: p.y,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            boxShadow: `0 0 10px ${p.color}`,
+          }}
+        />
+      ))}
+
+      {/* Outer Glowing Pulsing Rainbow Aura Ring */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none select-none z-[99999]"
-        style={{ pointerEvents: 'none' }}
-        animate={{
-          x: mousePosition.x - 22,
-          y: mousePosition.y - 18,
-          scale: isClicking ? 0.85 : isHovered ? 1.25 : 1,
-          rotate: isHovered ? -12 : 0,
+        className="absolute rounded-full border-2 border-dashed pointer-events-none"
+        style={{
+          left: mousePosition.x - 28,
+          top: mousePosition.y - 28,
+          width: 56,
+          height: 56,
         }}
-        transition={{ type: 'spring', stiffness: 550, damping: 28, mass: 0.1 }}
+        animate={{
+          rotate: 360,
+          scale: isClicking ? 0.7 : isHovered ? 1.4 : 1,
+          borderColor: isHovered ? '#C084FC' : '#FF5E36',
+          boxShadow: isHovered
+            ? '0 0 25px rgba(192, 132, 252, 0.6), inset 0 0 15px rgba(168, 85, 247, 0.4)'
+            : '0 0 15px rgba(255, 94, 54, 0.4)',
+        }}
+        transition={{
+          rotate: { repeat: Infinity, duration: 6, ease: 'linear' },
+          scale: { type: 'spring', stiffness: 450, damping: 25 },
+        }}
+      />
+
+      {/* Main Photorealistic 3D Shopping Bag Cursor with Live Rainbow Hue Shift */}
+      <motion.div
+        className="absolute pointer-events-none select-none"
+        style={{
+          left: mousePosition.x - 20,
+          top: mousePosition.y - 20,
+          width: 44,
+          height: 44,
+        }}
+        animate={{
+          scale: isClicking ? 0.8 : isHovered ? 1.3 : 1,
+          rotate: isHovered ? -14 : [ -4, 4, -4 ],
+        }}
+        transition={{
+          rotate: isHovered ? { duration: 0.2 } : { repeat: Infinity, duration: 3, ease: 'easeInOut' },
+          scale: { type: 'spring', stiffness: 500, damping: 25 },
+        }}
       >
-        <MulticoloredShoppingBagCursor isHovered={isHovered} isClicking={isClicking} />
+        <motion.img
+          src="/images/item_bag.png"
+          alt="3D Shopping Bag Cursor"
+          className="w-full h-full object-contain pointer-events-none"
+          animate={{
+            filter: [
+              'hue-rotate(0deg) drop-shadow(0 0 10px rgba(255, 94, 54, 0.8))',
+              'hue-rotate(120deg) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8))',
+              'hue-rotate(240deg) drop-shadow(0 0 12px rgba(56, 189, 248, 0.8))',
+              'hue-rotate(360deg) drop-shadow(0 0 10px rgba(255, 94, 54, 0.8))',
+            ],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4,
+            ease: 'linear',
+          }}
+        />
       </motion.div>
-    </>
+    </div>
   )
 }
