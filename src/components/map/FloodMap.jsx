@@ -14,14 +14,18 @@ export const FloodMap = ({
 
   // Map coordinate bounds to percentage on our 3D tactical radar grid
   // Center around 19.076, 72.8777
-  const toGridPercent = (lat, lng) => {
+  const toGridPercent = (lat = 19.076, lng = 72.8777) => {
+    const safeLat = typeof lat === 'number' ? lat : 19.076
+    const safeLng = typeof lng === 'number' ? lng : 72.8777
+    const uLat = userLocation?.lat ?? 19.076
+    const uLng = userLocation?.lng ?? 72.8777
     const latSpan = 0.024
     const lngSpan = 0.024
-    const x = ((lng - (userLocation.lng - lngSpan / 2)) / lngSpan) * 100
-    const y = ((userLocation.lat + latSpan / 2 - lat) / latSpan) * 100
+    const x = ((safeLng - (uLng - lngSpan / 2)) / lngSpan) * 100
+    const y = ((uLat + latSpan / 2 - safeLat) / latSpan) * 100
     return {
-      x: Math.max(8, Math.min(92, x)),
-      y: Math.max(8, Math.min(92, y)),
+      x: Math.max(8, Math.min(92, isNaN(x) ? 50 : x)),
+      y: Math.max(8, Math.min(92, isNaN(y) ? 50 : y)),
     }
   }
 
@@ -167,7 +171,7 @@ export const FloodMap = ({
 
           {/* Flood Waterlogging Hazard Zones */}
           {floodReports.map((report, idx) => {
-            const pos = toGridPercent(report.location.lat, report.location.lng)
+            const pos = toGridPercent(report?.location?.lat, report?.location?.lng)
             const isAlert = report.severity === 'alert'
             const color = isAlert ? '#ef4444' : '#f59e0b'
 
@@ -219,7 +223,7 @@ export const FloodMap = ({
 
           {/* 3D Shop Beacons */}
           {shops.map((shop, idx) => {
-            const pos = toGridPercent(shop.location.lat, shop.location.lng)
+            const pos = toGridPercent(shop?.location?.lat, shop?.location?.lng)
             const isSafe = shop.floodStatus === 'safe'
             const beaconColor = isSafe ? '#10b981' : shop.floodStatus === 'watch' ? '#f59e0b' : '#ef4444'
 

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ParticleCanvas } from '../components/ui/ParticleCanvas'
 import { CyberCard } from '../components/ui/CyberCard'
@@ -92,27 +92,30 @@ export const LandingPage = () => {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="flex flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2"
             >
-              <button
-                onClick={() => goToRole('buyer')}
+              <Link
+                to="/buyer"
+                onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
                 className="relative group px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 via-amber-500 to-teal-500 font-mono font-bold text-white text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(224,82,54,0.5)] hover:shadow-[0_0_50px_rgba(224,82,54,0.8)] transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5"
               >
                 <span>OPEN BUYER SHOP</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
 
-              <button
-                onClick={() => goToRole('vendor')}
-                className="px-7 py-4 rounded-2xl bg-slate-900 border border-white/20 hover:border-teal-400 text-slate-200 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-2xl hover:shadow-[0_0_30px_rgba(13,148,136,0.3)]"
+              <Link
+                to="/vendor"
+                onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
+                className="px-7 py-4 rounded-2xl bg-slate-900 border border-white/20 hover:border-teal-400 text-slate-200 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-2xl hover:shadow-[0_0_30px_rgba(13,148,136,0.3)] flex items-center justify-center"
               >
                 VENDOR PORTAL
-              </button>
+              </Link>
 
-              <button
-                onClick={() => goToRole('admin')}
-                className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all"
+              <Link
+                to="/admin"
+                onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
+                className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center"
               >
                 ADMIN PANEL
-              </button>
+              </Link>
             </motion.div>
           </div>
 
@@ -203,9 +206,14 @@ export const LandingPage = () => {
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Multi-item Cart Drawer</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Unique Verification Codes</li>
                 </ul>
-                <Button variant="primary" className="w-full py-3 font-mono font-bold" icon={ArrowRight} onClick={() => goToRole('buyer')}>
-                  OPEN BUYER SHOP
-                </Button>
+                <Link
+                  to="/buyer"
+                  onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(224,82,54,0.4)] hover:shadow-[0_0_30px_rgba(224,82,54,0.7)] transition-all"
+                >
+                  <span>OPEN BUYER SHOP</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </CyberCard>
           </TiltCard3D>
@@ -226,9 +234,14 @@ export const LandingPage = () => {
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Live Inventory Adjuster</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Order Fulfillment Queue</li>
                 </ul>
-                <Button variant="safety" className="w-full py-3 font-mono font-bold" icon={QrCode} onClick={() => goToRole('vendor')}>
-                  OPEN VENDOR PORTAL
-                </Button>
+                <Link
+                  to="/vendor"
+                  onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(13,148,136,0.4)] hover:shadow-[0_0_30px_rgba(13,148,136,0.7)] transition-all"
+                >
+                  <span>OPEN VENDOR PORTAL</span>
+                  <QrCode className="w-4 h-4" />
+                </Link>
               </div>
             </CyberCard>
           </TiltCard3D>
@@ -249,9 +262,14 @@ export const LandingPage = () => {
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Flood Telemetry Verification</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Platform Analytics Charts</li>
                 </ul>
-                <Button variant="secondary" className="w-full py-3 font-mono font-bold" icon={ShieldAlert} onClick={() => goToRole('admin')}>
-                  OPEN ADMIN PANEL
-                </Button>
+                <Link
+                  to="/admin"
+                  onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.7)] transition-all"
+                >
+                  <span>OPEN ADMIN PANEL</span>
+                  <ShieldAlert className="w-4 h-4" />
+                </Link>
               </div>
             </CyberCard>
           </TiltCard3D>

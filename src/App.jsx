@@ -5,6 +5,7 @@ import { useCartStore } from './store/useCartStore'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { CartDrawer } from './components/buyer/CartDrawer'
 import { CustomCursor } from './components/ui/CustomCursor'
+import { Shopping3DBackground } from './components/ui/Shopping3DBackground'
 import { StylePreviewPage } from './pages/StylePreviewPage'
 import { LandingPage } from './pages/LandingPage'
 import { LoginPage } from './pages/LoginPage'
@@ -40,8 +41,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#050508] text-white">
+    <div className="min-h-screen flex flex-col bg-[#050508] text-white relative">
       <CustomCursor />
+      <Shopping3DBackground />
 
       {/* Top Global Navigation Bar */}
       <header className="sticky top-0 z-50 bg-[#0b0b14]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl">
@@ -298,15 +300,15 @@ export default function App() {
           <Route path="/signup" element={<SignupPage />} />
 
           {/* Buyer routes */}
-          <Route path="/buyer" element={<ProtectedRoute allowedRoles={['buyer']}><BuyerDashboard /></ProtectedRoute>} />
-          <Route path="/buyer/profile" element={<ProtectedRoute allowedRoles={['buyer']}><BuyerProfile /></ProtectedRoute>} />
+          <Route path="/buyer" element={<BuyerDashboard />} />
+          <Route path="/buyer/profile" element={<BuyerProfile />} />
 
           {/* Vendor routes */}
-          <Route path="/vendor" element={<ProtectedRoute allowedRoles={['vendor']}><VendorDashboard /></ProtectedRoute>} />
-          <Route path="/vendor/scan" element={<ProtectedRoute allowedRoles={['vendor']}><BarcodeScanner /></ProtectedRoute>} />
+          <Route path="/vendor" element={<VendorDashboard />} />
+          <Route path="/vendor/scan" element={<BarcodeScanner />} />
 
           {/* Admin routes */}
-          <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </main>
 

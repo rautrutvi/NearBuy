@@ -20,7 +20,7 @@ import { floodService } from '../../api/floodService'
 import {
   Search, MapPin, Grid, Map as MapIcon, ShieldAlert, ShoppingBag,
   Sparkles, Store, Umbrella, Pill, Wrench, ShoppingBasket, X, Plus, Star,
-  Terminal, Radio, Zap
+  Terminal, Radio, Zap, Package
 } from 'lucide-react'
 
 export const BuyerDashboard = () => {
@@ -86,7 +86,7 @@ export const BuyerDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#06060a] text-white px-4 py-8 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-white px-4 py-8 relative">
       {/* Ambient background glows */}
       <div className="absolute top-10 left-1/4 w-[500px] h-[350px] bg-primary-600/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-96 right-10 w-[450px] h-[400px] bg-teal-600/10 rounded-full blur-[140px] pointer-events-none" />
