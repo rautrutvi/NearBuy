@@ -55,9 +55,9 @@ export const LandingPage = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-primary-500/40 text-xs font-mono font-bold text-primary-400 shadow-[0_0_25px_rgba(224,82,54,0.3)] backdrop-blur-md"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#120a21]/90 border border-purple-500/40 text-xs font-mono font-bold text-purple-300 shadow-[0_0_25px_rgba(168,85,247,0.3)] backdrop-blur-md"
             >
-              <Sparkles className="w-4 h-4 text-amber-400 animate-spin" />
+              <Sparkles className="w-4 h-4 text-primary-400 animate-spin" />
               <span>HYPERLOCAL STORE INVENTORY &amp; MONSOON FLOOD RADAR</span>
             </motion.div>
 
@@ -68,7 +68,7 @@ export const LandingPage = () => {
               className="text-5xl md:text-7xl font-extrabold font-display tracking-tight text-white leading-[1.05]"
             >
               Shop Local,{' '}
-              <span className="bg-gradient-to-r from-primary-400 via-amber-300 to-teal-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(224,82,54,0.5)]">
+              <span className="bg-gradient-to-r from-primary-400 via-lavender-300 to-purple-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(168,85,247,0.5)]">
                 Stay Safe
               </span>{' '}
               During Monsoon
@@ -93,7 +93,7 @@ export const LandingPage = () => {
               <Link
                 to="/buyer"
                 onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
-                className="relative group px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 via-amber-500 to-teal-500 font-mono font-bold text-white text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(224,82,54,0.5)] hover:shadow-[0_0_50px_rgba(224,82,54,0.8)] transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5"
+                className="relative group px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 font-mono font-bold text-white text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.7)] transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5"
               >
                 <span>OPEN BUYER SHOP</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -102,7 +102,7 @@ export const LandingPage = () => {
               <Link
                 to="/vendor"
                 onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
-                className="px-7 py-4 rounded-2xl bg-slate-900 border border-white/20 hover:border-teal-400 text-slate-200 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-2xl hover:shadow-[0_0_30px_rgba(13,148,136,0.3)] flex items-center justify-center"
+                className="px-7 py-4 rounded-2xl bg-[#110a24] border border-purple-500/30 hover:border-purple-400 text-slate-200 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-2xl hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] flex items-center justify-center"
               >
                 VENDOR PORTAL
               </Link>

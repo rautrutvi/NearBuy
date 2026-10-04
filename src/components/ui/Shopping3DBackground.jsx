@@ -40,8 +40,8 @@ export const Shopping3DBackground = () => {
       />
 
       {/* 2. CINEMATIC GRADIENT LIGHTING & VIGNETTE (Preserves high readability for text) */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#06060c]/85 via-[#06060c]/60 to-[#06060c]/95" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#06060c_80%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080614]/85 via-[#080614]/60 to-[#080614]/95" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#080614_80%)]" />
 
       {/* 3. DYNAMIC INTERACTIVE CURSOR SPOTLIGHT */}
       <div
@@ -49,10 +49,15 @@ export const Shopping3DBackground = () => {
         style={{
           left: cursorPos.x - 300,
           top: cursorPos.y - 300,
-          background: 'radial-gradient(circle, rgba(224,82,54,0.14) 0%, rgba(13,148,136,0.07) 45%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(168,85,247,0.18) 0%, rgba(255,94,54,0.10) 45%, transparent 70%)',
           filter: 'blur(45px)',
         }}
       />
+
+      {/* AMBIENT PURPLE & ORANGE GLOW SPOTLIGHTS */}
+      <div className="absolute top-10 left-[10%] w-[550px] h-[400px] bg-purple-600/20 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[35%] right-[8%] w-[500px] h-[450px] bg-primary-500/18 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-10 left-[20%] w-[600px] h-[350px] bg-violet-600/15 rounded-full blur-[160px] pointer-events-none" />
 
       {/* 4. REAL FLOATING 3D SHOPPING OBJECTS (100% True Transparent PNGs - No Background Box) */}
       
@@ -149,7 +154,7 @@ export const Shopping3DBackground = () => {
         <motion.div
           animate={{ y: [-10, 10, -10], rotate: [-4, 4, -4] }}
           transition={{ repeat: Infinity, duration: 5.5, ease: 'easeInOut' }}
-          className="absolute top-36 left-[16%] hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121220]/80 backdrop-blur-xl border border-primary-500/40 shadow-[0_10px_25px_rgba(224,82,54,0.3)] text-xs font-mono font-bold text-primary-300"
+          className="absolute top-36 left-[16%] hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#181126]/85 backdrop-blur-xl border border-primary-500/40 shadow-[0_10px_25px_rgba(255,94,54,0.3)] text-xs font-mono font-bold text-primary-300"
         >
           <span className="w-2 h-2 rounded-full bg-primary-400 animate-ping" />
           <span>30-MIN PICKUP</span>
@@ -159,7 +164,7 @@ export const Shopping3DBackground = () => {
         <motion.div
           animate={{ y: [12, -12, 12], rotate: [4, -4, 4] }}
           transition={{ repeat: Infinity, duration: 6.2, ease: 'easeInOut', delay: 0.8 }}
-          className="absolute top-44 right-[18%] hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0f1924]/85 backdrop-blur-xl border border-teal-500/40 shadow-[0_10px_25px_rgba(13,148,136,0.3)] text-xs font-mono font-bold text-teal-300"
+          className="absolute top-44 right-[18%] hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#19102b]/85 backdrop-blur-xl border border-purple-500/40 shadow-[0_10px_25px_rgba(168,85,247,0.35)] text-xs font-mono font-bold text-purple-300"
         >
           <span>☔</span>
           <span>RADAR SAFE</span>
@@ -191,9 +196,9 @@ export const Shopping3DBackground = () => {
         </div>
       </motion.div>
 
-      {/* 6. GLOWING FLOOR STAGE RIMS (Simulating the 3D studio pedestal on the ground) */}
-      <div className="absolute -bottom-28 left-1/2 -translate-x-1/2 w-[950px] h-[280px] border border-teal-500/20 rounded-full opacity-40 [transform:rotateX(78deg)] pointer-events-none" />
-      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[700px] h-[200px] border-2 border-primary-500/25 rounded-full opacity-50 [transform:rotateX(78deg)] shadow-[0_0_70px_rgba(224,82,54,0.35)] pointer-events-none" />
+      {/* 6. GLOWING FLOOR STAGE RIMS (Purple & Orange Pedestal) */}
+      <div className="absolute -bottom-28 left-1/2 -translate-x-1/2 w-[950px] h-[280px] border border-purple-500/30 rounded-full opacity-40 [transform:rotateX(78deg)] pointer-events-none" />
+      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[700px] h-[200px] border-2 border-primary-500/30 rounded-full opacity-50 [transform:rotateX(78deg)] shadow-[0_0_80px_rgba(168,85,247,0.4)] pointer-events-none" />
     </div>
   )
 }

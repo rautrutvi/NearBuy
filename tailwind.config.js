@@ -12,24 +12,36 @@ export default {
           100: '#FBEADE',
           200: '#F6D3BC',
           300: '#EFA688',
-          400: '#E87856',
-          500: '#E05236', // Primary Terracotta / Amber
-          600: '#C83D24',
-          700: '#A62D1B',
-          800: '#86261A',
-          900: '#6D2319',
+          400: '#FF7A59',
+          500: '#FF5E36', // Sunset Orange
+          600: '#E04822',
+          700: '#B83214',
+          800: '#8E250E',
+          900: '#6E1D0B',
+        },
+        lavender: {
+          50: '#FAF5FF',
+          100: '#F3E8FF',
+          200: '#E9D5FF',
+          300: '#D8B4FE',
+          400: '#C084FC', // Soft Lavender
+          500: '#A855F7', // Electric Purple
+          600: '#9333EA',
+          700: '#7E22CE', // Deep Purple
+          800: '#6B21A8',
+          900: '#581C87',
         },
         safety: {
-          50: '#F0FDF9',
-          100: '#CCFBF1',
-          200: '#99F6E4',
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#0D9488', // Safety Teal / Monsoon Cyan
-          600: '#0D9488',
-          700: '#0F766E',
-          800: '#115E59',
-          900: '#134E4A',
+          50: '#FAF5FF',
+          100: '#F3E8FF',
+          200: '#E9D5FF',
+          300: '#D8B4FE',
+          400: '#C084FC',
+          500: '#A855F7', // Lavender Safety Accent
+          600: '#9333EA',
+          700: '#7E22CE',
+          800: '#6B21A8',
+          900: '#581C87',
         },
         flood: {
           safe: '#10B981',
