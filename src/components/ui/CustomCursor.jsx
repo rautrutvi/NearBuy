@@ -1,138 +1,80 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-// Multicolored Rainbow Monsoon Umbrella Cursor SVG
-const MulticoloredUmbrellaCursor = ({ isHovered, isClicking }) => (
+// Multicolored Rainbow Glossy Shopping Bag Cursor SVG
+const MulticoloredShoppingBagCursor = ({ isHovered, isClicking }) => (
   <svg
-    width="52"
+    width="50"
     height="54"
-    viewBox="0 0 52 54"
+    viewBox="0 0 50 54"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     style={{ pointerEvents: 'none' }}
     className="drop-shadow-[0_10px_20px_rgba(168,85,247,0.5)] pointer-events-none select-none"
   >
     <defs>
-      {/* Segment Gradients for realistic 3D depth */}
-      <linearGradient id="segRed" x1="4" y1="26" x2="16" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#FF7A59" />
-        <stop offset="1" stopColor="#E05236" />
+      {/* Vibrant Multicolored Rainbow Body Gradient */}
+      <linearGradient id="rainbowBagGrad" x1="0" y1="12" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FF5E36" />   {/* Coral Red */}
+        <stop offset="25%" stopColor="#F59E0B" />  {/* Amber Gold */}
+        <stop offset="50%" stopColor="#10B981" />  {/* Emerald Green */}
+        <stop offset="75%" stopColor="#38BDF8" />  {/* Sky Blue */}
+        <stop offset="100%" stopColor="#A855F7" /> {/* Electric Purple */}
       </linearGradient>
-      <linearGradient id="segYellow" x1="14" y1="26" x2="22" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#FDE047" />
-        <stop offset="1" stopColor="#EAB308" />
-      </linearGradient>
-      <linearGradient id="segGreen" x1="22" y1="26" x2="26" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#34D399" />
-        <stop offset="1" stopColor="#059669" />
-      </linearGradient>
-      <linearGradient id="segCyan" x1="26" y1="26" x2="30" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#38BDF8" />
-        <stop offset="1" stopColor="#0284C7" />
-      </linearGradient>
-      <linearGradient id="segPurple" x1="30" y1="26" x2="38" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#C084FC" />
-        <stop offset="1" stopColor="#7E22CE" />
-      </linearGradient>
-      <linearGradient id="segPink" x1="36" y1="26" x2="48" y2="8" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#F472B6" />
-        <stop offset="1" stopColor="#DB2777" />
+
+      {/* Folded Rim Top Gradient */}
+      <linearGradient id="rainbowFoldGrad" x1="0" y1="10" x2="50" y2="18" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#FF886C" />
+        <stop offset="50%" stopColor="#FCD34D" />
+        <stop offset="100%" stopColor="#C084FC" />
       </linearGradient>
     </defs>
 
-    {/* Silver Tip Top Spike */}
-    <path d="M26 2V8" stroke="#E2E8F0" strokeWidth="3" strokeLinecap="round" />
-    <circle cx="26" cy="3" r="2" fill="#F8FAFC" />
-
-    {/* MULTICOLORED RAINBOW CANOPY PANELS */}
-    {/* Panel 1: Coral Red (Far Left) */}
+    {/* Twisted Rope Handles (Back & Front Arcs) */}
     <path
-      d="M4 26C4 16 13 8 26 8V26C18.5 24 10 26 4 26Z"
-      fill="url(#segRed)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Panel 2: Gold Yellow (Mid Left) */}
-    <path
-      d="M13 24.5C13 16 18 8 26 8V26C21.5 24.5 17 24.5 13 24.5Z"
-      fill="url(#segYellow)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Panel 3: Emerald Green (Center Left) */}
-    <path
-      d="M20 24.5C20 16 23 8 26 8V26C24 24.5 22 24.5 20 24.5Z"
-      fill="url(#segGreen)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Panel 4: Sky Cyan (Center Right) */}
-    <path
-      d="M26 8C29 8 32 16 32 24.5C30 24.5 28 24.5 26 26V8Z"
-      fill="url(#segCyan)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Panel 5: Lavender Purple (Mid Right) */}
-    <path
-      d="M26 8C34 8 39 16 39 24.5C35 24.5 30.5 24.5 26 26V8Z"
-      fill="url(#segPurple)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Panel 6: Magenta Rose (Far Right) */}
-    <path
-      d="M26 8C39 8 48 16 48 26C42 26 33.5 24 26 26V8Z"
-      fill="url(#segPink)"
-      stroke="#ffffff"
-      strokeWidth="0.8"
-      strokeOpacity="0.4"
-    />
-
-    {/* Scalloped Rim Outline */}
-    <path
-      d="M4 26Q8.5 23.5 13 24.5Q16.5 25 20 24.5Q23 24 26 26Q29 24 32 24.5Q35.5 25 39 24.5Q43.5 23.5 48 26"
-      stroke="#FFFFFF"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-
-    {/* Central Shaft & Wooden J-Hook Handle */}
-    <path
-      d="M26 26V44C26 48 22 51 18 51C14 51 11 48 11 44"
-      stroke="#D97706"
+      d="M17 14V8C17 4.68629 19.6863 2 23 2C26.3137 2 29 4.68629 29 8V14"
+      stroke="#F59E0B"
       strokeWidth="3.5"
       strokeLinecap="round"
     />
     <path
-      d="M26 26V44C26 48 22 51 18 51C14 51 11 48 11 44"
-      stroke="#F59E0B"
-      strokeWidth="1.8"
+      d="M19 14V9C19 6.79086 20.7909 5 23 5C25.2091 5 27 6.79086 27 9V14"
+      stroke="#FEF08A"
+      strokeWidth="2"
       strokeLinecap="round"
-      strokeDasharray="10 4"
     />
 
-    {/* Dripping Water Droplets from Canopy Edge */}
-    <circle cx="8" cy="30" r="1.5" fill="#38BDF8" opacity="0.85" />
-    <circle cx="20" cy="28.5" r="1.2" fill="#C084FC" opacity="0.85" />
-    <circle cx="33" cy="28.5" r="1.2" fill="#FDE047" opacity="0.85" />
-    <circle cx="44" cy="30" r="1.5" fill="#34D399" opacity="0.85" />
+    {/* Main Bag Body with Multicolored Rainbow Fill */}
+    <rect x="5" y="14" width="36" height="34" rx="6" fill="url(#rainbowBagGrad)" stroke="#ffffff" strokeWidth="1" strokeOpacity="0.4" />
+
+    {/* Folded Top Paper Edge */}
+    <path d="M5 14C5 12.8954 5.89543 12 7 12H39C40.1046 12 41 12.8954 41 14V18H5V14Z" fill="url(#rainbowFoldGrad)" />
+
+    {/* Vertical Multicolored Decorative Accent Stripes */}
+    <rect x="13" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.25" />
+    <rect x="22" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.35" />
+    <rect x="31" y="18" width="3" height="30" fill="#ffffff" fillOpacity="0.25" />
+
+    {/* Happy Cute Face or Nearbuy Badge */}
+    <circle cx="16" cy="27" r="2.5" fill="#ffffff" />
+    <circle cx="30" cy="27" r="2.5" fill="#ffffff" />
+
+    {/* Joyful Smile Curve */}
+    {isHovered ? (
+      <path d="M18 32C18 32 20 37 23 37C26 37 28 32 28 32H18Z" fill="#ffffff" />
+    ) : (
+      <path d="M19 32C19 32 21 34.5 23 34.5C25 34.5 27 32 27 32" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+    )}
+
+    {/* Rosy Cheeks */}
+    <ellipse cx="12" cy="31" rx="2" ry="1.2" fill="#FEF08A" opacity="0.9" />
+    <ellipse cx="34" cy="31" rx="2" ry="1.2" fill="#FEF08A" opacity="0.9" />
 
     {/* Sparkles on Hover */}
     {isHovered && (
       <>
-        <path d="M44 6L45 8L47 9L45 10L44 12L43 10L41 9L43 8L44 6Z" fill="#FDE047" />
-        <path d="M6 10L7 11.5L8.5 12.5L7 13.5L6 15L5 13.5L3.5 12.5L5 11.5L6 10Z" fill="#C084FC" />
+        <path d="M42 6L43 8L45 9L43 10L42 12L41 10L39 9L41 8L42 6Z" fill="#FDE047" />
+        <path d="M6 8L7 9.5L8.5 10.5L7 11.5L6 13L5 11.5L3.5 10.5L5 9.5L6 8Z" fill="#C084FC" />
       </>
     )}
   </svg>
@@ -145,7 +87,7 @@ export const CustomCursor = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    // Enable custom umbrella cursor on desktop screens
+    // Enable custom shopping bag cursor on desktop screens
     if (window.innerWidth < 640) return
 
     const handleMouseMove = (e) => {
@@ -194,19 +136,19 @@ export const CustomCursor = () => {
 
   return (
     <>
-      {/* Multicolored Rainbow Monsoon Umbrella Cursor */}
+      {/* Multicolored Rainbow Glossy Shopping Bag Cursor */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none select-none z-[99999]"
         style={{ pointerEvents: 'none' }}
         animate={{
-          x: mousePosition.x - 24,
+          x: mousePosition.x - 22,
           y: mousePosition.y - 18,
           scale: isClicking ? 0.85 : isHovered ? 1.25 : 1,
-          rotate: isHovered ? -15 : 0,
+          rotate: isHovered ? -12 : 0,
         }}
         transition={{ type: 'spring', stiffness: 550, damping: 28, mass: 0.1 }}
       >
-        <MulticoloredUmbrellaCursor isHovered={isHovered} isClicking={isClicking} />
+        <MulticoloredShoppingBagCursor isHovered={isHovered} isClicking={isClicking} />
       </motion.div>
     </>
   )
