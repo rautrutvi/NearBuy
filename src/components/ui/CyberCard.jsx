@@ -6,7 +6,6 @@ export const CyberCard = ({
   className = '',
   glowColor = 'primary', // 'primary' | 'teal' | 'amber' | 'violet'
   tag = 'SYS.OK',
-  theme = 'light', // 'light' | 'dark'
   onClick,
 }) => {
   const ref = useRef(null)
@@ -40,10 +39,10 @@ export const CyberCard = ({
   }
 
   const tagColors = {
-    primary: 'text-primary-700 border-primary-300 bg-primary-50',
-    teal: 'text-safety-700 border-safety-300 bg-safety-50',
-    amber: 'text-amber-800 border-amber-300 bg-amber-50',
-    violet: 'text-violet-700 border-violet-300 bg-violet-50',
+    primary: 'text-primary-400 border-primary-500/40 bg-primary-950/60',
+    teal: 'text-safety-400 border-safety-500/40 bg-safety-950/60',
+    amber: 'text-amber-400 border-amber-500/40 bg-amber-950/60',
+    violet: 'text-violet-400 border-violet-500/40 bg-violet-950/60',
   }
 
   return (
@@ -63,15 +62,15 @@ export const CyberCard = ({
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={`relative group rounded-3xl p-[2px] transition-all duration-300 ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`relative group rounded-3xl p-[1.5px] transition-all duration-300 ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
       {/* Animated glowing border gradient */}
       <div
         className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${glowGradients[glowColor] || glowGradients.primary} opacity-30 group-hover:opacity-100 blur-sm group-hover:blur-md transition-all duration-300`}
       />
 
-      {/* Card Body */}
-      <div className="relative h-full w-full bg-white/95 backdrop-blur-xl rounded-[22px] border border-slate-200/80 p-6 overflow-hidden shadow-soft group-hover:shadow-2xl flex flex-col justify-between transition-all duration-300">
+      {/* Dark Glass Card Body */}
+      <div className="relative h-full w-full bg-[#0c0c16]/95 backdrop-blur-2xl rounded-[22px] border border-white/10 p-6 overflow-hidden shadow-2xl flex flex-col justify-between transition-all duration-300">
         {/* Top Tag & status indicator */}
         {tag && (
           <div className="flex items-center justify-between gap-2 mb-4">
@@ -79,14 +78,14 @@ export const CyberCard = ({
               [{tag}]
             </span>
             <div className="flex gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-primary-500 transition-colors" />
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-safety-500 transition-colors" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-primary-400 transition-colors" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-safety-400 transition-colors" />
             </div>
           </div>
         )}
 
         {/* Card Content in 3D */}
-        <div style={{ transform: 'translateZ(15px)' }} className="relative z-10 text-slate-800">
+        <div style={{ transform: 'translateZ(15px)' }} className="relative z-10 text-white">
           {children}
         </div>
       </div>

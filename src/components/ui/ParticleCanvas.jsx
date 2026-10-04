@@ -70,7 +70,7 @@ export const ParticleCanvas = () => {
       ctx.clearRect(0, 0, width, height)
 
       // A. Soft, subtle clean grid
-      ctx.strokeStyle = 'rgba(148, 163, 184, 0.08)'
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)'
       ctx.lineWidth = 1
       const gridSize = 80
 

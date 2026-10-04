@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
-import { Input } from '../../components/ui/Input'
 import { StockBadge, FloodBadge } from '../../components/ui/Badge'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { FloodMap } from '../../components/map/FloodMap'
@@ -19,7 +18,8 @@ import { floodService } from '../../api/floodService'
 
 import {
   Search, MapPin, Grid, Map as MapIcon, ShieldAlert, ShoppingBag,
-  Sparkles, Store, Umbrella, Pill, Wrench, ShoppingBasket, X, Plus, Star
+  Sparkles, Store, Umbrella, Pill, Wrench, ShoppingBasket, X, Plus, Star,
+  Terminal, Radio, Zap
 } from 'lucide-react'
 
 export const BuyerDashboard = () => {
@@ -49,7 +49,6 @@ export const BuyerDashboard = () => {
     { id: 'Hardware', label: 'Hardware', icon: Wrench },
   ]
 
-  // Load data on mount
   useEffect(() => {
     loadData()
   }, [selectedCategory, searchQuery])
@@ -86,250 +85,314 @@ export const BuyerDashboard = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-      {/* Access Denied Alert Banner */}
-      {accessAlert && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-rose-50 border border-rose-200 p-4 rounded-2xl flex items-center justify-between text-rose-800 text-xs font-semibold shadow-soft"
-        >
-          <div className="flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-rose-600 shrink-0" />
-            <span>{accessAlert}</span>
-          </div>
-          <button onClick={() => setAccessAlert(null)} className="text-rose-500 hover:text-rose-800">
-            <X className="w-4 h-4" />
-          </button>
-        </motion.div>
-      )}
+    <div className="min-h-screen bg-[#06060a] text-white px-4 py-8 relative overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute top-10 left-1/4 w-[500px] h-[350px] bg-primary-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-96 right-10 w-[450px] h-[400px] bg-teal-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-soft">
-        <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-2xl md:text-3xl font-bold font-display text-slate-900">Nearbuy Local Marketplace</h1>
-            <FloodBadge level="safe" label="Monsoon Safe Route Active" />
-          </div>
-          <p className="text-xs text-slate-500">Find real-time stock at nearby shops with monsoon flood safety guidance.</p>
-        </div>
+      <div className="max-w-6xl mx-auto space-y-8 relative z-10">
 
-        {/* View Switcher: Grid vs Map */}
-        <div className="flex items-center gap-1 bg-surface-100 p-1.5 rounded-2xl self-start md:self-auto border border-slate-200">
-          <button
-            onClick={() => setActiveTab('grid')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              activeTab === 'grid' ? 'bg-white shadow-soft text-primary-600 font-bold' : 'text-slate-600 hover:text-slate-900'
-            }`}
+        {/* Access Alert */}
+        {accessAlert && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-amber-950/70 border border-amber-500/50 p-4 rounded-2xl flex items-center justify-between text-amber-300 text-xs font-mono shadow-[0_0_20px_rgba(245,158,11,0.2)]"
           >
-            <Grid className="w-4 h-4" />
-            Grid View
-          </button>
-          <button
-            onClick={() => setActiveTab('map')}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              activeTab === 'map' ? 'bg-white shadow-soft text-safety-600 font-bold' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <MapIcon className="w-4 h-4" />
-            Monsoon Map
-          </button>
-        </div>
-      </div>
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0" />
+              <span>{accessAlert}</span>
+            </div>
+            <button onClick={() => setAccessAlert(null)} className="text-amber-400 hover:text-white">
+              <X className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
 
-      {/* Search & Category Filter Section */}
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <Input
-              icon={Search}
-              placeholder="Search products, umbrellas, rice, medicines..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-white px-4 py-2.5 rounded-xl border border-slate-200">
-            <MapPin className="w-4 h-4 text-primary-500 shrink-0" />
-            <span>Search Radius: <strong className="text-slate-900">Within 2.0 km</strong></span>
-          </div>
-        </div>
+        {/* Cyber Hero Banner */}
+        <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-primary-500/40 via-amber-500/40 to-teal-500/40 shadow-2xl">
+          <div className="bg-[#0c0c14]/90 backdrop-blur-xl p-6 rounded-[23px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-tight">
+                  Nearbuy Local Marketplace
+                </h1>
+                <FloodBadge level="safe" label="Monsoon Safe Route Active" />
+              </div>
+              <p className="text-xs text-slate-400 font-mono">
+                Real-time stock counts · 30-min pickup reservation · OpenStreetMap flood hazard radar
+              </p>
+            </div>
 
-        {/* Category Pills */}
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat) => {
-            const Icon = cat.icon
-            const isSelected = selectedCategory === cat.id
-            return (
+            {/* View Switcher: Grid vs Map */}
+            <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-2xl border border-white/10 shrink-0">
               <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-                  isSelected
-                    ? 'bg-primary-500 text-white shadow-lift'
-                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                onClick={() => setActiveTab('grid')}
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition-all ${
+                  activeTab === 'grid'
+                    ? 'bg-gradient-to-r from-primary-500 to-amber-500 text-white shadow-[0_0_15px_rgba(224,82,54,0.4)]'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
-                {cat.label}
+                <Grid className="w-4 h-4" />
+                Grid View
               </button>
-            )
-          })}
+              <button
+                onClick={() => setActiveTab('map')}
+                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition-all ${
+                  activeTab === 'map'
+                    ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_0_15px_rgba(13,148,136,0.4)]'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <MapIcon className="w-4 h-4" />
+                Monsoon Map
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Active Reservations Section */}
-      {reservations.length > 0 && (
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold font-display text-slate-900 flex items-center gap-2">
-              <ShoppingBag className="w-5 h-5 text-primary-500" /> Your Pickup Reservations ({reservations.length})
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {reservations.map((res) => (
-              <ReservationCard key={res.id} reservation={res} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Main Content Area: Grid View or Map View */}
-      {activeTab === 'map' ? (
-        <section className="space-y-3">
-          <h2 className="text-lg font-bold font-display text-slate-900 flex items-center gap-2">
-            <MapIcon className="w-5 h-5 text-safety-600" /> Interactive Flood Safety & Shop Map
-          </h2>
-          <FloodMap shops={shops} floodReports={floodReports} />
-        </section>
-      ) : (
-        <section className="space-y-6">
-          {/* Product Inventory Grid */}
-          <div>
-            <h2 className="text-lg font-bold font-display text-slate-900 mb-4">Available Local Products</h2>
-            {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-64 rounded-2xl bg-slate-200 animate-pulse" />
-                ))}
-              </div>
-            ) : products.length === 0 ? (
-              <EmptyState
-                title="No Products Match Your Search"
-                description="Try changing your search term or select 'All Items' from category filters."
-                actionLabel="Reset Search"
-                onAction={() => { setSearchQuery(''); setSelectedCategory('All'); }}
+        {/* Search & Category Filter Section */}
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2 relative">
+              <Search className="w-5 h-5 text-slate-500 absolute left-4 top-3.5" />
+              <input
+                type="text"
+                placeholder="Search products, umbrellas, rice, medicines, torches..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#0d0d16] border border-white/15 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 font-mono transition-all shadow-inner"
               />
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {products.map((product) => (
-                  <Card key={product.id} className="flex flex-col justify-between space-y-4">
-                    <div className="space-y-3">
-                      {/* Product Image & Stock Badge */}
-                      <div className="h-44 w-full rounded-xl bg-slate-100 overflow-hidden relative">
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                        <div className="absolute top-2.5 left-2.5">
-                          <StockBadge count={product.stockCount} />
-                        </div>
-                      </div>
-
-                      <div>
-                        <span className="text-[10px] font-bold text-primary-600 uppercase tracking-wider">{product.category}</span>
-                        <h3 className="font-bold text-base font-display text-slate-900 leading-snug line-clamp-1">{product.name}</h3>
-                        <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
-                          <Store className="w-3.5 h-3.5 text-slate-400" /> {product.shopName}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] text-slate-400 block">Price</span>
-                        <span className="text-xl font-extrabold font-display text-slate-900">₹{product.price}</span>
-                      </div>
-                      <div className="flex gap-1.5">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          icon={Plus}
-                          disabled={product.stockCount <= 0}
-                          onClick={() => addItem(product)}
-                          title="Add to Cart"
-                        >
-                          Cart
-                        </Button>
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          icon={ShoppingBag}
-                          disabled={product.stockCount <= 0}
-                          onClick={() => handleOpenReserveModal(product)}
-                        >
-                          Reserve
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Nearby Shops Section */}
-          <div className="pt-6 border-t border-slate-200">
-            <h2 className="text-lg font-bold font-display text-slate-900 mb-4">Verified Nearby Shops</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {shops.map((shop) => (
-                <Card key={shop.id} className="flex gap-4 items-center">
-                  <img src={shop.image} alt={shop.name} className="w-20 h-20 rounded-xl object-cover shrink-0" />
-                  <div className="space-y-1 flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-1">
-                      <h3 className="font-bold text-sm text-slate-900 font-display truncate">{shop.name}</h3>
-                      <FloodBadge level={shop.floodStatus} />
-                    </div>
-                    <p className="text-xs text-slate-500 truncate">{shop.address}</p>
-                    <div className="flex items-center gap-3 text-xs text-slate-600 pt-1 font-medium">
-                      <span>📍 {shop.distanceKm} km</span>
-                      <span>★ {shop.rating} ({shop.reviewsCount})</span>
-                      <span className={shop.isOpen ? 'text-emerald-600 font-bold' : 'text-rose-500'}>
-                        {shop.isOpen ? 'Open Now' : 'Closed'}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => setSelectedShopForReviews(selectedShopForReviews?.id === shop.id ? null : shop)}
-                      className="text-[11px] font-semibold text-primary-600 hover:text-primary-800 flex items-center gap-1 mt-1"
-                    >
-                      <Star className="w-3 h-3" />
-                      {selectedShopForReviews?.id === shop.id ? 'Hide Reviews' : 'View & Write Reviews'}
-                    </button>
-                  </div>
-                </Card>
-              ))}
+            </div>
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-300 bg-[#0d0d16] px-4 py-3 rounded-2xl border border-white/15">
+              <MapPin className="w-4 h-4 text-primary-400 shrink-0 animate-bounce" />
+              <span>RADIUS: <strong className="text-white">2.0 KM (WALKING RANGE)</strong></span>
             </div>
           </div>
 
-          {/* Reviews Section for selected shop */}
-          {selectedShopForReviews && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="pt-6 border-t border-slate-200 space-y-3"
-            >
-              <h2 className="text-lg font-bold font-display text-slate-900">
-                Reviews — {selectedShopForReviews.name}
-              </h2>
-              <ReviewSection shopId={selectedShopForReviews.id} />
-            </motion.div>
-          )}
-        </section>
-      )}
+          {/* Category Pills */}
+          <div className="flex flex-wrap gap-2.5">
+            {categories.map((cat) => {
+              const Icon = cat.icon
+              const isSelected = selectedCategory === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                    isSelected
+                      ? 'bg-primary-600/30 text-primary-300 border-2 border-primary-500 shadow-[0_0_20px_rgba(224,82,54,0.4)] scale-105'
+                      : 'bg-slate-900/80 text-slate-400 hover:text-white border border-white/10 hover:border-white/25'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {cat.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
 
-      {/* Product Detail & Reservation Modal */}
-      <ProductModal
-        product={selectedProduct}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onReserve={handleCreateReservation}
-      />
+        {/* Active Reservations Section */}
+        {reservations.length > 0 && (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
+                <ShoppingBag className="w-5 h-5 text-primary-400" /> Active Pickup Reservations ({reservations.length})
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {reservations.map((res) => (
+                <div key={res.id} className="rounded-2xl p-[1px] bg-gradient-to-r from-primary-500/50 to-amber-500/50">
+                  <div className="bg-[#0d0d18] p-5 rounded-[15px] border border-white/10 space-y-3">
+                    <ReservationCard reservation={res} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Content Area: Grid View or Map View */}
+        {activeTab === 'map' ? (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
+                <MapIcon className="w-5 h-5 text-teal-400" /> Live Monsoon Hazard &amp; Shop Map
+              </h2>
+              <span className="text-xs font-mono text-slate-400">OpenStreetMap Telemetry</span>
+            </div>
+            <div className="rounded-3xl p-[1.5px] bg-gradient-to-r from-teal-500/40 via-sky-500/40 to-primary-500/40 shadow-2xl overflow-hidden">
+              <div className="bg-[#0b0b14] p-4 rounded-[22px] border border-white/10">
+                <FloodMap
+                  shops={shops}
+                  floodReports={floodReports}
+                  onSelectShop={(shop) => handleOpenReserveModal(products.find(p => p.shopId === shop.id) || products[0])}
+                />
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section className="space-y-8">
+            {/* Products Grid */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
+                  <Package className="w-5 h-5 text-amber-400" /> Live Store Products ({products.length})
+                </h2>
+                <span className="text-xs font-mono text-slate-400">Real-Time Stock Checked</span>
+              </div>
+
+              {isLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="h-64 rounded-2xl bg-white/5 animate-pulse border border-white/10" />
+                  ))}
+                </div>
+              ) : products.length === 0 ? (
+                <EmptyState
+                  icon={Package}
+                  title="No items found"
+                  description="Try adjusting your search query or selecting a different category."
+                  actionLabel="Clear Filters"
+                  onAction={() => { setSelectedCategory('All'); setSearchQuery('') }}
+                />
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {products.map((product) => (
+                    <motion.div
+                      key={product.id}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      transition={{ duration: 0.25 }}
+                      className="rounded-3xl p-[1px] bg-gradient-to-b from-white/15 to-white/5 shadow-xl hover:shadow-[0_0_30px_rgba(224,82,54,0.3)] transition-all duration-300"
+                    >
+                      <div className="bg-[#0d0d16] rounded-[23px] p-5 space-y-4 border border-white/10 flex flex-col justify-between h-full">
+                        {/* Image & Stock Badge */}
+                        <div className="relative h-44 rounded-2xl overflow-hidden bg-slate-900 border border-white/10 group">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                          <div className="absolute top-3 right-3">
+                            <StockBadge count={product.stockCount} />
+                          </div>
+                          <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono text-amber-400">
+                            {product.category}
+                          </div>
+                        </div>
+
+                        {/* Title & Shop Details */}
+                        <div className="space-y-1">
+                          <h3 className="font-bold text-base font-display text-white truncate">
+                            {product.name}
+                          </h3>
+                          <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                            <Store className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                            <span className="truncate">{product.shopName}</span>
+                          </p>
+                        </div>
+
+                        {/* Price & Actions */}
+                        <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                          <div>
+                            <span className="text-[10px] font-mono text-slate-400 block">Price</span>
+                            <span className="text-xl font-extrabold font-display text-white">₹{product.price}</span>
+                          </div>
+
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => addItem(product)}
+                              disabled={product.stockCount <= 0}
+                              className="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/15 border border-white/15 text-white font-mono text-xs font-bold transition-all flex items-center gap-1 hover:scale-105"
+                              title="Add to Cart"
+                            >
+                              <Plus className="w-3.5 h-3.5 text-primary-400" />
+                              Cart
+                            </button>
+
+                            <button
+                              onClick={() => handleOpenReserveModal(product)}
+                              disabled={product.stockCount <= 0}
+                              className="px-4 py-2 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono text-xs font-bold shadow-[0_0_15px_rgba(224,82,54,0.4)] hover:shadow-[0_0_25px_rgba(224,82,54,0.7)] transition-all hover:scale-105"
+                            >
+                              Reserve
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Verified Nearby Shops Section */}
+            <div className="pt-8 border-t border-white/10 space-y-4">
+              <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
+                <Store className="w-5 h-5 text-teal-400" /> Verified Neighborhood Shops
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {shops.map((shop) => (
+                  <div
+                    key={shop.id}
+                    className="rounded-2xl p-4 bg-[#0d0d16] border border-white/10 flex gap-4 items-center shadow-lg hover:border-teal-500/50 transition-all"
+                  >
+                    <img src={shop.image} alt={shop.name} className="w-20 h-20 rounded-xl object-cover shrink-0 border border-white/10" />
+                    <div className="space-y-1.5 flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <h3 className="font-bold text-sm text-white font-display truncate">{shop.name}</h3>
+                        <FloodBadge level={shop.floodStatus} />
+                      </div>
+                      <p className="text-xs text-slate-400 truncate">{shop.address}</p>
+                      <div className="flex items-center gap-3 text-xs font-mono text-slate-300">
+                        <span>📍 {shop.distanceKm} km</span>
+                        <span className="text-amber-400 font-bold">★ {shop.rating} ({shop.reviewsCount})</span>
+                        <span className={shop.isOpen ? 'text-emerald-400 font-bold' : 'text-rose-400'}>
+                          {shop.isOpen ? '● Open Now' : '○ Closed'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setSelectedShopForReviews(selectedShopForReviews?.id === shop.id ? null : shop)}
+                        className="text-xs font-mono font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 pt-1"
+                      >
+                        <Star className="w-3.5 h-3.5" />
+                        {selectedShopForReviews?.id === shop.id ? 'Hide Reviews' : 'View & Write Reviews'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Expandable Reviews Section */}
+            {selectedShopForReviews && (
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="pt-6 border-t border-white/10 space-y-4"
+              >
+                <h3 className="text-lg font-bold font-display text-white">
+                  Customer Reviews — {selectedShopForReviews.name}
+                </h3>
+                <div className="bg-[#0d0d18] p-6 rounded-3xl border border-white/10">
+                  <ReviewSection shopId={selectedShopForReviews.id} />
+                </div>
+              </motion.div>
+            )}
+          </section>
+        )}
+
+        {/* Product Modal */}
+        <ProductModal
+          isOpen={isModalOpen}
+          product={selectedProduct}
+          onClose={() => setIsModalOpen(false)}
+          onReserve={handleCreateReservation}
+        />
+      </div>
     </div>
   )
 }

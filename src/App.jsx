@@ -38,34 +38,34 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <div className="min-h-screen flex flex-col bg-[#050508] text-white">
       <CustomCursor />
 
-      {/* Top Global Navigation Bar - Always visible & accessible */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-soft">
+      {/* Top Global Navigation Bar */}
+      <header className="sticky top-0 z-50 bg-[#0b0b14]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary-500 to-amber-500 text-white flex items-center justify-center shadow-lift group-hover:scale-105 transition-transform duration-300">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary-500 to-amber-500 text-white flex items-center justify-center shadow-[0_0_20px_rgba(224,82,54,0.4)] group-hover:scale-105 transition-transform duration-300">
               <Store className="w-5 h-5" />
             </div>
             <div>
-              <span className="font-extrabold text-xl font-display tracking-tight text-slate-900 group-hover:text-primary-600 transition-colors">
+              <span className="font-extrabold text-xl font-display tracking-tight text-white group-hover:text-primary-400 transition-colors">
                 Nearbuy
               </span>
-              <span className="text-[10px] block font-semibold text-safety-600 -mt-1 tracking-wider uppercase">
-                Hyperlocal &amp; Safety
+              <span className="text-[10px] block font-mono font-bold text-amber-400 -mt-1 tracking-wider uppercase">
+                HYPERLOCAL &amp; RADAR
               </span>
             </div>
           </Link>
 
-          {/* Navigation Links - Always Accessible */}
-          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-2xl text-xs font-semibold text-slate-600 border border-slate-200/60">
+          {/* Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-2xl text-xs font-mono font-bold text-slate-300 border border-white/10">
             <Link
               to="/"
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/' ? 'bg-white shadow-soft text-primary-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <Home className="w-3.5 h-3.5" />
@@ -76,7 +76,7 @@ export default function App() {
               to="/buyer"
               onClick={() => handleQuickRole('buyer')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/buyer' ? 'bg-white shadow-soft text-primary-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/buyer' ? 'bg-primary-600/30 text-primary-300 border border-primary-500/40 shadow-[0_0_15px_rgba(224,82,54,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
@@ -87,7 +87,7 @@ export default function App() {
               to="/vendor"
               onClick={() => handleQuickRole('vendor')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/vendor' ? 'bg-white shadow-soft text-safety-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/vendor' ? 'bg-teal-600/30 text-teal-300 border border-teal-500/40 shadow-[0_0_15px_rgba(13,148,136,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <Store className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export default function App() {
               to="/admin"
               onClick={() => handleQuickRole('admin')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/admin' ? 'bg-white shadow-soft text-violet-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/admin' ? 'bg-violet-600/30 text-violet-300 border border-violet-500/40 shadow-[0_0_15px_rgba(139,92,246,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <ShieldCheck className="w-3.5 h-3.5" />
@@ -109,7 +109,7 @@ export default function App() {
               to="/buyer/profile"
               onClick={() => handleQuickRole('buyer')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/buyer/profile' ? 'bg-white shadow-soft text-primary-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/buyer/profile' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <User className="w-3.5 h-3.5" />
@@ -120,7 +120,7 @@ export default function App() {
               to="/vendor/scan"
               onClick={() => handleQuickRole('vendor')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/vendor/scan' ? 'bg-white shadow-soft text-safety-600 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/vendor/scan' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <QrCode className="w-3.5 h-3.5" />
@@ -130,7 +130,7 @@ export default function App() {
             <Link
               to="/style-preview"
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
-                location.pathname === '/style-preview' ? 'bg-white shadow-soft text-slate-900 font-bold' : 'hover:text-slate-900'
+                location.pathname === '/style-preview' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
             >
               <Palette className="w-3.5 h-3.5" />
@@ -143,12 +143,12 @@ export default function App() {
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-100 transition-colors shadow-soft"
+              className="relative p-2.5 rounded-xl bg-white/5 hover:bg-white/15 text-primary-400 border border-white/10 transition-colors shadow-soft"
               title="View Cart"
             >
               <ShoppingCart className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-primary-500 to-amber-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow-md animate-pulse">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-primary-500 to-amber-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow-md animate-pulse font-mono">
                   {cartCount}
                 </span>
               )}
@@ -157,15 +157,15 @@ export default function App() {
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-slate-800 leading-tight">{user?.name || 'Active User'}</p>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase bg-primary-100 text-primary-700">
+                  <p className="text-xs font-bold text-white font-mono leading-tight">{user?.name || 'Active User'}</p>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase bg-primary-950 text-primary-400 border border-primary-500/30">
                     {role}
                   </span>
                 </div>
                 <button
                   onClick={handleLogout}
                   title="Logout"
-                  className="p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                  className="p-2.5 rounded-xl bg-white/5 text-slate-400 hover:bg-rose-950/60 hover:text-rose-300 border border-white/10 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -174,7 +174,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-primary-500 text-white hover:bg-primary-600 shadow-lift transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold px-4 py-2 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white hover:scale-105 shadow-[0_0_15px_rgba(224,82,54,0.4)] transition-all"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   Sign In
@@ -198,7 +198,6 @@ export default function App() {
       {/* Main Content Router */}
       <main className="flex-1">
         <Routes>
-          {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/style-preview" element={<StylePreviewPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -218,19 +217,19 @@ export default function App() {
       </main>
 
       {/* Global Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
-          <div className="flex items-center gap-2 font-display font-bold text-slate-800">
+      <footer className="border-t border-white/10 bg-[#08080f] py-6 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-400 gap-3">
+          <div className="flex items-center gap-2 font-bold text-white">
             <div className="w-6 h-6 rounded-lg bg-primary-500 text-white flex items-center justify-center text-xs">
               N
             </div>
             Nearbuy 2026 · Hyperlocal Inventory &amp; Monsoon Radar Platform
           </div>
-          <div className="flex items-center gap-4 font-medium text-slate-500">
-            <Link to="/buyer" onClick={() => handleQuickRole('buyer')} className="hover:text-primary-600">Buyer Shop</Link>
-            <Link to="/vendor" onClick={() => handleQuickRole('vendor')} className="hover:text-safety-600">Vendor Portal</Link>
-            <Link to="/admin" onClick={() => handleQuickRole('admin')} className="hover:text-violet-600">Admin</Link>
-            <Link to="/style-preview" className="hover:text-slate-800">Design System</Link>
+          <div className="flex items-center gap-4 text-slate-400">
+            <Link to="/buyer" onClick={() => handleQuickRole('buyer')} className="hover:text-primary-400">Buyer Shop</Link>
+            <Link to="/vendor" onClick={() => handleQuickRole('vendor')} className="hover:text-teal-400">Vendor Portal</Link>
+            <Link to="/admin" onClick={() => handleQuickRole('admin')} className="hover:text-violet-400">Admin</Link>
+            <Link to="/style-preview" className="hover:text-white">Design System</Link>
           </div>
         </div>
       </footer>

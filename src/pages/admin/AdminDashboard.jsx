@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Card } from '../../components/ui/Card'
-import { Button } from '../../components/ui/Button'
 import { FloodBadge } from '../../components/ui/Badge'
 import {
   ShieldCheck, AlertTriangle, Building2, Activity, Users,
-  CheckCircle2, XCircle, Eye, MapPin, Clock, X, AlertCircle,
-  TrendingUp, Package, Star, ShieldAlert
+  CheckCircle2, XCircle, MapPin, Clock, X, AlertCircle,
+  TrendingUp, Package, Star, ShieldAlert, Terminal, Radio, Cpu
 } from 'lucide-react'
 
 const PENDING_SHOPS = [
@@ -55,10 +53,10 @@ const PENDING_FLOOD_REPORTS = [
 ]
 
 const PLATFORM_STATS = [
-  { label: 'Total Verified Shops', value: '48', icon: Building2, color: 'bg-slate-100 text-slate-700', trend: '+3 this week' },
-  { label: 'Active Users Today', value: '1,284', icon: Users, color: 'bg-primary-50 text-primary-700', trend: '+12% vs yesterday' },
-  { label: 'Reservations Today', value: '237', icon: Package, color: 'bg-safety-50 text-safety-700', trend: '+8% vs yesterday' },
-  { label: 'Avg Shop Rating', value: '4.7★', icon: Star, color: 'bg-amber-50 text-amber-700', trend: 'Stable' },
+  { label: 'Total Verified Shops', value: '48', icon: Building2, color: 'text-teal-400', border: 'border-teal-500/30', trend: '+3 this week' },
+  { label: 'Active Users Today', value: '1,284', icon: Users, color: 'text-amber-400', border: 'border-amber-500/30', trend: '+12% vs yesterday' },
+  { label: 'Reservations Today', value: '237', icon: Package, color: 'text-primary-400', border: 'border-primary-500/30', trend: '+8% vs yesterday' },
+  { label: 'Avg Shop Rating', value: '4.7★', icon: Star, color: 'text-violet-400', border: 'border-violet-500/30', trend: 'Stable 99.4%' },
 ]
 
 export const AdminDashboard = () => {
@@ -92,265 +90,260 @@ export const AdminDashboard = () => {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
-      {/* Access Denied Alert Banner */}
-      {accessAlert && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-rose-50 border border-rose-200 p-4 rounded-2xl flex items-center justify-between text-rose-800 text-xs font-semibold"
-        >
-          <div className="flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
-            <span>{accessAlert}</span>
-          </div>
-          <button onClick={() => setAccessAlert(null)}>
-            <X className="w-4 h-4" />
-          </button>
-        </motion.div>
-      )}
+    <div className="min-h-screen bg-[#06060a] text-white px-4 py-8 relative overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute top-10 left-1/3 w-[500px] h-[350px] bg-violet-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[450px] h-[350px] bg-amber-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 to-slate-700 p-6 rounded-3xl text-white">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-2xl md:text-3xl font-bold font-display">Admin Control Center</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/20 backdrop-blur text-white border border-white/20">Super Admin</span>
-          </div>
-          <p className="text-xs text-slate-300">Verify shops, validate flood reports, and monitor platform health.</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-          </div>
-          <span className="text-xs font-semibold text-emerald-400">Platform Live</span>
-        </div>
-      </div>
+      <div className="max-w-6xl mx-auto space-y-8 relative z-10">
 
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {PLATFORM_STATS.map((stat) => {
-          const Icon = stat.icon
-          return (
-            <Card key={stat.label} hoverEffect={false} className="space-y-2">
-              <div className={`w-9 h-9 rounded-xl ${stat.color} flex items-center justify-center`}>
-                <Icon className="w-4 h-4" />
-              </div>
-              <p className="text-2xl font-extrabold font-display text-slate-900">{stat.value}</p>
-              <p className="text-[11px] font-medium text-slate-500">{stat.label}</p>
-              <p className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
-                <TrendingUp className="w-3 h-3" />{stat.trend}
-              </p>
-            </Card>
-          )
-        })}
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex gap-1 bg-surface-100 p-1.5 rounded-2xl border border-slate-200 w-full md:w-fit">
-        {tabs.map((tab) => {
-          const Icon = tab.icon
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                activeTab === tab.id
-                  ? 'bg-white shadow-soft text-slate-900 font-bold'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {tab.label}
-              {tab.badge > 0 && (
-                <span className="bg-primary-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none">
-                  {tab.badge}
-                </span>
-              )}
+        {/* Alert Banner */}
+        {accessAlert && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-amber-950/70 border border-amber-500/50 p-4 rounded-2xl flex items-center justify-between text-amber-300 text-xs font-mono"
+          >
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-amber-400 shrink-0" />
+              <span>{accessAlert}</span>
+            </div>
+            <button onClick={() => setAccessAlert(null)} className="text-amber-400 hover:text-white">
+              <X className="w-4 h-4" />
             </button>
-          )
-        })}
-      </div>
+          </motion.div>
+        )}
 
-      {/* TAB: Shop Verification */}
-      {activeTab === 'shops' && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold font-display text-slate-900">
-            Pending Shop Verifications ({pendingShops.length})
-          </h2>
+        {/* Header Banner */}
+        <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-violet-500/40 via-amber-500/40 to-teal-500/40 shadow-2xl">
+          <div className="bg-[#0c0c14]/90 backdrop-blur-xl p-6 rounded-[23px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping" />
+                <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-tight">
+                  Admin Mission Control
+                </h1>
+                <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-violet-950/80 text-violet-300 border border-violet-500/40">
+                  SUPER ADMIN LEVEL
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 font-mono">
+                Verify merchant registrations · Validate community flood telemetry · Supervise network health
+              </p>
+            </div>
 
-          {pendingShops.length === 0 ? (
-            <Card hoverEffect={false} className="p-10 text-center bg-emerald-50 border border-emerald-200">
-              <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
-              <h3 className="font-bold text-emerald-800 font-display">All Shops Reviewed!</h3>
-              <p className="text-xs text-emerald-700 mt-1">No pending shop applications to verify.</p>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {pendingShops.map((shop) => (
-                <Card key={shop.id} hoverEffect={false} className="space-y-4">
-                  <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-2 bg-slate-900/90 px-4 py-2 rounded-2xl border border-white/10">
+              <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <span className="text-xs font-mono text-emerald-400 font-bold">RADAR TELEMETRY LIVE</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {PLATFORM_STATS.map((stat) => {
+            const Icon = stat.icon
+            return (
+              <div key={stat.label} className={`p-5 rounded-2xl bg-[#0d0d16] border ${stat.border} shadow-lg space-y-2`}>
+                <div className="flex items-center justify-between">
+                  <Icon className={`w-5 h-5 ${stat.color}`} />
+                  <span className="text-[10px] font-mono text-emerald-400">{stat.trend}</span>
+                </div>
+                <p className="text-3xl font-extrabold font-display text-white">{stat.value}</p>
+                <p className="text-xs font-mono text-slate-400">{stat.label}</p>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-white/10 w-fit">
+          {tabs.map((tab) => {
+            const Icon = tab.icon
+            const isActive = activeTab === tab.id
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold flex items-center gap-2 transition-all ${
+                  isActive
+                    ? 'bg-gradient-to-r from-violet-500 to-purple-600 text-white shadow-[0_0_15px_rgba(139,92,246,0.4)]'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {tab.label}
+                {tab.badge > 0 && (
+                  <span className="bg-primary-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-none">
+                    {tab.badge}
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* TAB 1: Pending Shop Verification */}
+        {activeTab === 'shops' && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold font-display text-white">
+              Pending Merchant Applications ({pendingShops.length})
+            </h2>
+
+            {pendingShops.length === 0 ? (
+              <div className="p-12 text-center bg-[#0d0d16] rounded-3xl border border-emerald-500/30">
+                <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
+                <h3 className="font-bold text-lg font-display text-white">All Applications Reviewed</h3>
+                <p className="text-xs font-mono text-slate-400 mt-1">No pending shops awaiting verification.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {pendingShops.map((shop) => (
+                  <div key={shop.id} className="p-6 rounded-2xl bg-[#0d0d16] border border-white/10 space-y-4 shadow-xl">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-bold text-base font-display text-white">{shop.name}</h3>
+                          <FloodBadge level={shop.floodZone} label={`Zone: ${shop.floodZone}`} />
+                        </div>
+                        <p className="text-xs font-mono text-slate-300">Owner: {shop.owner} ({shop.phone})</p>
+                      </div>
+                      <span className="text-[10px] font-mono text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-lg border border-amber-500/30 shrink-0">
+                        {shop.submittedAt}
+                      </span>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono text-slate-300 space-y-1">
+                      <p className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-primary-400" /> {shop.address}
+                      </p>
+                      <p className="flex items-center gap-1.5">
+                        <Building2 className="w-3.5 h-3.5 text-teal-400" /> Category: {shop.category}
+                      </p>
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        disabled={processingId === shop.id}
+                        onClick={() => handleShopVerify(shop.id, false)}
+                        className="flex-1 py-2.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 font-mono text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <XCircle className="w-4 h-4" /> Reject
+                      </button>
+                      <button
+                        disabled={processingId === shop.id}
+                        onClick={() => handleShopVerify(shop.id, true)}
+                        className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-mono text-xs font-bold shadow-[0_0_15px_rgba(13,148,136,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <CheckCircle2 className="w-4 h-4" /> Approve Shop
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* TAB 2: Flood Telemetry Verification */}
+        {activeTab === 'floods' && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold font-display text-white">
+              Community Flood Telemetry Queue
+            </h2>
+            <div className="space-y-4">
+              {floodReports.map((report) => (
+                <div key={report.id} className="p-6 rounded-2xl bg-[#0d0d16] border border-white/10 space-y-4 shadow-xl">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-base font-display text-slate-900 leading-tight">{shop.name}</h3>
-                        <FloodBadge level={shop.floodZone} label={`Zone: ${shop.floodZone}`} />
+                        <ShieldAlert className={`w-5 h-5 ${report.severity === 'alert' ? 'text-rose-500' : 'text-amber-500'}`} />
+                        <h3 className="font-bold text-base font-display text-white">{report.areaName}</h3>
                       </div>
-                      <p className="text-xs font-semibold text-slate-600">Owner: {shop.owner}</p>
+                      <p className="text-xs font-mono text-slate-400">Reported by: <strong className="text-slate-200">{report.reportedBy}</strong></p>
+                      <p className="text-xs font-mono text-slate-400 mt-0.5">Water Depth: <strong className="text-amber-400">{report.waterDepthCm} cm</strong> · {report.reportedAt}</p>
                     </div>
-                    <span className="text-[10px] font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-1 rounded-lg shrink-0 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {shop.submittedAt}
-                    </span>
+                    <FloodBadge level={report.severity} />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 bg-surface-50 p-3 rounded-xl border border-slate-100">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                      <span className="truncate">{shop.address}</span>
+                  {report.verifiedByAdmin ? (
+                    <div className="bg-emerald-950/70 border border-emerald-500/40 p-3 rounded-xl text-xs font-mono text-emerald-300 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      {report.approved ? 'Telemetry verified and published to safety radar map.' : 'Dismissed as false report.'}
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{shop.category}</span>
+                  ) : (
+                    <div className="flex gap-2">
+                      <button
+                        disabled={processingId === report.id}
+                        onClick={() => handleFloodVerify(report.id, false)}
+                        className="flex-1 py-2.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 font-mono text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <XCircle className="w-4 h-4" /> Dismiss
+                      </button>
+                      <button
+                        disabled={processingId === report.id}
+                        onClick={() => handleFloodVerify(report.id, true)}
+                        className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono text-xs font-bold shadow-[0_0_15px_rgba(224,82,54,0.4)] hover:scale-105 transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <ShieldCheck className="w-4 h-4" /> Verify &amp; Publish to Radar
+                      </button>
                     </div>
-                  </div>
-
-                  <div className="flex gap-2 pt-1">
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      icon={XCircle}
-                      className="flex-1"
-                      isLoading={processingId === shop.id}
-                      onClick={() => handleShopVerify(shop.id, false)}
-                    >
-                      Reject
-                    </Button>
-                    <Button
-                      variant="safety"
-                      size="sm"
-                      icon={CheckCircle2}
-                      className="flex-1"
-                      isLoading={processingId === shop.id}
-                      onClick={() => handleShopVerify(shop.id, true)}
-                    >
-                      Approve Shop
-                    </Button>
-                  </div>
-                </Card>
+                  )}
+                </div>
               ))}
             </div>
-          )}
-        </section>
-      )}
+          </section>
+        )}
 
-      {/* TAB: Flood Reports */}
-      {activeTab === 'floods' && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold font-display text-slate-900">Community Flood Reports</h2>
-          <div className="space-y-4">
-            {floodReports.map((report) => (
-              <Card key={report.id} hoverEffect={false} className="space-y-4">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <ShieldAlert className={`w-5 h-5 ${report.severity === 'alert' ? 'text-rose-600' : 'text-amber-600'}`} />
-                      <h3 className="font-bold text-base font-display text-slate-900">{report.areaName}</h3>
+        {/* TAB 3: Analytics */}
+        {activeTab === 'stats' && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-bold font-display text-white">Platform Telemetry Overview</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 rounded-2xl bg-[#0d0d16] border border-white/10 space-y-4">
+                <h3 className="font-bold text-sm font-mono text-slate-300">Shop Category Distribution</h3>
+                {[
+                  { label: 'Grocery / Kirana Stores', count: 22, pct: 46 },
+                  { label: 'Pharmacy & Medical Supplies', count: 12, pct: 25 },
+                  { label: 'Hardware, Tools & Torches', count: 8, pct: 17 },
+                  { label: 'Electronics & Radios', count: 6, pct: 12 },
+                ].map((item) => (
+                  <div key={item.label} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                      <span>{item.label}</span>
+                      <span className="text-white font-bold">{item.count} shops ({item.pct}%)</span>
                     </div>
-                    <p className="text-xs text-slate-500">Reported by: <strong className="text-slate-700">{report.reportedBy}</strong></p>
-                    <p className="text-xs text-slate-500 mt-0.5">Water Depth: <strong className="text-slate-800">{report.waterDepthCm} cm</strong> · {report.reportedAt}</p>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        style={{ width: `${item.pct}%` }}
+                        className="h-full bg-gradient-to-r from-primary-500 via-amber-500 to-teal-500 rounded-full"
+                      />
+                    </div>
                   </div>
-                  <FloodBadge level={report.severity} />
-                </div>
-
-                {report.verifiedByAdmin ? (
-                  <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs font-semibold text-emerald-800 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    {report.approved ? 'Report verified and published to safety map.' : 'Report dismissed as inaccurate.'}
-                  </div>
-                ) : (
-                  <div className="flex gap-2">
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      icon={XCircle}
-                      className="flex-1"
-                      isLoading={processingId === report.id}
-                      onClick={() => handleFloodVerify(report.id, false)}
-                    >
-                      Dismiss Report
-                    </Button>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      icon={ShieldAlert}
-                      className="flex-1"
-                      isLoading={processingId === report.id}
-                      onClick={() => handleFloodVerify(report.id, true)}
-                    >
-                      Verify & Publish
-                    </Button>
-                  </div>
-                )}
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* TAB: Platform Stats */}
-      {activeTab === 'stats' && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold font-display text-slate-900">Platform Analytics Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card hoverEffect={false} className="space-y-4">
-              <h3 className="font-bold text-sm font-display text-slate-900">Shop Category Breakdown</h3>
-              {[
-                { label: 'Grocery / Kirana', count: 22, pct: 46 },
-                { label: 'Pharmacy & Medical', count: 12, pct: 25 },
-                { label: 'Hardware & Tools', count: 8, pct: 17 },
-                { label: 'Electronics', count: 6, pct: 12 },
-              ].map((item) => (
-                <div key={item.label} className="space-y-1">
-                  <div className="flex items-center justify-between text-xs font-medium text-slate-700">
-                    <span>{item.label}</span>
-                    <span className="font-bold">{item.count} shops ({item.pct}%)</span>
-                  </div>
-                  <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.pct}%` }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                      className="h-full bg-gradient-to-r from-primary-500 to-safety-500 rounded-full"
-                    />
-                  </div>
-                </div>
-              ))}
-            </Card>
-
-            <Card hoverEffect={false} className="space-y-4">
-              <h3 className="font-bold text-sm font-display text-slate-900">Flood Safety Zone Status</h3>
-              {[
-                { label: 'Safe Zones', value: '36 shops', color: 'bg-emerald-500', level: 'safe' },
-                { label: 'Waterlogging Watch', value: '9 shops', color: 'bg-amber-500', level: 'watch' },
-                { label: 'Severe Alert Zones', value: '3 shops', color: 'bg-rose-500', level: 'alert' },
-              ].map((zone) => (
-                <div key={zone.label} className="flex items-center justify-between p-3 rounded-xl bg-surface-50 border border-slate-100">
-                  <div className="flex items-center gap-2.5">
-                    <span className={`w-3 h-3 rounded-full ${zone.color}`} />
-                    <span className="text-xs font-semibold text-slate-700">{zone.label}</span>
-                  </div>
-                  <span className="text-xs font-bold text-slate-900">{zone.value}</span>
-                </div>
-              ))}
-
-              <div className="bg-safety-50 border border-safety-200 p-3 rounded-xl text-xs text-safety-900 font-medium">
-                <ShieldCheck className="w-4 h-4 inline mr-1.5 text-safety-600" />
-                Platform Flood Safety Score: <strong>99.4%</strong> accuracy verified.
+                ))}
               </div>
-            </Card>
-          </div>
-        </section>
-      )}
+
+              <div className="p-6 rounded-2xl bg-[#0d0d16] border border-white/10 space-y-4">
+                <h3 className="font-bold text-sm font-mono text-slate-300">Monsoon Flood Hazard Status</h3>
+                {[
+                  { label: 'Safe Dry Zones', value: '36 shops', color: 'bg-emerald-400' },
+                  { label: 'Waterlogging Watch Zones', value: '9 shops', color: 'bg-amber-400' },
+                  { label: 'Severe Alert Underpasses', value: '3 shops', color: 'bg-rose-500' },
+                ].map((zone) => (
+                  <div key={zone.label} className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-white/10">
+                    <div className="flex items-center gap-2.5">
+                      <span className={`w-3 h-3 rounded-full ${zone.color}`} />
+                      <span className="text-xs font-mono text-slate-300">{zone.label}</span>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-white">{zone.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+      </div>
     </div>
   )
 }
