@@ -6,6 +6,7 @@ export const CyberCard = ({
   className = '',
   glowColor = 'primary', // 'primary' | 'teal' | 'amber' | 'violet'
   tag = 'SYS.OK',
+  theme = 'light', // 'light' | 'dark'
   onClick,
 }) => {
   const ref = useRef(null)
@@ -14,8 +15,8 @@ export const CyberCard = ({
   const mouseY = useMotionValue(0)
 
   const springConfig = { damping: 20, stiffness: 180 }
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), springConfig)
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), springConfig)
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig)
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig)
 
   const handleMouseMove = (e) => {
     if (!ref.current) return
@@ -32,17 +33,17 @@ export const CyberCard = ({
   }
 
   const glowGradients = {
-    primary: 'from-primary-500 via-amber-500 to-primary-600',
+    primary: 'from-primary-500 via-amber-400 to-primary-600',
     teal: 'from-safety-400 via-emerald-400 to-teal-600',
-    amber: 'from-amber-400 via-orange-500 to-red-500',
+    amber: 'from-amber-400 via-orange-400 to-red-500',
     violet: 'from-violet-500 via-purple-400 to-indigo-600',
   }
 
   const tagColors = {
-    primary: 'text-primary-400 border-primary-500/30 bg-primary-950/50',
-    teal: 'text-safety-400 border-safety-500/30 bg-safety-950/50',
-    amber: 'text-amber-400 border-amber-500/30 bg-amber-950/50',
-    violet: 'text-violet-400 border-violet-500/30 bg-violet-950/50',
+    primary: 'text-primary-700 border-primary-300 bg-primary-50',
+    teal: 'text-safety-700 border-safety-300 bg-safety-50',
+    amber: 'text-amber-800 border-amber-300 bg-amber-50',
+    violet: 'text-violet-700 border-violet-300 bg-violet-50',
   }
 
   return (
@@ -57,41 +58,35 @@ export const CyberCard = ({
         transformStyle: 'preserve-3d',
         perspective: 1000,
       }}
-      whileHover={{ scale: 1.02, y: -5 }}
+      whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={`relative group rounded-3xl p-[1.5px] transition-all duration-500 ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`relative group rounded-3xl p-[2px] transition-all duration-300 ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
       {/* Animated glowing border gradient */}
       <div
-        className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${glowGradients[glowColor] || glowGradients.primary} opacity-30 group-hover:opacity-100 blur-sm group-hover:blur-md transition-all duration-500 animate-pulse-subtle`}
+        className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${glowGradients[glowColor] || glowGradients.primary} opacity-30 group-hover:opacity-100 blur-sm group-hover:blur-md transition-all duration-300`}
       />
 
-      {/* Outer border mask */}
-      <div className={`relative h-full w-full bg-slate-950/90 backdrop-blur-xl rounded-3xl border border-white/10 p-6 overflow-hidden shadow-2xl flex flex-col justify-between`}>
-        {/* Top-right cyber HUD tag */}
+      {/* Card Body */}
+      <div className="relative h-full w-full bg-white/95 backdrop-blur-xl rounded-[22px] border border-slate-200/80 p-6 overflow-hidden shadow-soft group-hover:shadow-2xl flex flex-col justify-between transition-all duration-300">
+        {/* Top Tag & status indicator */}
         {tag && (
           <div className="flex items-center justify-between gap-2 mb-4">
             <span className={`text-[10px] font-mono font-bold tracking-widest px-2.5 py-0.5 rounded-full border ${tagColors[glowColor] || tagColors.primary}`}>
               [{tag}]
             </span>
             <div className="flex gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-primary-400 transition-colors" />
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-safety-400 transition-colors" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-primary-500 transition-colors" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-safety-500 transition-colors" />
             </div>
           </div>
         )}
 
-        {/* Futuristic corner accents */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary-500/50 rounded-tl-xl group-hover:border-primary-400 transition-colors" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-safety-500/50 rounded-tr-xl group-hover:border-safety-400 transition-colors" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-safety-500/50 rounded-bl-xl group-hover:border-safety-400 transition-colors" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary-500/50 rounded-br-xl group-hover:border-primary-400 transition-colors" />
-
-        {/* Content elevated in 3D */}
-        <div style={{ transform: 'translateZ(20px)' }} className="relative z-10">
+        {/* Card Content in 3D */}
+        <div style={{ transform: 'translateZ(15px)' }} className="relative z-10 text-slate-800">
           {children}
         </div>
       </div>
