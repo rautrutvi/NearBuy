@@ -54,19 +54,19 @@ export const Shopping3DBackground = () => {
         }}
       />
 
-      {/* 4. REAL FLOATING 3D SHOPPING OBJECTS (Photorealistic Renders) */}
+      {/* 4. REAL FLOATING 3D SHOPPING OBJECTS (100% True Transparent PNGs - No Background Box) */}
       
       {/* ITEM 1: Photorealistic Glossy Coral Shopping Bag (Top-Left) */}
       <motion.div
         style={{ x: springXFast, y: springYFast }}
         animate={{ y: [-15, 15, -15], rotate: [-5, 5, -5] }}
         transition={{ repeat: Infinity, duration: 6.5, ease: 'easeInOut' }}
-        className="absolute top-20 left-[2%] lg:left-[4%] w-36 h-36 md:w-48 md:h-48 z-10"
+        className="absolute top-20 left-[2%] lg:left-[4%] w-36 h-36 md:w-48 md:h-48 z-10 pointer-events-none"
       >
         <img
-          src="/images/item_bag.jpg"
+          src="/images/item_bag.png"
           alt="3D Shopping Bag"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_20px_35px_rgba(224,82,54,0.4)] opacity-90 hover:opacity-100"
+          className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)] hover:scale-105 transition-transform"
         />
       </motion.div>
 
@@ -75,12 +75,12 @@ export const Shopping3DBackground = () => {
         style={{ x: springXSlow, y: springYSlow }}
         animate={{ y: [16, -16, 16], rotate: [6, -4, 6] }}
         transition={{ repeat: Infinity, duration: 7.2, ease: 'easeInOut', delay: 0.5 }}
-        className="absolute top-24 right-[2%] lg:right-[5%] w-36 h-36 md:w-44 md:h-44 z-10"
+        className="absolute top-24 right-[2%] lg:right-[5%] w-36 h-36 md:w-44 md:h-44 z-10 pointer-events-none"
       >
         <img
-          src="/images/item_gift.jpg"
+          src="/images/item_gift.png"
           alt="3D Gift Box"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_20px_35px_rgba(245,158,11,0.4)] opacity-85"
+          className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]"
         />
       </motion.div>
 
@@ -89,12 +89,12 @@ export const Shopping3DBackground = () => {
         style={{ x: springXSlow, y: springYSlow }}
         animate={{ y: [-18, 18, -18], rotate: [-4, 6, -4] }}
         transition={{ repeat: Infinity, duration: 8.5, ease: 'easeInOut', delay: 1 }}
-        className="absolute top-[45%] -left-4 lg:left-[2%] w-44 h-44 md:w-56 md:h-56 z-10"
+        className="absolute top-[45%] -left-4 lg:left-[2%] w-44 h-44 md:w-56 md:h-56 z-10 pointer-events-none"
       >
         <img
-          src="/images/item_cart.jpg"
+          src="/images/item_cart.png"
           alt="3D Shopping Cart"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_25px_40px_rgba(13,148,136,0.35)] opacity-85"
+          className="w-full h-full object-contain filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.9)]"
         />
       </motion.div>
 
@@ -103,12 +103,12 @@ export const Shopping3DBackground = () => {
         style={{ x: springXFast, y: springYFast }}
         animate={{ y: [14, -14, 14], rotate: [8, -8, 8] }}
         transition={{ repeat: Infinity, duration: 7.8, ease: 'easeInOut', delay: 1.5 }}
-        className="absolute top-[42%] right-[1%] lg:right-[4%] w-40 h-40 md:w-52 md:h-52 z-10"
+        className="absolute top-[42%] right-[1%] lg:right-[4%] w-40 h-40 md:w-52 md:h-52 z-10 pointer-events-none"
       >
         <img
-          src="/images/item_umbrella.jpg"
+          src="/images/item_umbrella.png"
           alt="3D Monsoon Umbrella"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_20px_35px_rgba(224,82,54,0.4)] opacity-85"
+          className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]"
         />
       </motion.div>
 
@@ -117,12 +117,12 @@ export const Shopping3DBackground = () => {
         style={{ x: springXFast, y: springYFast }}
         animate={{ y: [-12, 12, -12], rotate: [-8, 6, -8] }}
         transition={{ repeat: Infinity, duration: 6.8, ease: 'easeInOut', delay: 2 }}
-        className="absolute bottom-24 right-[8%] lg:right-[12%] w-28 h-28 md:w-36 md:h-36 z-10 hidden sm:block"
+        className="absolute bottom-24 right-[8%] lg:right-[12%] w-28 h-28 md:w-36 md:h-36 z-10 hidden sm:block pointer-events-none"
       >
         <img
-          src="/images/item_gift.jpg"
+          src="/images/item_gift.png"
           alt="3D Gift Box Small"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_15px_30px_rgba(245,158,11,0.35)] opacity-75"
+          className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] opacity-90"
         />
       </motion.div>
 
@@ -131,12 +131,12 @@ export const Shopping3DBackground = () => {
         style={{ x: springXSlow, y: springYSlow }}
         animate={{ y: [15, -15, 15], rotate: [6, -6, 6] }}
         transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut', delay: 1.2 }}
-        className="absolute bottom-28 left-[6%] lg:left-[10%] w-32 h-32 md:w-40 md:h-40 z-10 hidden sm:block"
+        className="absolute bottom-28 left-[6%] lg:left-[10%] w-32 h-32 md:w-40 md:h-40 z-10 hidden sm:block pointer-events-none"
       >
         <img
-          src="/images/item_bag.jpg"
+          src="/images/item_bag.png"
           alt="3D Shopping Bag Small"
-          className="w-full h-full object-contain mix-blend-screen drop-shadow-[0_15px_30px_rgba(224,82,54,0.35)] opacity-75"
+          className="w-full h-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] opacity-90"
         />
       </motion.div>
 
