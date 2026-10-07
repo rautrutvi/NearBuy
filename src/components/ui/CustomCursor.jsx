@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
-// Happy Lavender Shopping Bag Character SVG (Matching website's Lavender & Orange theme)
-const HappyLavenderShoppingBagCharacter = ({ isHovered, isClicking }) => (
+// Happy Blue Shopping Bag Character SVG (Original Vecteezy-style Happy Blue Character)
+const HappyBlueShoppingBagCharacter = ({ isHovered, isClicking }) => (
   <svg
     width="46"
     height="50"
@@ -10,20 +10,20 @@ const HappyLavenderShoppingBagCharacter = ({ isHovered, isClicking }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     style={{ pointerEvents: 'none' }}
-    className="pointer-events-none select-none drop-shadow-[0_8px_18px_rgba(168,85,247,0.55)]"
+    className="pointer-events-none select-none drop-shadow-[0_8px_18px_rgba(37,99,235,0.55)]"
   >
     <defs>
-      {/* Glossy Vibrant Lavender & Electric Purple Bag Body Gradient */}
-      <linearGradient id="lavenderBagBodyGrad" x1="4" y1="12" x2="42" y2="48" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#C084FC" />   {/* Soft Lavender */}
-        <stop offset="55%" stopColor="#A855F7" />  {/* Electric Purple */}
-        <stop offset="100%" stopColor="#7E22CE" /> {/* Deep Violet */}
+      {/* Vibrant Sky Blue & Electric Royal Blue Bag Body Gradient */}
+      <linearGradient id="blueBagBodyGrad" x1="4" y1="12" x2="42" y2="48" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#3B82F6" />   {/* Vibrant Sky Blue */}
+        <stop offset="55%" stopColor="#2563EB" />  {/* Royal Blue */}
+        <stop offset="100%" stopColor="#1D4ED8" /> {/* Deep Sapphire Blue */}
       </linearGradient>
 
       {/* Folded Top Paper Edge Gradient */}
-      <linearGradient id="lavenderBagFoldGrad" x1="4" y1="10" x2="42" y2="16" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stopColor="#E9D5FF" />
-        <stop offset="100%" stopColor="#C084FC" />
+      <linearGradient id="blueBagFoldGrad" x1="4" y1="10" x2="42" y2="16" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#93C5FD" />
+        <stop offset="100%" stopColor="#3B82F6" />
       </linearGradient>
 
       {/* Specular Highlight Sheen */}
@@ -33,7 +33,7 @@ const HappyLavenderShoppingBagCharacter = ({ isHovered, isClicking }) => (
       </linearGradient>
     </defs>
 
-    {/* Dual Handles (Sunset Orange Rope Arcs matching website theme) */}
+    {/* Dual Handles (Sunset Orange Rope Arcs) */}
     <path
       d="M16 12V7.5C16 4.46243 18.4624 2 21.5 2C24.5376 2 27 4.46243 27 7.5V12"
       stroke="#FF5E36"
@@ -47,28 +47,28 @@ const HappyLavenderShoppingBagCharacter = ({ isHovered, isClicking }) => (
       strokeLinecap="round"
     />
 
-    {/* Main Lavender Shopping Bag Body */}
-    <rect x="4" y="12" width="35" height="34" rx="7" fill="url(#lavenderBagBodyGrad)" stroke="#F3E8FF" strokeWidth="1.2" strokeOpacity="0.8" />
+    {/* Main Blue Shopping Bag Body */}
+    <rect x="4" y="12" width="35" height="34" rx="7" fill="url(#blueBagBodyGrad)" stroke="#DBEAFE" strokeWidth="1.2" strokeOpacity="0.8" />
 
     {/* Folded Top Paper Rim */}
-    <path d="M4 12C4 10.8954 4.89543 10 6 10H37C38.1046 10 39 10.8954 39 12V16H4V12Z" fill="url(#lavenderBagFoldGrad)" />
+    <path d="M4 12C4 10.8954 4.89543 10 6 10H37C38.1046 10 39 10.8954 39 12V16H4V12Z" fill="url(#blueBagFoldGrad)" />
 
     {/* Front Specular Highlight Sheen */}
     <path d="M8 16V42" stroke="url(#sheenGrad)" strokeWidth="2.5" strokeLinecap="round" />
 
     {/* Side Fold Crease Lines */}
-    <path d="M9 16L11 42" stroke="#7E22CE" strokeWidth="1.2" opacity="0.4" />
-    <path d="M34 16L32 42" stroke="#7E22CE" strokeWidth="1.2" opacity="0.4" />
+    <path d="M9 16L11 42" stroke="#1D4ED8" strokeWidth="1.2" opacity="0.4" />
+    <path d="M34 16L32 42" stroke="#1D4ED8" strokeWidth="1.2" opacity="0.4" />
 
     {/* CUTE HAPPY CARTOON FACE */}
     
     {/* Left Eye */}
-    <circle cx="15" cy="24" r="3.2" fill="#1E1035" />
+    <circle cx="15" cy="24" r="3.2" fill="#0F172A" />
     <circle cx="14" cy="23" r="1.2" fill="#FFFFFF" />
     <circle cx="16" cy="25" r="0.6" fill="#FFFFFF" />
 
     {/* Right Eye */}
-    <circle cx="28" cy="24" r="3.2" fill="#1E1035" />
+    <circle cx="28" cy="24" r="3.2" fill="#0F172A" />
     <circle cx="27" cy="23" r="1.2" fill="#FFFFFF" />
     <circle cx="29" cy="25" r="0.6" fill="#FFFFFF" />
 
@@ -80,14 +80,14 @@ const HappyLavenderShoppingBagCharacter = ({ isHovered, isClicking }) => (
     {isHovered ? (
       // Big open happy mouth with tongue on hover!
       <g>
-        <path d="M16 29C16 29 18.5 35 21.5 35C24.5 35 27 29 27 29H16Z" fill="#1E1035" />
+        <path d="M16 29C16 29 18.5 35 21.5 35C24.5 35 27 29 27 29H16Z" fill="#0F172A" />
         <path d="M19 32.5C19.5 34 21 34.8 21.5 34.8C22 34.8 23.5 34 24 32.5C22.5 32 20.5 32 19 32.5Z" fill="#FB7185" />
       </g>
     ) : (
       // Cute friendly smile curve
       <path
         d="M17 29.5C17 29.5 19 32.5 21.5 32.5C24 32.5 26 29.5 26 29.5"
-        stroke="#1E1035"
+        stroke="#0F172A"
         strokeWidth="2.2"
         strokeLinecap="round"
       />
@@ -159,7 +159,7 @@ export const CustomCursor = () => {
 
   return (
     <div className="fixed top-0 left-0 pointer-events-none select-none z-[99999]" style={{ pointerEvents: 'none' }}>
-      {/* Happy Lavender Shopping Bag Character Cursor (Matching Lavender/Orange theme, NO rings) */}
+      {/* Happy Blue Shopping Bag Character Cursor */}
       <motion.div
         className="pointer-events-none select-none"
         style={{ pointerEvents: 'none' }}
@@ -176,7 +176,7 @@ export const CustomCursor = () => {
           mass: 0.1,
         }}
       >
-        <HappyLavenderShoppingBagCharacter isHovered={isHovered} isClicking={isClicking} />
+        <HappyBlueShoppingBagCharacter isHovered={isHovered} isClicking={isClicking} />
       </motion.div>
     </div>
   )
