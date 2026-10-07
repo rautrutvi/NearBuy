@@ -102,7 +102,7 @@ export const LandingPage = () => {
               <Link
                 to="/vendor"
                 onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
-                className="px-7 py-4 rounded-2xl bg-[#110a24] border border-purple-500/30 hover:border-purple-400 text-slate-200 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-2xl hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] flex items-center justify-center"
+                className="px-7 py-4 rounded-2xl bg-gradient-to-r from-purple-600/90 to-lavender-600/90 border border-purple-400/50 hover:border-purple-300 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-[0_0_25px_rgba(168,85,247,0.35)] hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] flex items-center justify-center transform hover:-translate-y-0.5"
               >
                 VENDOR PORTAL
               </Link>
@@ -110,7 +110,7 @@ export const LandingPage = () => {
               <Link
                 to="/admin"
                 onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
-                className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center"
+                className="px-6 py-4 rounded-2xl bg-gradient-to-r from-primary-500/80 to-purple-600/80 border border-primary-400/40 hover:border-primary-300 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-[0_0_25px_rgba(255,94,54,0.3)] hover:shadow-[0_0_40px_rgba(255,94,54,0.5)] flex items-center justify-center transform hover:-translate-y-0.5"
               >
                 ADMIN PANEL
               </Link>
@@ -173,12 +173,12 @@ export const LandingPage = () => {
       {/* ROLE PORTAL GATEWAYS */}
       <section className="py-24 px-4 max-w-7xl mx-auto">
         <div className="text-center space-y-3 mb-16">
-          <span className="text-xs font-mono font-bold text-teal-400 bg-teal-950/80 px-4 py-1.5 rounded-full uppercase tracking-widest border border-teal-500/40">
+          <span className="text-xs font-mono font-bold text-purple-300 bg-purple-950/80 px-4 py-1.5 rounded-full uppercase tracking-widest border border-purple-500/40">
             CHOOSE YOUR INTERFACE
           </span>
           <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white">
             EXPLORE THE{' '}
-            <span className="bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple-400 via-lavender-300 to-primary-400 bg-clip-text text-transparent">
               PORTALS
             </span>
           </h2>
@@ -189,7 +189,7 @@ export const LandingPage = () => {
           <TiltCard3D glowColor="primary" maxTilt={12} scale={1.03} depth={20}>
             <CyberCard tag="BUYER.PORTAL" glowColor="primary">
               <div className="space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-amber-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(224,82,54,0.5)]">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 via-purple-600 to-lavender-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(255,94,54,0.5)]">
                   <Users className="w-7 h-7" />
                 </div>
                 <div>
@@ -204,7 +204,7 @@ export const LandingPage = () => {
                 <Link
                   to="/buyer"
                   onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 to-amber-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(224,82,54,0.4)] hover:shadow-[0_0_30px_rgba(224,82,54,0.7)] transition-all"
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,94,54,0.4)] hover:shadow-[0_0_35px_rgba(255,94,54,0.7)] transition-all"
                 >
                   <span>OPEN BUYER SHOP</span>
                   <ArrowRight className="w-4 h-4" />
@@ -214,10 +214,10 @@ export const LandingPage = () => {
           </TiltCard3D>
 
           {/* Vendor Portal Card */}
-          <TiltCard3D glowColor="teal" maxTilt={12} scale={1.03} depth={20}>
-            <CyberCard tag="VENDOR.PORTAL" glowColor="teal">
+          <TiltCard3D glowColor="violet" maxTilt={12} scale={1.03} depth={20}>
+            <CyberCard tag="VENDOR.PORTAL" glowColor="violet">
               <div className="space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(13,148,136,0.5)]">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 via-lavender-500 to-purple-800 flex items-center justify-center text-white shadow-[0_0_25px_rgba(168,85,247,0.5)]">
                   <Store className="w-7 h-7" />
                 </div>
                 <div>
@@ -225,14 +225,14 @@ export const LandingPage = () => {
                   <p className="text-xs text-slate-400 mt-1">Manage stock in real-time, scan barcodes, and fulfill pickup orders.</p>
                 </div>
                 <ul className="space-y-2 text-xs font-mono text-slate-300">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Camera Barcode Scanner UI</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Live Inventory Adjuster</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-400 shrink-0" /> Order Fulfillment Queue</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Camera Barcode Scanner UI</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Live Inventory Adjuster</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" /> Order Fulfillment Queue</li>
                 </ul>
                 <Link
                   to="/vendor"
                   onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(13,148,136,0.4)] hover:shadow-[0_0_30px_rgba(13,148,136,0.7)] transition-all"
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-lavender-500 to-purple-700 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all"
                 >
                   <span>OPEN VENDOR PORTAL</span>
                   <QrCode className="w-4 h-4" />
@@ -242,10 +242,10 @@ export const LandingPage = () => {
           </TiltCard3D>
 
           {/* Admin Portal Card */}
-          <TiltCard3D glowColor="violet" maxTilt={12} scale={1.03} depth={20}>
-            <CyberCard tag="ADMIN.PORTAL" glowColor="violet">
+          <TiltCard3D glowColor="primary" maxTilt={12} scale={1.03} depth={20}>
+            <CyberCard tag="ADMIN.PORTAL" glowColor="primary">
               <div className="space-y-5">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white shadow-[0_0_25px_rgba(139,92,246,0.5)]">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 via-purple-600 to-lavender-500 flex items-center justify-center text-white shadow-[0_0_25px_rgba(255,94,54,0.5)]">
                   <ShieldCheck className="w-7 h-7" />
                 </div>
                 <div>
@@ -253,14 +253,14 @@ export const LandingPage = () => {
                   <p className="text-xs text-slate-400 mt-1">Verify new merchant applications and publish community flood reports.</p>
                 </div>
                 <ul className="space-y-2 text-xs font-mono text-slate-300">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Shop Approval Queue</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Flood Telemetry Verification</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-violet-400 shrink-0" /> Platform Analytics Charts</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Shop Approval Queue</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Flood Telemetry Verification</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" /> Platform Analytics Charts</li>
                 </ul>
                 <Link
                   to="/admin"
                   onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.7)] transition-all"
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,94,54,0.4)] hover:shadow-[0_0_35px_rgba(255,94,54,0.7)] transition-all"
                 >
                   <span>OPEN ADMIN PANEL</span>
                   <ShieldAlert className="w-4 h-4" />
