@@ -5,6 +5,7 @@ import com.nearbuy.dto.ProductResponse;
 import com.nearbuy.entity.Product;
 import com.nearbuy.entity.Shop;
 import com.nearbuy.entity.User;
+import com.nearbuy.entity.VerifiedStatus;
 import com.nearbuy.exception.BadRequestException;
 import com.nearbuy.exception.ForbiddenException;
 import com.nearbuy.exception.ResourceNotFoundException;
@@ -54,6 +55,10 @@ public class ProductService {
             throw new ForbiddenException("You can only add products to your own shop");
         }
 
+        if (shop.getVerifiedStatus() != VerifiedStatus.APPROVED) {
+            throw new ForbiddenException("Shop is pending approval by Administrator rautrutvi@gmail.com. You cannot add products until approved.");
+        }
+
         Product product = Product.builder()
                 .shop(shop)
                 .name(request.getName().trim())
@@ -80,6 +85,10 @@ public class ProductService {
 
         if (!product.getShop().getOwner().getEmail().equalsIgnoreCase(ownerEmail.trim())) {
             throw new ForbiddenException("You can only modify products in your own shop");
+        }
+
+        if (product.getShop().getVerifiedStatus() != VerifiedStatus.APPROVED) {
+            throw new ForbiddenException("Shop is pending approval by Administrator rautrutvi@gmail.com. You cannot modify products until approved.");
         }
 
         product.setName(request.getName().trim());
@@ -150,6 +159,10 @@ public class ProductService {
             throw new ForbiddenException("You can only update stock in your own shop");
         }
 
+        if (product.getShop().getVerifiedStatus() != VerifiedStatus.APPROVED) {
+            throw new ForbiddenException("Shop is pending approval by Administrator rautrutvi@gmail.com. You cannot update stock until approved.");
+        }
+
         int newQuantity = product.getQuantity() + delta;
         if (newQuantity < 0) {
             throw new BadRequestException("Insufficient stock. Resulting quantity cannot be negative (current: "
@@ -166,6 +179,13 @@ public class ProductService {
      */
     @Transactional(readOnly = true)
     public List<ProductResponse> getProductsByShop(Long shopId) {
+        Shop shop = shopRepository.findById(shopId)
+                .orElseThrow(() -> new ResourceNotFoundException("Shop not found with id: " + shopId));
+
+        if (shop.getVerifiedStatus() != VerifiedStatus.APPROVED) {
+            return List.of();
+        }
+
         return productRepository.findByShopId(shopId).stream()
                 .map(this::mapToProductResponse)
                 .collect(Collectors.toList());

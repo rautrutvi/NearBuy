@@ -14,7 +14,8 @@ const mapShopFromBackend = (s) => ({
   floodStatus: (s.floodStatus || 'safe').toLowerCase() === 'severe' ? 'alert' : (s.floodStatus || 'safe').toLowerCase(),
   location: { lat: s.latitude || 19.076, lng: s.longitude || 72.8777 },
   image: s.imageUrl || 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60',
-  verified: s.verifiedStatus === 'VERIFIED',
+  verified: s.verifiedStatus === 'APPROVED' || s.verifiedStatus === 'VERIFIED',
+  verifiedStatus: s.verifiedStatus || 'PENDING',
   openingHours: s.openingHours || '8:00 AM - 10:00 PM',
 })
 
@@ -102,9 +103,10 @@ export const shopService = {
   },
 
   // Admin: Verify or reject shop
-  async verifyShop(shopId, status = 'VERIFIED') {
+  async verifyShop(shopId, status = 'APPROVED') {
+    const backendStatus = (status === 'VERIFIED' || status === 'APPROVED') ? 'APPROVED' : 'REJECTED'
     try {
-      const response = await axiosClient.put(`/admin/shops/${shopId}/verify`, { status })
+      const response = await axiosClient.put(`/admin/shops/${shopId}/verify`, { status: backendStatus })
       return mapShopFromBackend(response.data)
     } catch (e) {
       console.error('Failed to verify shop on backend', e)

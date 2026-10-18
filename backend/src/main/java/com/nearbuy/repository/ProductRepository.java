@@ -29,6 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByShopIdAndBarcode(Long shopId, String barcode);
 
     @Query("SELECT p FROM Product p WHERE " +
+            "p.shop.verifiedStatus = com.nearbuy.entity.VerifiedStatus.APPROVED AND " +
             "(:query IS NULL OR :query = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(p.description) LIKE LOWER(CONCAT('%', :query, '%'))) " +
             "AND (:category IS NULL OR :category = '' OR LOWER(p.category) = LOWER(:category))")
     List<Product> searchProducts(@Param("query") String query, @Param("category") String category);

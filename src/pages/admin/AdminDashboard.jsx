@@ -101,11 +101,12 @@ export const AdminDashboard = () => {
     try {
       const numericId = typeof shopId === 'string' ? parseInt(shopId.replace(/\D/g, '') || '0') : shopId
       if (numericId > 0) {
-        await adminService.verifyShop(numericId, approved ? 'VERIFIED' : 'REJECTED')
+        await adminService.verifyShop(numericId, approved ? 'APPROVED' : 'REJECTED')
       }
     } catch (e) {
       console.warn('Backend shop verification failed, applying locally', e?.message)
     }
+    localStorage.setItem('nearbuy_vendor_approved', approved ? 'true' : 'false')
     setPendingShops((prev) => prev.filter((s) => s.id !== shopId))
     setProcessingId(null)
   }
@@ -115,7 +116,7 @@ export const AdminDashboard = () => {
     try {
       const numericId = typeof reportId === 'string' ? parseInt(reportId.replace(/\D/g, '') || '0') : reportId
       if (numericId > 0) {
-        await adminService.verifyFloodZone(numericId, approved ? 'ACTIVE' : 'REJECTED')
+        await adminService.verifyFloodZone(numericId, approved ? 'VERIFIED' : 'REJECTED')
       }
     } catch (e) {
       console.warn('Backend flood zone verification failed, applying locally', e?.message)
@@ -161,13 +162,13 @@ export const AdminDashboard = () => {
         <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-violet-500/40 via-amber-500/40 to-teal-500/40 shadow-2xl">
           <div className="bg-[#0c0c14]/90 backdrop-blur-xl p-6 rounded-[23px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping" />
                 <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-tight">
                   Admin Mission Control
                 </h1>
                 <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-violet-950/80 text-violet-300 border border-violet-500/40">
-                  SUPER ADMIN LEVEL
+                  SUPER ADMIN: rautrutvi@gmail.com
                 </span>
               </div>
               <p className="text-xs text-slate-400 font-mono">

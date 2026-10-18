@@ -19,19 +19,11 @@ import {
 
 export const LandingPage = () => {
   const navigate = useNavigate()
-  const { login } = useAuthStore()
 
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-
-  const goToRole = (role) => {
-    login({ name: `Demo ${role.toUpperCase()}`, email: `${role}@nearbuy.in` }, role)
-    if (role === 'buyer') navigate('/buyer')
-    else if (role === 'vendor') navigate('/vendor')
-    else if (role === 'admin') navigate('/admin')
-  }
 
   return (
     <div className="relative min-h-screen bg-transparent text-white overflow-x-hidden selection:bg-primary-500 selection:text-white font-sans">
@@ -92,7 +84,6 @@ export const LandingPage = () => {
             >
               <Link
                 to="/buyer"
-                onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
                 className="relative group px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 font-mono font-bold text-white text-xs uppercase tracking-wider shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_50px_rgba(168,85,247,0.7)] transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2.5"
               >
                 <span>OPEN BUYER SHOP</span>
@@ -101,7 +92,6 @@ export const LandingPage = () => {
 
               <Link
                 to="/vendor"
-                onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
                 className="px-7 py-4 rounded-2xl bg-gradient-to-r from-purple-600/90 to-lavender-600/90 border border-purple-400/50 hover:border-purple-300 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-[0_0_25px_rgba(168,85,247,0.35)] hover:shadow-[0_0_40px_rgba(168,85,247,0.6)] flex items-center justify-center transform hover:-translate-y-0.5"
               >
                 VENDOR PORTAL
@@ -109,7 +99,6 @@ export const LandingPage = () => {
 
               <Link
                 to="/admin"
-                onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
                 className="px-6 py-4 rounded-2xl bg-gradient-to-r from-primary-500/80 to-purple-600/80 border border-primary-400/40 hover:border-primary-300 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all duration-300 backdrop-blur-xl shadow-[0_0_25px_rgba(255,94,54,0.3)] hover:shadow-[0_0_40px_rgba(255,94,54,0.5)] flex items-center justify-center transform hover:-translate-y-0.5"
               >
                 ADMIN PANEL
@@ -203,7 +192,6 @@ export const LandingPage = () => {
                 </ul>
                 <Link
                   to="/buyer"
-                  onClick={() => login({ name: 'Demo BUYER', email: 'buyer@nearbuy.in' }, 'buyer')}
                   className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,94,54,0.4)] hover:shadow-[0_0_35px_rgba(255,94,54,0.7)] transition-all"
                 >
                   <span>OPEN BUYER SHOP</span>
@@ -231,7 +219,6 @@ export const LandingPage = () => {
                 </ul>
                 <Link
                   to="/vendor"
-                  onClick={() => login({ name: 'Demo VENDOR', email: 'vendor@nearbuy.in' }, 'vendor')}
                   className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 via-lavender-500 to-purple-700 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all"
                 >
                   <span>OPEN VENDOR PORTAL</span>
@@ -259,7 +246,6 @@ export const LandingPage = () => {
                 </ul>
                 <Link
                   to="/admin"
-                  onClick={() => login({ name: 'Demo ADMIN', email: 'admin@nearbuy.in' }, 'admin')}
                   className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-primary-500 via-purple-600 to-lavender-500 text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,94,54,0.4)] hover:shadow-[0_0_35px_rgba(255,94,54,0.7)] transition-all"
                 >
                   <span>OPEN ADMIN PANEL</span>
