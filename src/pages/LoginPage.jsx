@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '../store/useAuthStore'
+import { authService } from '../api/authService'
 import { Store, UserCheck, Shield, Lock, Mail, ArrowRight, Sparkles, AlertCircle, Terminal } from 'lucide-react'
 
 export const LoginPage = () => {
@@ -11,26 +12,58 @@ export const LoginPage = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState(location.state?.message || null)
 
-  const handleRoleLogin = (role) => {
-    let demoEmail = email || `${role}@nearbuy.com`
-    login({ name: `Demo ${role.toUpperCase()}`, email: demoEmail }, role)
+  const performLogin = async (targetEmail, targetPassword, targetRole) => {
+    setIsLoading(true)
+    setErrorMsg(null)
+    try {
+      // Attempt real Spring Boot JWT authentication
+      const data = await authService.login(targetEmail, targetPassword)
+      const userRole = (data.user?.role || targetRole || 'buyer').toLowerCase()
+      const normalizedRole = userRole === 'customer' ? 'buyer' : userRole === 'shopkeeper' ? 'vendor' : userRole
+      login(data.user, normalizedRole, data.token)
 
-    if (role === 'buyer') navigate('/buyer')
-    else if (role === 'vendor') navigate('/vendor')
-    else if (role === 'admin') navigate('/admin')
+      if (normalizedRole === 'buyer') navigate('/buyer')
+      else if (normalizedRole === 'vendor') navigate('/vendor')
+      else if (normalizedRole === 'admin') navigate('/admin')
+    } catch (err) {
+      console.warn('Backend login attempt:', err?.response?.data || err.message)
+      // If server responded with 401/403/400, display actual error
+      if (err?.response?.data?.message) {
+        setErrorMsg(err.response.data.message)
+        setIsLoading(false)
+        return
+      }
+      // If network offline or backend server not running, fall back to smooth demo login
+      console.info('Falling back to local demo login')
+      login({ name: `Demo ${targetRole.toUpperCase()}`, email: targetEmail }, targetRole)
+      if (targetRole === 'buyer') navigate('/buyer')
+      else if (targetRole === 'vendor') navigate('/vendor')
+      else if (targetRole === 'admin') navigate('/admin')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleRoleLogin = (role) => {
+    if (role === 'buyer') {
+      performLogin('customer@test.com', 'pass123', 'buyer')
+    } else if (role === 'vendor') {
+      performLogin('shop@test.com', 'pass123', 'vendor')
+    } else if (role === 'admin') {
+      performLogin('admin@test.com', 'admin123', 'admin')
+    }
   }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
-    if (email.includes('admin')) {
-      handleRoleLogin('admin')
-    } else if (email.includes('vendor') || email.includes('shop')) {
-      handleRoleLogin('vendor')
-    } else {
-      handleRoleLogin('buyer')
-    }
+    let determinedRole = 'buyer'
+    if (email.includes('admin')) determinedRole = 'admin'
+    else if (email.includes('vendor') || email.includes('shop')) determinedRole = 'vendor'
+
+    performLogin(email || 'customer@test.com', password || 'pass123', determinedRole)
   }
 
   return (

@@ -10,13 +10,28 @@ const getStoredAuth = () => {
   return { user: null, role: null, isAuthenticated: false }
 }
 
+const normalizeRole = (role) => {
+  if (!role) return 'buyer'
+  const r = role.toLowerCase()
+  if (r === 'customer' || r === 'buyer') return 'buyer'
+  if (r === 'shopkeeper' || r === 'vendor') return 'vendor'
+  if (r === 'admin') return 'admin'
+  return r
+}
+
 export const useAuthStore = create((set) => ({
   ...getStoredAuth(),
 
-  login: (userData, role) => {
+  login: (userData, role, token = null) => {
+    const normalizedRole = normalizeRole(role || userData?.role)
+    const userObj = {
+      ...(userData || { name: 'Demo User', email: `${normalizedRole}@nearbuy.local` }),
+      token: token || userData?.token,
+    }
     const newState = {
-      user: userData || { name: 'Demo User', email: `${role}@nearbuy.local` },
-      role: role,
+      user: userObj,
+      role: normalizedRole,
+      token: token || userObj.token,
       isAuthenticated: true,
     }
     try {
@@ -28,7 +43,7 @@ export const useAuthStore = create((set) => ({
   },
 
   logout: () => {
-    const newState = { user: null, role: null, isAuthenticated: false }
+    const newState = { user: null, role: null, token: null, isAuthenticated: false }
     try {
       localStorage.removeItem('nearbuy_auth')
     } catch (e) {

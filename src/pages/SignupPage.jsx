@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthStore } from '../store/useAuthStore'
+import { authService } from '../api/authService'
 import {
   Store, UserCheck, ArrowLeft, ArrowRight,
   Mail, Lock, Phone, User, MapPin, CheckCircle2, Terminal, Sparkles
@@ -64,10 +65,29 @@ export const SignupPage = () => {
     e.preventDefault()
     if (!validateStep2()) return
     setIsLoading(true)
-    await new Promise((r) => setTimeout(r, 1000))
-    setIsLoading(false)
-    setStep(3)
-    login({ name: form.name, email: form.email }, selectedRole)
+    try {
+      const signupRole = selectedRole === 'buyer' ? 'CUSTOMER' : 'SHOPKEEPER'
+      const userRes = await authService.signup({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        role: signupRole,
+        phone: form.phone,
+      })
+      // Automatically log in with the new credentials
+      try {
+        const loginData = await authService.login(form.email, form.password)
+        login(loginData.user, selectedRole, loginData.token)
+      } catch (loginErr) {
+        login(userRes, selectedRole)
+      }
+    } catch (err) {
+      console.warn('Backend signup error, falling back to demo mode:', err?.response?.data || err.message)
+      login({ name: form.name, email: form.email, phone: form.phone }, selectedRole)
+    } finally {
+      setIsLoading(false)
+      setStep(3)
+    }
   }
 
   const handleSuccessContinue = () => {

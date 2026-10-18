@@ -15,9 +15,10 @@ axiosClient.interceptors.request.use(
     try {
       const stored = localStorage.getItem('nearbuy_auth')
       if (stored) {
-        const { user } = JSON.parse(stored)
-        if (user && user.token) {
-          config.headers.Authorization = `Bearer ${user.token}`
+        const parsed = JSON.parse(stored)
+        const token = parsed.token || parsed.user?.token
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`
         }
       }
     } catch (e) {

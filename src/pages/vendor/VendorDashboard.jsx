@@ -6,6 +6,7 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { ProgressTracker } from '../../components/ui/ProgressTracker'
 import { TiltCard3D } from '../../components/ui/TiltCard3D'
 import { reservationService } from '../../api/reservationService'
+import { productService } from '../../api/productService'
 import {
   QrCode, Package, ShieldAlert, X, CheckCircle2,
   Store, TrendingUp, PackageCheck, Clock, ChevronRight, AlertCircle, Sparkles, Terminal
@@ -28,23 +29,47 @@ export const VendorDashboard = () => {
   const [scanResult, setScanResult] = useState(null)
 
   useEffect(() => {
-    loadReservations()
+    loadVendorData()
   }, [])
 
-  const loadReservations = async () => {
-    const res = await reservationService.getReservations()
-    setReservations(res)
+  const loadVendorData = async () => {
+    try {
+      const [res, prods] = await Promise.all([
+        reservationService.getReservations('vendor'),
+        productService.getMyProducts(),
+      ])
+      if (Array.isArray(res) && res.length > 0) setReservations(res)
+      if (Array.isArray(prods) && prods.length > 0) setProducts(prods)
+    } catch (e) {
+      console.warn('Failed to load live vendor data', e?.message)
+    }
   }
 
   const handleUpdateStatus = async (reservationId, newStatus) => {
     setUpdatingId(reservationId)
     await reservationService.updateReservationStatus(reservationId, newStatus)
-    await loadReservations()
+    await loadVendorData()
     setUpdatingId(null)
   }
 
-  const handleScanLookup = () => {
-    const found = products.find((p) => p.barcode === scanInput.trim())
+  const handleScanLookup = async () => {
+    const rawBarcode = scanInput.trim()
+    if (!rawBarcode) return
+
+    try {
+      // Attempt backend scan-and-sell to decrement live inventory
+      const updatedProduct = await productService.scanAndSell(rawBarcode, 1)
+      setScanResult({ ...updatedProduct, found: true })
+      setProducts((prev) =>
+        prev.map((p) => p.id === updatedProduct.id ? updatedProduct : p)
+      )
+      return
+    } catch (e) {
+      console.warn('Backend scan-sell attempt failed, falling back to local lookup', e?.message)
+    }
+
+    // Local fallback
+    const found = products.find((p) => p.barcode === rawBarcode)
     if (found) {
       setScanResult({ ...found, found: true })
       setProducts(products.map((p) => p.id === found.id ? { ...p, stockCount: Math.max(0, p.stockCount - 1) } : p))
