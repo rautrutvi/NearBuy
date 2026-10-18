@@ -55,6 +55,10 @@ public class ReservationService {
         Shop shop = shopRepository.findById(request.getShopId())
                 .orElseThrow(() -> new ResourceNotFoundException("Shop not found with id: " + request.getShopId()));
 
+        if (shop.getVerifiedStatus() != VerifiedStatus.APPROVED) {
+            throw new BadRequestException("Shop is pending approval by Administrator rautrutvi@gmail.com and cannot accept reservations.");
+        }
+
         if (request.getItems() == null || request.getItems().isEmpty()) {
             throw new BadRequestException("Reservation must contain at least one item");
         }

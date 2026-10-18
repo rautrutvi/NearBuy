@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FloodBadge } from '../../components/ui/Badge'
 import { TiltCard3D } from '../../components/ui/TiltCard3D'
+import { adminService } from '../../api/adminService'
 import {
   ShieldCheck, AlertTriangle, Building2, Activity, Users,
   CheckCircle2, XCircle, MapPin, Clock, X, AlertCircle,
@@ -66,18 +67,60 @@ export const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('shops')
   const [pendingShops, setPendingShops] = useState(PENDING_SHOPS)
   const [floodReports, setFloodReports] = useState(PENDING_FLOOD_REPORTS)
+  const [platformStats, setPlatformStats] = useState(PLATFORM_STATS)
   const [processingId, setProcessingId] = useState(null)
+
+  useEffect(() => {
+    loadAdminData()
+  }, [])
+
+  const loadAdminData = async () => {
+    try {
+      const [shops, floods, stats] = await Promise.all([
+        adminService.getPendingShops(),
+        adminService.getPendingFloodZones(),
+        adminService.getAdminStats(),
+      ])
+      if (Array.isArray(shops) && shops.length > 0) setPendingShops(shops)
+      if (Array.isArray(floods) && floods.length > 0) setFloodReports(floods)
+      if (stats && stats.totalUsers) {
+        setPlatformStats([
+          { label: 'Total Verified Shops', value: String(stats.totalShops || 48), icon: Building2, color: 'text-teal-400', border: 'border-teal-500/30', trend: `${stats.pendingShops || 0} pending` },
+          { label: 'Active Users Today', value: Number(stats.totalUsers || 1284).toLocaleString(), icon: Users, color: 'text-amber-400', border: 'border-amber-500/30', trend: 'Verified platform' },
+          { label: 'Reservations Total', value: String(stats.totalReservations || 237), icon: Package, color: 'text-primary-400', border: 'border-primary-500/30', trend: 'Live system' },
+          { label: 'Active Flood Zones', value: String(stats.activeFloodZones || 3), icon: AlertTriangle, color: 'text-violet-400', border: 'border-violet-500/30', trend: `${stats.pendingFloodZones || 0} reports pending` },
+        ])
+      }
+    } catch (e) {
+      console.warn('Failed to load admin data from backend', e?.message)
+    }
+  }
 
   const handleShopVerify = async (shopId, approved) => {
     setProcessingId(shopId)
-    await new Promise((r) => setTimeout(r, 600))
+    try {
+      const numericId = typeof shopId === 'string' ? parseInt(shopId.replace(/\D/g, '') || '0') : shopId
+      if (numericId > 0) {
+        await adminService.verifyShop(numericId, approved ? 'APPROVED' : 'REJECTED')
+      }
+    } catch (e) {
+      console.warn('Backend shop verification failed, applying locally', e?.message)
+    }
+    localStorage.setItem('nearbuy_vendor_approved', approved ? 'true' : 'false')
     setPendingShops((prev) => prev.filter((s) => s.id !== shopId))
     setProcessingId(null)
   }
 
   const handleFloodVerify = async (reportId, approved) => {
     setProcessingId(reportId)
-    await new Promise((r) => setTimeout(r, 600))
+    try {
+      const numericId = typeof reportId === 'string' ? parseInt(reportId.replace(/\D/g, '') || '0') : reportId
+      if (numericId > 0) {
+        await adminService.verifyFloodZone(numericId, approved ? 'VERIFIED' : 'REJECTED')
+      }
+    } catch (e) {
+      console.warn('Backend flood zone verification failed, applying locally', e?.message)
+    }
     setFloodReports((prev) =>
       prev.map((r) => r.id === reportId ? { ...r, verifiedByAdmin: true, approved } : r)
     )
@@ -119,13 +162,13 @@ export const AdminDashboard = () => {
         <div className="relative rounded-3xl p-[1px] bg-gradient-to-r from-violet-500/40 via-amber-500/40 to-teal-500/40 shadow-2xl">
           <div className="bg-[#0c0c14]/90 backdrop-blur-xl p-6 rounded-[23px] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping" />
                 <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-tight">
                   Admin Mission Control
                 </h1>
                 <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-violet-950/80 text-violet-300 border border-violet-500/40">
-                  SUPER ADMIN LEVEL
+                  SUPER ADMIN: rautrutvi@gmail.com
                 </span>
               </div>
               <p className="text-xs text-slate-400 font-mono">
@@ -142,7 +185,7 @@ export const AdminDashboard = () => {
 
         {/* Stats Row with 3D Physics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {PLATFORM_STATS.map((stat) => {
+          {platformStats.map((stat) => {
             const Icon = stat.icon
             return (
               <TiltCard3D key={stat.label} glowColor="violet" maxTilt={14} scale={1.03} depth={15}>

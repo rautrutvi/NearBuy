@@ -28,21 +28,36 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (userRepository.count() > 0) {
+        // Always ensure rautrutvi@gmail.com is present with ADMIN role
+        if (!userRepository.existsByEmail("rautrutvi@gmail.com")) {
+            userRepository.save(User.builder()
+                    .name("Rutvi Raut")
+                    .email("rautrutvi@gmail.com")
+                    .password(passwordEncoder.encode("admin123"))
+                    .role(Role.ADMIN)
+                    .phone("9999999990")
+                    .active(true)
+                    .build());
+            log.info("Administrator rautrutvi@gmail.com provisioned.");
+        }
+
+        if (userRepository.count() > 1) {
             return;
         }
 
         log.info("Database is empty. Seeding initial users...");
 
-        // ── Core test accounts ──────────────────────────────────────────────────
+        // ── Administrator Account (Exclusively rautrutvi@gmail.com) ─────────────
         User admin = userRepository.save(User.builder()
-                .name("Nearbuy Admin")
-                .email("admin@test.com")
+                .name("Rutvi Raut")
+                .email("rautrutvi@gmail.com")
                 .password(passwordEncoder.encode("admin123"))
                 .role(Role.ADMIN)
                 .phone("9999999990")
                 .active(true)
                 .build());
+
+        log.info("Administrator rautrutvi@gmail.com seeded successfully.");
 
         User customer = userRepository.save(User.builder()
                 .name("Test Customer")

@@ -20,7 +20,7 @@ import { Store, UserCheck, ShieldCheck, LogOut, LogIn, ShoppingCart, QrCode, Use
 export default function App() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, role, isAuthenticated, login, logout } = useAuthStore()
+  const { user, role, isAuthenticated, logout } = useAuthStore()
   const { items } = useCartStore()
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -34,10 +34,6 @@ export default function App() {
   const handleLogout = () => {
     logout()
     navigate('/login')
-  }
-
-  const handleQuickRole = (newRole) => {
-    login({ name: `Demo ${newRole.toUpperCase()}`, email: `${newRole}@nearbuy.in` }, newRole)
   }
 
   return (
@@ -78,7 +74,6 @@ export default function App() {
 
             <Link
               to="/buyer"
-              onClick={() => handleQuickRole('buyer')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
                 location.pathname === '/buyer' ? 'bg-primary-600/30 text-primary-300 border border-primary-500/40 shadow-[0_0_15px_rgba(224,82,54,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
@@ -89,7 +84,6 @@ export default function App() {
 
             <Link
               to="/vendor"
-              onClick={() => handleQuickRole('vendor')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
                 location.pathname === '/vendor' ? 'bg-teal-600/30 text-teal-300 border border-teal-500/40 shadow-[0_0_15px_rgba(13,148,136,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
@@ -100,7 +94,6 @@ export default function App() {
 
             <Link
               to="/admin"
-              onClick={() => handleQuickRole('admin')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
                 location.pathname === '/admin' ? 'bg-violet-600/30 text-violet-300 border border-violet-500/40 shadow-[0_0_15px_rgba(139,92,246,0.3)]' : 'hover:text-white hover:bg-white/5'
               }`}
@@ -111,7 +104,6 @@ export default function App() {
 
             <Link
               to="/buyer/profile"
-              onClick={() => handleQuickRole('buyer')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
                 location.pathname === '/buyer/profile' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
@@ -122,7 +114,6 @@ export default function App() {
 
             <Link
               to="/vendor/scan"
-              onClick={() => handleQuickRole('vendor')}
               className={`px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all ${
                 location.pathname === '/vendor/scan' ? 'bg-white/15 text-white shadow-md' : 'hover:text-white hover:bg-white/5'
               }`}
@@ -162,7 +153,13 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <div className="text-right hidden sm:block">
                   <p className="text-xs font-bold text-white font-mono leading-tight">{user?.name || 'Active User'}</p>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase bg-primary-950 text-primary-400 border border-primary-500/30">
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase border ${
+                    role === 'admin'
+                      ? 'bg-violet-950 text-violet-300 border-violet-500/40'
+                      : role === 'vendor'
+                      ? 'bg-teal-950 text-teal-300 border-teal-500/40'
+                      : 'bg-primary-950 text-primary-400 border-primary-500/30'
+                  }`}>
                     {role}
                   </span>
                 </div>
@@ -214,7 +211,7 @@ export default function App() {
 
             <Link
               to="/buyer"
-              onClick={() => { handleQuickRole('buyer'); setIsMobileMenuOpen(false) }}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
                 location.pathname === '/buyer' ? 'bg-primary-600/30 text-primary-300 border border-primary-500/40' : 'text-slate-300 hover:bg-white/5'
               }`}
@@ -225,7 +222,7 @@ export default function App() {
 
             <Link
               to="/vendor"
-              onClick={() => { handleQuickRole('vendor'); setIsMobileMenuOpen(false) }}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
                 location.pathname === '/vendor' ? 'bg-teal-600/30 text-teal-300 border border-teal-500/40' : 'text-slate-300 hover:bg-white/5'
               }`}
@@ -236,7 +233,7 @@ export default function App() {
 
             <Link
               to="/admin"
-              onClick={() => { handleQuickRole('admin'); setIsMobileMenuOpen(false) }}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
                 location.pathname === '/admin' ? 'bg-violet-600/30 text-violet-300 border border-violet-500/40' : 'text-slate-300 hover:bg-white/5'
               }`}
@@ -247,7 +244,7 @@ export default function App() {
 
             <Link
               to="/buyer/profile"
-              onClick={() => { handleQuickRole('buyer'); setIsMobileMenuOpen(false) }}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
                 location.pathname === '/buyer/profile' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
               }`}
@@ -258,7 +255,7 @@ export default function App() {
 
             <Link
               to="/vendor/scan"
-              onClick={() => { handleQuickRole('vendor'); setIsMobileMenuOpen(false) }}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold transition-all ${
                 location.pathname === '/vendor/scan' ? 'bg-white/15 text-white' : 'text-slate-300 hover:bg-white/5'
               }`}
@@ -301,14 +298,42 @@ export default function App() {
 
           {/* Buyer routes */}
           <Route path="/buyer" element={<BuyerDashboard />} />
-          <Route path="/buyer/profile" element={<BuyerProfile />} />
+          <Route
+            path="/buyer/profile"
+            element={
+              <ProtectedRoute allowedRoles={['buyer', 'vendor', 'admin']}>
+                <BuyerProfile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Vendor routes */}
-          <Route path="/vendor" element={<VendorDashboard />} />
-          <Route path="/vendor/scan" element={<BarcodeScanner />} />
+          <Route
+            path="/vendor"
+            element={
+              <ProtectedRoute allowedRoles={['vendor', 'admin']}>
+                <VendorDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vendor/scan"
+            element={
+              <ProtectedRoute allowedRoles={['vendor', 'admin']}>
+                <BarcodeScanner />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* Admin routes */}
-          <Route path="/admin" element={<AdminDashboard />} />
+          {/* Admin routes strictly locked to rautrutvi@gmail.com */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdminEmail allowedRoles={['admin']}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
 
@@ -322,9 +347,9 @@ export default function App() {
             Nearbuy 2026 · Hyperlocal Inventory &amp; Monsoon Radar Platform
           </div>
           <div className="flex items-center gap-4 text-slate-400">
-            <Link to="/buyer" onClick={() => handleQuickRole('buyer')} className="hover:text-primary-400">Buyer Shop</Link>
-            <Link to="/vendor" onClick={() => handleQuickRole('vendor')} className="hover:text-teal-400">Vendor Portal</Link>
-            <Link to="/admin" onClick={() => handleQuickRole('admin')} className="hover:text-violet-400">Admin</Link>
+            <Link to="/buyer" className="hover:text-primary-400">Buyer Shop</Link>
+            <Link to="/vendor" className="hover:text-teal-400">Vendor Portal</Link>
+            <Link to="/admin" className="hover:text-violet-400">Admin</Link>
             <Link to="/style-preview" className="hover:text-white">Design System</Link>
           </div>
         </div>
