@@ -11,9 +11,9 @@ export const BuyerProfile = () => {
   const [activeTab, setActiveTab] = useState('profile')
 
   const history = [
-    { id: 'r1', productName: 'Heavy Duty Umbrella (Large)', shopName: 'Sharma Kirana', status: 'picked_up', date: '2 days ago', price: 349 },
-    { id: 'r2', productName: 'Kolam Raw Rice 5kg', shopName: 'Green Grocery Hub', status: 'picked_up', date: '5 days ago', price: 320 },
-    { id: 'r3', productName: 'Emergency High-Beam Torch', shopName: 'Quick Hardware & Tools', status: 'pending', date: 'Today', price: 299 },
+    { id: 'r1', productName: 'Premium Toor Dal (1 kg)', shopName: 'Vardhman Grain Stores', status: 'picked_up', date: '2 days ago', price: 165 },
+    { id: 'r2', productName: 'Kolam Raw Rice (5 kg)', shopName: 'Dedhia Kirana', status: 'picked_up', date: '5 days ago', price: 320 },
+    { id: 'r3', productName: 'Fortune Sunflower Oil (1 L)', shopName: 'Jashoda Grain Stores', status: 'pending', date: 'Today', price: 145 },
   ]
 
   return (

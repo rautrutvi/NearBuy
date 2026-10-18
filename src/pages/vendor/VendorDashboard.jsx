@@ -12,9 +12,9 @@ import {
 } from 'lucide-react'
 
 const VENDOR_PRODUCTS = [
-  { id: 'prod-101', name: 'Heavy Duty Windproof Umbrella (Large)', price: 349, stockCount: 14, barcode: '8901234567890', category: 'Monsoon Essentials' },
-  { id: 'prod-102', name: 'Kolam Raw Rice 5kg Pack', price: 320, stockCount: 8, barcode: '8901234567891', category: 'Grocery' },
-  { id: 'prod-103', name: 'Waterproof High-Beam LED Torch', price: 299, stockCount: 5, barcode: '8901234567894', category: 'Hardware' },
+  { id: 'prod-1', name: 'Premium Toor Dal (1 kg)', price: 165, stockCount: 25, barcode: '8901234500001', category: 'Grocery' },
+  { id: 'prod-2', name: 'Kolam Raw Rice (5 kg)', price: 320, stockCount: 18, barcode: '8901234500002', category: 'Grocery' },
+  { id: 'prod-3', name: 'Fortune Sunflower Oil (1 L)', price: 145, stockCount: 30, barcode: '8901234500003', category: 'Grocery' },
 ]
 
 export const VendorDashboard = () => {

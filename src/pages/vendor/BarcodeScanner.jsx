@@ -70,7 +70,7 @@ export const BarcodeScanner = () => {
               value={manualCode}
               onChange={(e) => setManualCode(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleLookup(manualCode)}
-              placeholder="e.g. 8901234567890"
+              placeholder="e.g. 8901234500001"
               className="flex-1 bg-slate-900 border border-white/15 rounded-xl px-4 py-3 text-xs font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-400 font-mono"
             />
             <button
@@ -81,7 +81,7 @@ export const BarcodeScanner = () => {
             </button>
           </div>
           <p className="text-[10px] font-mono text-slate-500">
-            Try test barcodes: <code className="text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded">8901234567890</code> (Umbrella) or <code className="text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded">8901234567891</code> (Rice)
+            Try test barcodes: <code className="text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded">8901234500001</code> (Toor Dal) or <code className="text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded">8901234500002</code> (Kolam Rice)
           </p>
         </div>
 

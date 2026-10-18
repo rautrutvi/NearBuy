@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
-import { StockBadge, FloodBadge } from '../../components/ui/Badge'
+import { StockBadge } from '../../components/ui/Badge'
 import { EmptyState } from '../../components/ui/EmptyState'
-import { FloodMap } from '../../components/map/FloodMap'
 import { TiltCard3D } from '../../components/ui/TiltCard3D'
+import { ShopMap } from '../../components/map/ShopMap'
 import { ProductModal } from '../../components/buyer/ProductModal'
 import { ReservationCard } from '../../components/buyer/ReservationCard'
 import { ReviewSection } from '../../components/buyer/ReviewSection'
@@ -19,7 +18,7 @@ import { floodService } from '../../api/floodService'
 
 import {
   Search, MapPin, Grid, Map as MapIcon, ShieldAlert, ShoppingBag,
-  Sparkles, Store, Umbrella, Pill, Wrench, ShoppingBasket, X, Plus, Star,
+  Sparkles, Store, ShoppingBasket, X, Plus, Star,
   Terminal, Radio, Zap, Package
 } from 'lucide-react'
 
@@ -44,10 +43,7 @@ export const BuyerDashboard = () => {
 
   const categories = [
     { id: 'All', label: 'All Items', icon: Sparkles },
-    { id: 'Monsoon Essentials', label: 'Monsoon Essentials', icon: Umbrella },
     { id: 'Grocery', label: 'Groceries', icon: ShoppingBasket },
-    { id: 'Pharmacy', label: 'Medicines', icon: Pill },
-    { id: 'Hardware', label: 'Hardware', icon: Wrench },
   ]
 
   useEffect(() => {
@@ -119,10 +115,13 @@ export const BuyerDashboard = () => {
                 <h1 className="text-2xl md:text-3xl font-extrabold font-display text-white tracking-tight">
                   Nearbuy Local Marketplace
                 </h1>
-                <FloodBadge level="safe" label="Monsoon Safe Route Active" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Live Local Stores
+                </span>
               </div>
               <p className="text-xs text-slate-400 font-mono">
-                Real-time stock counts · 30-min pickup reservation · OpenStreetMap flood hazard radar
+                Real-time stock counts · 30-min pickup reservation · Interactive Satellite &amp; Terrain Map
               </p>
             </div>
 
@@ -148,7 +147,7 @@ export const BuyerDashboard = () => {
                 }`}
               >
                 <MapIcon className="w-4 h-4" />
-                Monsoon Map
+                Store Map
               </button>
             </div>
           </div>
@@ -161,7 +160,7 @@ export const BuyerDashboard = () => {
               <Search className="w-5 h-5 text-slate-500 absolute left-4 top-3.5" />
               <input
                 type="text"
-                placeholder="Search products, umbrellas, rice, medicines, torches..."
+                placeholder="Search groceries, rice, dal, flour, cooking oil..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[#0d0d16] border border-white/15 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 font-mono transition-all shadow-inner"
@@ -220,16 +219,21 @@ export const BuyerDashboard = () => {
         {activeTab === 'map' ? (
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
-                <MapIcon className="w-5 h-5 text-teal-400" /> Live Monsoon Hazard &amp; Shop Map
-              </h2>
-              <span className="text-xs font-mono text-slate-400">OpenStreetMap Telemetry</span>
+              <div>
+                <h2 className="text-lg font-bold font-display text-white flex items-center gap-2">
+                  <MapIcon className="w-5 h-5 text-teal-400" /> Live Neighborhood Shops &amp; Landmarks Map
+                </h2>
+                <p className="text-xs text-slate-400 font-mono">
+                  Vasai Road (Vasai West) street map with live stock &amp; local landmarks
+                </p>
+              </div>
+              <span className="text-xs font-mono text-slate-400">Streets · Satellite · Terrain</span>
             </div>
+
             <div className="rounded-3xl p-[1.5px] bg-gradient-to-r from-teal-500/40 via-sky-500/40 to-primary-500/40 shadow-2xl overflow-hidden">
-              <div className="bg-[#0b0b14] p-4 rounded-[22px] border border-white/10">
-                <FloodMap
+              <div className="bg-[#0b0b14] p-3 rounded-[22px] border border-white/10">
+                <ShopMap
                   shops={shops}
-                  floodReports={floodReports}
                   onSelectShop={(shop) => handleOpenReserveModal(products.find(p => p.shopId === shop.id) || products[0])}
                 />
               </div>
@@ -358,7 +362,7 @@ export const BuyerDashboard = () => {
                       <div className="space-y-1.5 flex-1 min-w-0" style={{ transform: 'translateZ(10px)' }}>
                         <div className="flex items-center justify-between gap-1">
                           <h3 className="font-bold text-sm text-white font-display truncate">{shop.name}</h3>
-                          <FloodBadge level={shop.floodStatus} />
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Verified</span>
                         </div>
                         <p className="text-xs text-slate-400 truncate font-mono">{shop.address}</p>
                         <div className="flex items-center gap-3 text-xs font-mono text-slate-300">

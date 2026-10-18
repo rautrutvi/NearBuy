@@ -65,15 +65,15 @@ export const LiveRadarSimulator = () => {
                   className="absolute top-8 left-12 bg-slate-950/90 border border-emerald-500/50 p-2 rounded-xl text-[10px] font-mono flex items-center gap-1.5 shadow-lg cursor-pointer"
                 >
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  Sharma Kirana (Safe)
+                  Vardhman Grain (Safe)
                 </motion.div>
 
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="absolute bottom-10 right-10 bg-slate-950/90 border border-amber-500/50 p-2 rounded-xl text-[10px] font-mono flex items-center gap-1.5 shadow-lg cursor-pointer"
+                  className="absolute bottom-10 right-10 bg-slate-950/90 border border-emerald-500/50 p-2 rounded-xl text-[10px] font-mono flex items-center gap-1.5 shadow-lg cursor-pointer"
                 >
-                  <span className="w-2 h-2 rounded-full bg-amber-400" />
-                  Green Medical (Watch)
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  Dedhia Kirana (Safe)
                 </motion.div>
 
                 <motion.div
@@ -81,7 +81,7 @@ export const LiveRadarSimulator = () => {
                   className="absolute top-16 right-16 bg-slate-950/90 border border-rose-500/50 p-2 rounded-xl text-[10px] font-mono flex items-center gap-1.5 shadow-lg cursor-pointer"
                 >
                   <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                  Subhash Underpass (Alert 45cm)
+                  Vasai Underpass (Alert 35cm)
                 </motion.div>
 
                 <div className="text-center z-10 pointer-events-none">
@@ -103,8 +103,8 @@ export const LiveRadarSimulator = () => {
               className="space-y-2"
             >
               {[
-                { name: 'Windproof Large Umbrella', shop: 'Sharma Kirana', price: 349, count: 14, tag: 'safe' },
-                { name: 'Kolam Raw Rice 5kg', shop: 'Green Grocery', price: 320, count: 8, tag: 'watch' },
+                { name: 'Premium Toor Dal 1kg', shop: 'Vardhman Grain Stores', price: 165, count: 25, tag: 'safe' },
+                { name: 'Kolam Raw Rice 5kg', shop: 'Dedhia Kirana', price: 320, count: 18, tag: 'safe' },
               ].map((prod) => (
                 <div key={prod.name} className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-white/10 text-xs">
                   <div>
@@ -133,7 +133,7 @@ export const LiveRadarSimulator = () => {
               </div>
               <div className="bg-slate-950 p-2.5 rounded-xl border border-white/10 text-xs font-mono text-emerald-400 flex items-center justify-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                Barcode 8901234567890 Scanned!
+                Barcode 8901234500001 Scanned!
               </div>
             </motion.div>
           )}

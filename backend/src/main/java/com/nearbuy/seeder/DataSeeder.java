@@ -64,229 +64,402 @@ public class DataSeeder implements CommandLineRunner {
 
         log.info("Initial users successfully seeded.");
 
-        // ── Seed shopkeepers for Virar shops ─────────────────────────────────────
-        User sharma = userRepository.save(User.builder()
-                .name("Ramesh Sharma")
-                .email("sharma@test.com")
+        // ── Shopkeepers for the 6 Vasai West grocery shops ───────────────────────
+        User vardhmanOwner = userRepository.save(User.builder()
+                .name("Vardhman Grain Stores")
+                .email("vardhman@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543211")
+                .phone("9890035858")
                 .active(true)
                 .build());
 
-        User lifecare = userRepository.save(User.builder()
-                .name("Dr. Patel")
-                .email("lifecare@test.com")
+        User dedhiaOwner = userRepository.save(User.builder()
+                .name("Dedhia Kirana")
+                .email("dedhia@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543212")
+                .phone("9226139567")
                 .active(true)
                 .build());
 
-        User gupta = userRepository.save(User.builder()
-                .name("Suresh Gupta")
-                .email("gupta@test.com")
+        User jashodaOwner = userRepository.save(User.builder()
+                .name("Jashoda Grain Stores")
+                .email("jashoda@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543213")
+                .phone("9923273746")
                 .active(true)
                 .build());
 
-        User apex = userRepository.save(User.builder()
-                .name("Apex Enterprises")
-                .email("apex@test.com")
+        User devnarayanOwner = userRepository.save(User.builder()
+                .name("Devnarayan Super Market")
+                .email("devnarayan@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543214")
+                .phone("9158457802")
                 .active(true)
                 .build());
 
-        User ravi = userRepository.save(User.builder()
-                .name("Ravi Electronics")
-                .email("ravi@test.com")
+        User jagrutiOwner = userRepository.save(User.builder()
+                .name("Jagruti Super Market")
+                .email("jagruti@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543215")
+                .phone("7021071461")
                 .active(true)
                 .build());
 
-        User preeti = userRepository.save(User.builder()
-                .name("Preeti Organics")
-                .email("preeti@test.com")
+        User jalaramOwner = userRepository.save(User.builder()
+                .name("Jalaram Kirana Store")
+                .email("jalaram@test.com")
                 .password(passwordEncoder.encode("pass123"))
                 .role(Role.SHOPKEEPER)
-                .phone("9876543216")
+                .phone("6377400582")
                 .active(true)
                 .build());
 
-        // ── 4 Approved shops near Virar, Maharashtra ─────────────────────────────
-        Shop sharmaShop = shopRepository.save(Shop.builder()
-                .owner(sharma)
-                .name("Sharma General Kirana & Provisions")
-                .address("Station Road, Ward 4, Virar West")
-                .latitude(19.4640)
-                .longitude(72.8044)
+        // ── 6 Real Grocery shops in Vasai West, Maharashtra ─────────────────────
+        Shop vardhmanShop = shopRepository.save(Shop.builder()
+                .owner(vardhmanOwner)
+                .name("Vardhman Grain Stores")
+                .address("Shop No 1, Guruprasad Apt, Veer Savarkar Nagar, Anand Nagar, Vasai West 401202")
+                .latitude(19.38107)
+                .longitude(72.83014)
                 .category("Grocery")
                 .verifiedStatus(VerifiedStatus.APPROVED)
-                .openingHours("07:00 - 22:00")
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        Shop lifecareShop = shopRepository.save(Shop.builder()
-                .owner(lifecare)
-                .name("Lifecare Medical & Monsoon Pharmacy")
-                .address("Market Yard Chowk, Virar West")
-                .latitude(19.4670)
-                .longitude(72.8038)
-                .category("Pharmacy")
+        Shop dedhiaShop = shopRepository.save(Shop.builder()
+                .owner(dedhiaOwner)
+                .name("Dedhia Kirana")
+                .address("2, Janpad Shopping Centre, Navghar, Station Road, Vasai West 401202")
+                .latitude(19.38262)
+                .longitude(72.83053)
+                .category("Grocery")
                 .verifiedStatus(VerifiedStatus.APPROVED)
-                .openingHours("09:00 - 21:00")
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        Shop guptaShop = shopRepository.save(Shop.builder()
-                .owner(gupta)
-                .name("Gupta Hardware & Monsoon Safety Tools")
-                .address("Main Highway Link Rd, Virar")
-                .latitude(19.4690)
-                .longitude(72.8060)
-                .category("Hardware")
+        Shop jashodaShop = shopRepository.save(Shop.builder()
+                .owner(jashodaOwner)
+                .name("Jashoda Grain Stores")
+                .address("Nutan Siddharth Building, Vasai Rd W, Veer Savarkar Nagar, Anand Nagar, Vasai West 401202")
+                .latitude(19.38066)
+                .longitude(72.83132)
+                .category("Grocery")
                 .verifiedStatus(VerifiedStatus.APPROVED)
-                .openingHours("08:30 - 20:30")
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        Shop apexShop = shopRepository.save(Shop.builder()
-                .owner(apex)
-                .name("Apex Supermarket & Daily Essentials")
-                .address("Subhash Nagar Phase 1, Virar East")
-                .latitude(19.4710)
-                .longitude(72.8090)
-                .category("Supermarket")
+        Shop devnarayanShop = shopRepository.save(Shop.builder()
+                .owner(devnarayanOwner)
+                .name("Devnarayan Super Market")
+                .address("Shop No. 1, Badami Stop, Giriz Road, Navghar Manikpur, Vasai West 401202")
+                .latitude(19.38429)
+                .longitude(72.82945)
+                .category("Grocery")
                 .verifiedStatus(VerifiedStatus.APPROVED)
-                .openingHours("08:00 - 23:00")
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        // ── 2 Pending shops ───────────────────────────────────────────────────────
-        shopRepository.save(Shop.builder()
-                .owner(ravi)
-                .name("Ravi Electronics & Mobile Accessories")
-                .address("Sector 7, Industrial Zone, Virar")
-                .latitude(19.4720)
-                .longitude(72.8020)
-                .category("Electronics")
-                .verifiedStatus(VerifiedStatus.PENDING)
-                .openingHours("10:00 - 20:00")
+        Shop jagrutiShop = shopRepository.save(Shop.builder()
+                .owner(jagrutiOwner)
+                .name("Jagruti Super Market")
+                .address("Shop No. 31/32, Gokul Park, Vasai Rd W, Jayraj Nagar, Sai Nagar, Vasai West 401202")
+                .latitude(19.38477)
+                .longitude(72.82480)
+                .category("Grocery")
+                .verifiedStatus(VerifiedStatus.APPROVED)
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        shopRepository.save(Shop.builder()
-                .owner(preeti)
-                .name("Preeti Organic Vegetables & Fruits")
-                .address("Ganesh Nagar, Plot 12, Virar East")
-                .latitude(19.4700)
-                .longitude(72.8100)
-                .category("Organic Food")
-                .verifiedStatus(VerifiedStatus.PENDING)
-                .openingHours("06:00 - 13:00")
+        Shop jalaramShop = shopRepository.save(Shop.builder()
+                .owner(jalaramOwner)
+                .name("Jalaram Kirana Store")
+                .address("Vishwakarma Apartment Bhaji Market, 1&2, Ambadi Rd, Navghar Manikpur, Sai Nagar, Vasai West 401202")
+                .latitude(19.38380)
+                .longitude(72.82750)
+                .category("Grocery")
+                .verifiedStatus(VerifiedStatus.APPROVED)
+                .openingHours("08:00 - 22:00")
+                .imageUrl("https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=500&auto=format&fit=crop&q=60")
                 .build());
 
-        // ── Products with barcodes ────────────────────────────────────────────────
+        // ── Products for each shop (3 per shop, 18 total) ───────────────────────
+
+        // Shop 1: Vardhman Grain Stores
+        // SAMPLE PRICE - replace with the shopkeeper's real price
         productRepository.save(Product.builder()
-                .shop(lifecareShop)
-                .name("Paracetamol 650mg (15 Strips)")
-                .description("Pain relief & fever medication. Monsoon essential.")
-                .price(BigDecimal.valueOf(45.00))
-                .quantity(200)
-                .category("Medicine")
-                .barcode("8901058900928")
-                .lowStockThreshold(20)
-                .build());
-
-        productRepository.save(Product.builder()
-                .shop(guptaShop)
-                .name("Rechargeable LED Emergency Torch Light")
-                .description("Waterproof LED torch with 12-hour battery backup.")
-                .price(BigDecimal.valueOf(499.00))
-                .quantity(30)
-                .category("Safety Equipment")
-                .barcode("8904243000123")
-                .lowStockThreshold(5)
-                .build());
-
-        productRepository.save(Product.builder()
-                .shop(guptaShop)
-                .name("Waterproof Gum Boots (Size 9)")
-                .description("Heavy duty waterproof gum boots for flooded roads.")
-                .price(BigDecimal.valueOf(650.00))
-                .quantity(15)
-                .category("Footwear")
-                .barcode("8904243000456")
-                .lowStockThreshold(3)
-                .build());
-
-        productRepository.save(Product.builder()
-                .shop(sharmaShop)
-                .name("Heavy Duty Windproof Umbrella")
-                .description("Reinforced double canopy, windproof up to 100 kmph.")
-                .price(BigDecimal.valueOf(349.00))
-                .quantity(50)
-                .category("Weather Gear")
-                .barcode("8904243000789")
-                .lowStockThreshold(10)
-                .build());
-
-        productRepository.save(Product.builder()
-                .shop(apexShop)
-                .name("Monsoon Safety Kit")
-                .description("Includes: raincoat, torch, first-aid, water purifier tablets.")
-                .price(BigDecimal.valueOf(899.00))
+                .shop(vardhmanShop)
+                .name("Premium Toor Dal (1 kg)")
+                .description("Unpolished protein-rich Toor Dal, cleaned and graded for daily cooking.")
+                .price(BigDecimal.valueOf(165.00))
                 .quantity(25)
-                .category("Safety Equipment")
-                .barcode("8904243001001")
+                .category("Grocery")
+                .barcode("8901234500001")
                 .lowStockThreshold(5)
                 .build());
 
-        // ── Flood zones ───────────────────────────────────────────────────────────
-        // 1 VERIFIED zone near Lifecare pharmacy
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(vardhmanShop)
+                .name("Kolam Raw Rice (5 kg)")
+                .description("Traditional Kolam aged rice with soft texture and rich aroma.")
+                .price(BigDecimal.valueOf(320.00))
+                .quantity(18)
+                .category("Grocery")
+                .barcode("8901234500002")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(vardhmanShop)
+                .name("Fortune Sunflower Oil (1 L)")
+                .description("Refined sunflower cooking oil enriched with vitamins A & D.")
+                .price(BigDecimal.valueOf(145.00))
+                .quantity(30)
+                .category("Grocery")
+                .barcode("8901234500003")
+                .lowStockThreshold(5)
+                .build());
+
+        // Shop 2: Dedhia Kirana
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(dedhiaShop)
+                .name("Yellow Moong Dal (1 kg)")
+                .description("Easily digestible split yellow moong lentils, nutrient-rich.")
+                .price(BigDecimal.valueOf(140.00))
+                .quantity(22)
+                .category("Grocery")
+                .barcode("8901234500004")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(dedhiaShop)
+                .name("Daawat Rozana Basmati Rice (5 kg)")
+                .description("Everyday basmati rice with slender grains and authentic aroma.")
+                .price(BigDecimal.valueOf(380.00))
+                .quantity(14)
+                .category("Grocery")
+                .barcode("8901234500005")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(dedhiaShop)
+                .name("Pure Kachi Ghani Mustard Oil (1 L)")
+                .description("Cold pressed pungent mustard oil for authentic traditional Indian dishes.")
+                .price(BigDecimal.valueOf(160.00))
+                .quantity(20)
+                .category("Grocery")
+                .barcode("8901234500006")
+                .lowStockThreshold(5)
+                .build());
+
+        // Shop 3: Jashoda Grain Stores
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jashodaShop)
+                .name("Desi Chana Dal (1 kg)")
+                .description("Golden polished Chana Dal, staple for curries, dal fry, and snacks.")
+                .price(BigDecimal.valueOf(110.00))
+                .quantity(26)
+                .category("Grocery")
+                .barcode("8901234500007")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jashodaShop)
+                .name("Sona Masoori Rice (5 kg)")
+                .description("Medium grain aromatic South Indian rice, lightweight and low starch.")
+                .price(BigDecimal.valueOf(340.00))
+                .quantity(16)
+                .category("Grocery")
+                .barcode("8901234500008")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jashodaShop)
+                .name("Cold Pressed Groundnut Oil (1 L)")
+                .description("Filter groundnut peanut oil with pleasant nutty aroma.")
+                .price(BigDecimal.valueOf(190.00))
+                .quantity(15)
+                .category("Grocery")
+                .barcode("8901234500009")
+                .lowStockThreshold(5)
+                .build());
+
+        // Shop 4: Devnarayan Super Market
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(devnarayanShop)
+                .name("Whole White Urad Dal (1 kg)")
+                .description("Whole white urad lentils, ideal for idli, dosa, and vada batter.")
+                .price(BigDecimal.valueOf(150.00))
+                .quantity(18)
+                .category("Grocery")
+                .barcode("8901234500010")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(devnarayanShop)
+                .name("MP Sharbati Wheat Flour / Atta (5 kg)")
+                .description("100% pure MP Sharbati wheat grains ground to make extra soft rotis.")
+                .price(BigDecimal.valueOf(230.00))
+                .quantity(25)
+                .category("Grocery")
+                .barcode("8901234500011")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(devnarayanShop)
+                .name("Gemini Refined Soyabean Oil (1 L)")
+                .description("Light cooking soyabean oil with Omega 3 & 6 essential fatty acids.")
+                .price(BigDecimal.valueOf(135.00))
+                .quantity(32)
+                .category("Grocery")
+                .barcode("8901234500012")
+                .lowStockThreshold(5)
+                .build());
+
+        // Shop 5: Jagruti Super Market
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jagrutiShop)
+                .name("Big Kabuli Chana / Chickpeas (1 kg)")
+                .description("Jumbo size Kabuli chickpeas, perfect for restaurant-style chole bhature.")
+                .price(BigDecimal.valueOf(160.00))
+                .quantity(20)
+                .category("Grocery")
+                .barcode("8901234500013")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jagrutiShop)
+                .name("Aashirvaad Superior MP Atta (10 kg)")
+                .description("Whole wheat flour crafted through traditional 4-step chakki grinding process.")
+                .price(BigDecimal.valueOf(430.00))
+                .quantity(12)
+                .category("Grocery")
+                .barcode("8901234500014")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jagrutiShop)
+                .name("Amul Pure Cow Ghee (1 L)")
+                .description("Golden granular cow ghee made from fresh cream, rich aroma and taste.")
+                .price(BigDecimal.valueOf(590.00))
+                .quantity(15)
+                .category("Grocery")
+                .barcode("8901234500015")
+                .lowStockThreshold(5)
+                .build());
+
+        // Shop 6: Jalaram Kirana Store
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jalaramShop)
+                .name("Red Masoor Dal (1 kg)")
+                .description("Split red masoor lentils, quick cooking and high in dietary fiber.")
+                .price(BigDecimal.valueOf(125.00))
+                .quantity(24)
+                .category("Grocery")
+                .barcode("8901234500016")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jalaramShop)
+                .name("Madhur Sulphurless Pure Sugar (5 kg)")
+                .description("Refined sulphur-free crystal sugar untouched by hands.")
+                .price(BigDecimal.valueOf(240.00))
+                .quantity(28)
+                .category("Grocery")
+                .barcode("8901234500017")
+                .lowStockThreshold(5)
+                .build());
+
+        // SAMPLE PRICE - replace with the shopkeeper's real price
+        productRepository.save(Product.builder()
+                .shop(jalaramShop)
+                .name("Saffola Gold Pro Cooking Oil (1 L)")
+                .description("Dual-seed technology blended oil with antioxidant power for heart health.")
+                .price(BigDecimal.valueOf(175.00))
+                .quantity(19)
+                .category("Grocery")
+                .barcode("8901234500018")
+                .lowStockThreshold(5)
+                .build());
+
+        // ── Flood zones (4 zones within ~300m of the shops in Vasai West) ──────────
+        // 1 VERIFIED zone near Vasai Station Road underpass
         floodZoneRepository.save(FloodZone.builder()
-                .latitude(19.4668)
-                .longitude(72.8040)
-                .radiusMeters(300.0)
+                .latitude(19.3820)
+                .longitude(72.8295)
+                .radiusMeters(150.0)
                 .reportedBy(customer)
                 .status(FloodZoneStatus.VERIFIED)
-                .description("Waterlogged underpass near Market Yard Chowk, knee-deep water")
+                .description("DEMO: Waterlogged underpass near Vasai Station Road, ankle-deep water")
                 .expiresAt(LocalDateTime.now().plusHours(5))
                 .build());
 
-        // 1 VERIFIED zone near Apex supermarket
+        // 1 VERIFIED zone near Ambadi Road market
         floodZoneRepository.save(FloodZone.builder()
-                .latitude(19.4712)
-                .longitude(72.8092)
-                .radiusMeters(200.0)
+                .latitude(19.3835)
+                .longitude(72.8280)
+                .radiusMeters(120.0)
                 .reportedBy(customer)
                 .status(FloodZoneStatus.VERIFIED)
-                .description("Subhash Nagar drain overflow, road impassable")
+                .description("DEMO: Ambadi Road market drain overflow, slow traffic")
                 .expiresAt(LocalDateTime.now().plusHours(4))
                 .build());
 
         // 2 PENDING reports
         floodZoneRepository.save(FloodZone.builder()
-                .latitude(19.4650)
-                .longitude(72.8070)
-                .radiusMeters(150.0)
+                .latitude(19.3812)
+                .longitude(72.8305)
+                .radiusMeters(100.0)
                 .reportedBy(shopkeeper)
                 .status(FloodZoneStatus.PENDING)
-                .description("Waterlogging near railway tracks, reported by local shop")
+                .description("DEMO: Water accumulation near Anand Nagar junction")
                 .expiresAt(LocalDateTime.now().plusHours(6))
                 .build());
 
         floodZoneRepository.save(FloodZone.builder()
-                .latitude(19.4730)
-                .longitude(72.8010)
-                .radiusMeters(250.0)
+                .latitude(19.3840)
+                .longitude(72.8290)
+                .radiusMeters(150.0)
                 .reportedBy(customer)
                 .status(FloodZoneStatus.PENDING)
-                .description("Industrial zone road flooded after heavy rains")
+                .description("DEMO: Puddle forming near Badami Stop, drive slow")
                 .expiresAt(LocalDateTime.now().plusHours(6))
                 .build());
 
-        log.info("Virar demo data successfully seeded: 6 shops, 5 products, 4 flood zones.");
+        log.info("Vasai demo data successfully seeded: 6 shops, 18 products, 4 flood zones.");
     }
 }

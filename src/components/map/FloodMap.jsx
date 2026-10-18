@@ -5,7 +5,7 @@ import { Store, AlertTriangle, ShieldCheck, MapPin, Radio, Eye, Layers, Compass,
 export const FloodMap = ({
   shops = [],
   floodReports = [],
-  userLocation = { lat: 19.076, lng: 72.8777 },
+  userLocation = { lat: 19.3837, lng: 72.8282 },
   onSelectShop,
 }) => {
   const [selectedEntity, setSelectedEntity] = useState(null)
@@ -13,12 +13,12 @@ export const FloodMap = ({
   const [filterLayer, setFilterLayer] = useState('all') // 'all' | 'shops' | 'hazards'
 
   // Map coordinate bounds to percentage on our 3D tactical radar grid
-  // Center around 19.076, 72.8777
-  const toGridPercent = (lat = 19.076, lng = 72.8777) => {
-    const safeLat = typeof lat === 'number' ? lat : 19.076
-    const safeLng = typeof lng === 'number' ? lng : 72.8777
-    const uLat = userLocation?.lat ?? 19.076
-    const uLng = userLocation?.lng ?? 72.8777
+  // Center around 19.3837, 72.8282 (Vasai West Ambadi Road)
+  const toGridPercent = (lat = 19.3837, lng = 72.8282) => {
+    const safeLat = typeof lat === 'number' ? lat : 19.3837
+    const safeLng = typeof lng === 'number' ? lng : 72.8282
+    const uLat = userLocation?.lat ?? 19.3837
+    const uLng = userLocation?.lng ?? 72.8282
     const latSpan = 0.024
     const lngSpan = 0.024
     const x = ((safeLng - (uLng - lngSpan / 2)) / lngSpan) * 100
@@ -136,7 +136,7 @@ export const FloodMap = ({
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer"
             style={{ transform: viewMode !== 'top' ? 'translateZ(35px) rotateX(-50deg)' : 'none' }}
-            onClick={() => setSelectedEntity({ type: 'user', name: 'Your Location', address: 'Ward 4 Walking Radius (Current GPS)' })}
+            onClick={() => setSelectedEntity({ type: 'user', name: 'Your Location', address: 'Ambadi Road Walking Radius (Vasai West GPS)' })}
           >
             <div className="relative flex flex-col items-center group">
               <span className="animate-ping absolute w-8 h-8 rounded-full bg-primary-500/50" />

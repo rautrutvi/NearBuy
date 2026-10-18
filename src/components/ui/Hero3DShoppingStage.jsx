@@ -98,12 +98,12 @@ export const Hero3DShoppingStage = () => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-bold text-white truncate font-display">Monsoon Safety Kit</h4>
+                          <h4 className="text-xs font-bold text-white truncate font-display">Premium Toor Dal (1 kg)</h4>
                           <span className="text-[10px] font-mono text-purple-300 font-bold bg-purple-950/80 px-1.5 py-0.5 rounded border border-purple-500/40">
                             IN STOCK
                           </span>
                         </div>
-                        <p className="text-[10px] font-mono text-slate-400 mt-0.5">Sharma General Kirana · 0.4 km</p>
+                        <p className="text-[10px] font-mono text-slate-400 mt-0.5">Vardhman Grain Stores · 0.3 km</p>
                       </div>
                     </div>
                   </motion.div>
@@ -124,7 +124,7 @@ export const Hero3DShoppingStage = () => {
                 <div className="p-4 bg-[#090714]/95 border-t border-purple-500/20 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 block">Verified Local Merchant</span>
-                    <span className="text-xs font-bold text-white font-display">4 Nearby Shops Online</span>
+                    <span className="text-xs font-bold text-white font-display">6 Nearby Shops Online</span>
                   </div>
 
                   <Link
