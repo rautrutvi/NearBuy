@@ -1,11 +1,27 @@
 import React, { useState } from 'react'
+import { User, Package, Star, MapPin, Mail, Phone, LogOut, Terminal } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '../../store/useAuthStore'
 import { ProgressTracker } from '../../components/ui/ProgressTracker'
-import { User, Mail, Phone, MapPin, Package, Star, Edit3, LogOut, Clock, Terminal } from 'lucide-react'
+import { reservationService } from '../../api/reservationService';
 
-export const BuyerProfile = () => {
+  export const BuyerProfile = () => {
+  const downloadBill = async (reservationId) => {
+    try {
+      const resp = await reservationService.getReceipt(reservationId);
+      const blob = new Blob([resp.data], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `receipt-${reservationId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('Failed to download receipt', e);
+      alert('Failed to download receipt');
+    }
+  };
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
   const [activeTab, setActiveTab] = useState('profile')
@@ -129,6 +145,15 @@ export const BuyerProfile = () => {
                   <span className="font-extrabold text-amber-400 font-mono text-base">₹{item.price}</span>
                 </div>
                 <ProgressTracker currentStep={item.status} />
+                {/* Download bill button for paid/picked_up reservations */}
+                {item.status !== 'pending' && (
+                  <button
+                    onClick={() => downloadBill(item.id)}
+                    className="mt-2 w-full py-2 rounded bg-gradient-to-r from-primary-500 via-amber-500 to-teal-500 text-white font-mono text-xs uppercase tracking-wider shadow-[0_0_10px_rgba(224,82,54,0.4)] hover:scale-[1.02] transition-all"
+                  >
+                    Download Bill
+                  </button>
+                )}
               </div>
             ))}
           </div>

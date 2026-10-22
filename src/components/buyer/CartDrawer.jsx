@@ -8,41 +8,85 @@ import { reservationService } from '../../api/reservationService'
 
 
 export const CartDrawer = ({ isOpen, onClose, onCheckout }) => {
-  const { items, removeItem, updateQuantity, clearCart } = useCartStore()
-  const totalItems = items.reduce((s, i) => s + i.quantity, 0)
-  const totalPrice = items.reduce((s, i) => s + i.product.price * i.quantity, 0)
+  // UI state for payment flow (moved up)
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState('UPI'); // default
 
-  const handlePayUPI = async () => {
-  if (!items.length) return;
-  // Group items by shopId (fallback to 1)
-  const byShop = items.reduce((acc, it) => {
-    const sid = it.product.shopId ?? 1;
-    acc[sid] = acc[sid] || [];
-    acc[sid].push(it);
-    return acc;
-  }, {});
-  for (const shopId of Object.keys(byShop)) {
-    const shopItems = byShop[shopId];
-    // Create reservation (backend or mock)
-    const reservation = await reservationService.createReservation({
-      product: shopItems[0].product,
-      quantity: shopItems.reduce((s, i) => s + i.quantity, 0),
+  const { items, removeItem, updateQuantity, clearCart } = useCartStore();
+  const totalItems = items.reduce((s, i) => s + i.quantity, 0);
+  const totalPrice = items.reduce((s, i) => s + i.product.price * i.quantity, 0);
+
+  // Helper to generate a simple text receipt and download it
+  const downloadTextReceipt = (reservationId, shopItems) => {
+    const lines = [];
+    lines.push('Receipt');
+    lines.push('Reservation ID: ' + reservationId);
+    lines.push('---------------------------');
+    let subtotal = 0;
+    shopItems.forEach((it) => {
+      const lineTotal = it.product.price * it.quantity;
+      subtotal += lineTotal;
+      lines.push(`${it.product.name} x ${it.quantity} = ₹${lineTotal}`);
     });
-    // Pay via UPI method
-    const payment = await reservationService.payReservationMethod(reservation.id, 'UPI');
-    // Download receipt PDF
-    const resp = await reservationService.getReceipt(reservation.id);
-    const blob = new Blob([resp.data], { type: 'application/pdf' });
+    lines.push('---------------------------');
+    lines.push(`Total: ₹${subtotal}`);
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `receipt-${reservation.id}.pdf`;
+    a.download = `receipt-${reservationId}.txt`;
     a.click();
-    // Simple success feedback
-    alert(`UPI payment successful. Transaction ID: ${payment.transactionId || 'N/A'}`);
-  }
-  clearCart();
-};
+    URL.revokeObjectURL(url);
+  };
+
+  // Core payment handling (called after method selection)
+  const handleConfirmPayment = async () => {
+    if (!items.length) return;
+    // Group items by shopId (fallback to 1)
+    const byShop = items.reduce((acc, it) => {
+      const sid = it.product.shopId ?? 1;
+      acc[sid] = acc[sid] || [];
+      acc[sid].push(it);
+      return acc;
+    }, {});
+    for (const shopId of Object.keys(byShop)) {
+      const shopItems = byShop[shopId];
+      // Create reservation (backend or mock)
+      const reservation = await reservationService.createReservation({
+        product: shopItems[0].product,
+        quantity: shopItems.reduce((s, i) => s + i.quantity, 0),
+      });
+      // Pay using selected method
+      const payment = await reservationService.payReservationMethod(reservation.id, selectedMethod);
+      // If backend provides a PDF receipt, download it; otherwise generate a dummy text receipt
+      try {
+        const resp = await reservationService.getReceipt(reservation.id);
+        const blob = new Blob([resp.data], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `receipt-${reservation.id}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        // fallback to simple text receipt
+        downloadTextReceipt(reservation.id, shopItems);
+      }
+      alert(`Payment successful via ${selectedMethod}. Transaction ID: ${payment.transactionId || 'N/A'}`);
+    }
+    clearCart();
+    setShowPaymentOptions(false);
+  };
+
+  // Initial entry point from the "Pay with UPI" button – just open the options UI
+  const handlePayClick = () => {
+    setShowPaymentOptions(true);
+  };
+
+
+
+  // Deprecated: unified payment flow now uses handlePayClick and handleConfirmPayment.
+
 
 return (
     <AnimatePresence>
@@ -171,14 +215,43 @@ return (
                   <span>Reserve All for Counter Pickup</span>
                 </button>
                 <button
-                  onClick={handlePayUPI}
+                  onClick={handlePayClick}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,200,100,0.4)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 mt-2"
                 >
                   <span>Pay with UPI</span>
                 </button>
-                <p className="text-[10px] text-center text-slate-500 font-mono">
-                  30-min free reservation · Pay cash or UPI at store counter
-                </p>
+                {/* Payment Options UI */}
+                {showPaymentOptions && (
+                  <div className="mt-4 p-4 bg-[#0a0a12] border border-white/10 rounded-xl">
+                    <label className="block text-xs text-slate-400 mb-1 font-mono">Select Payment Method</label>
+                    <select
+                      value={selectedMethod}
+                      onChange={(e) => setSelectedMethod(e.target.value)}
+                      className="w-full bg-black/30 text-white p-2 rounded"
+                    >
+                      <option value="UPI">UPI</option>
+                      <option value="CASH">Cash (Pay at Shop)</option>
+                      <option value="CARD">Card</option>
+                    </select>
+                    {selectedMethod === 'UPI' && (
+                      <div className="mt-3 flex justify-center">
+                        <img src="/assets/dummy-upi-qr.png" alt="UPI QR Code" className="w-24 h-24 object-contain" />
+                      </div>
+                    )}
+                    <button
+                      onClick={handleConfirmPayment}
+                      className="w-full mt-3 py-2 rounded bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-[0_0_10px_rgba(0,200,100,0.4)] hover:scale-[1.02] transition-all"
+                    >
+                      Confirm Payment
+                    </button>
+                    <button
+                      onClick={() => setShowPaymentOptions(false)}
+                      className="w-full mt-2 py-2 rounded bg-gray-600 text-white font-mono text-xs uppercase hover:bg-gray-500"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </motion.div>
