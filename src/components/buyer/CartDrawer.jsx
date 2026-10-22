@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCartStore } from '../../store/useCartStore'
 import { EmptyState } from '../ui/EmptyState'
 import { X, ShoppingCart, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react'
+
+
 
 export const CartDrawer = ({ isOpen, onClose, onCheckout }) => {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore()
@@ -83,7 +85,7 @@ export const CartDrawer = ({ isOpen, onClose, onCheckout }) => {
                     className="flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10"
                   >
                     <img
-                      src={item.product.image}
+                      src={item.product.image_url || item.product.image}
                       alt={item.product.name}
                       className="w-14 h-14 rounded-xl object-cover shrink-0 border border-white/10"
                     />
@@ -134,6 +136,12 @@ export const CartDrawer = ({ isOpen, onClose, onCheckout }) => {
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Reserve All for Counter Pickup</span>
+                </button>
+                <button
+                  onClick={handlePayUPI}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white font-mono font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,200,100,0.4)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 mt-2"
+                >
+                  <span>Pay with UPI</span>
                 </button>
                 <p className="text-[10px] text-center text-slate-500 font-mono">
                   30-min free reservation · Pay cash or UPI at store counter

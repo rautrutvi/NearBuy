@@ -24,6 +24,7 @@ const mapReservationFromBackend = (r) => {
 }
 
 export const reservationService = {
+  // Existing methods ...
   // Fetch reservations (role-aware: customer or shopkeeper)
   async getReservations(role = 'buyer') {
     try {
@@ -97,7 +98,29 @@ export const reservationService = {
     return mockReservationsStore.find((r) => r.id === reservationId)
   },
 
-  // Customer: Pay for reservation
+  // Customer: Pay for reservation with specific method (e.g., UPI)
+  async payReservationMethod(reservationId, method) {
+    try {
+      const numericId = typeof reservationId === 'string' ? parseInt(reservationId.replace(/\\D/g, '') || '0') : reservationId;
+      const response = await axiosClient.post(`/customer/reservations/${numericId}/pay`, { method });
+      return response.data; // assume includes transactionId and updated reservation
+    } catch (e) {
+      console.error('Failed payment with method on backend', e);
+      throw e;
+    }
+  },
+
+  // Retrieve receipt PDF for a reservation
+  async getReceipt(reservationId) {
+    try {
+      const numericId = typeof reservationId === 'string' ? parseInt(reservationId.replace(/\\D/g, '') || '0') : reservationId;
+      const response = await axiosClient.get(`/customer/reservations/${numericId}/receipt`, { responseType: 'blob' });
+      return response; // contains blob data
+    } catch (e) {
+      console.error('Failed to fetch receipt', e);
+      throw e;
+    }
+  },
   async payReservation(reservationId) {
     try {
       const numericId = typeof reservationId === 'string' ? parseInt(reservationId.replace(/\D/g, '') || '0') : reservationId
