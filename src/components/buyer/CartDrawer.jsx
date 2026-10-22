@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useCartStore } from '../../store/useCartStore'
 import { EmptyState } from '../ui/EmptyState'
 import { X, ShoppingCart, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react'
+import { reservationService } from '../../api/reservationService'
 
 
 
@@ -11,7 +12,39 @@ export const CartDrawer = ({ isOpen, onClose, onCheckout }) => {
   const totalItems = items.reduce((s, i) => s + i.quantity, 0)
   const totalPrice = items.reduce((s, i) => s + i.product.price * i.quantity, 0)
 
-  return (
+  const handlePayUPI = async () => {
+  if (!items.length) return;
+  // Group items by shopId (fallback to 1)
+  const byShop = items.reduce((acc, it) => {
+    const sid = it.product.shopId ?? 1;
+    acc[sid] = acc[sid] || [];
+    acc[sid].push(it);
+    return acc;
+  }, {});
+  for (const shopId of Object.keys(byShop)) {
+    const shopItems = byShop[shopId];
+    // Create reservation (backend or mock)
+    const reservation = await reservationService.createReservation({
+      product: shopItems[0].product,
+      quantity: shopItems.reduce((s, i) => s + i.quantity, 0),
+    });
+    // Pay via UPI method
+    const payment = await reservationService.payReservationMethod(reservation.id, 'UPI');
+    // Download receipt PDF
+    const resp = await reservationService.getReceipt(reservation.id);
+    const blob = new Blob([resp.data], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `receipt-${reservation.id}.pdf`;
+    a.click();
+    // Simple success feedback
+    alert(`UPI payment successful. Transaction ID: ${payment.transactionId || 'N/A'}`);
+  }
+  clearCart();
+};
+
+return (
     <AnimatePresence>
       {isOpen && (
         <>

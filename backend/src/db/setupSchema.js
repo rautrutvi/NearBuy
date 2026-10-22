@@ -1,5 +1,4 @@
 import { pool } from './pool.js';
-import { createPaymentsTable } from './paymentsSchema.js';
 
 async function setupSchema() {
   console.log(`[db:setup] Initializing database schema on "${process.env.DB_NAME || 'nearbuy_app'}"...`);

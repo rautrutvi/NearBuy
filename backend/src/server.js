@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { pool, checkConnection, query } from './db/pool.js';
-import paymentRoutes from './payments/paymentRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -912,10 +911,6 @@ app.put('/api/admin/users/:userId/status', async (req, res, next) => {
 
 // ─────────────────────────────────────────────────────────────
 // Centralized Error Handler
-app.use(paymentRoutes);
-
-app.use(paymentRoutes);
-
 // ─────────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error(`[API Error] ${req.method} ${req.url}:`, err);
