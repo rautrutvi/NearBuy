@@ -1,0 +1,21 @@
+{
+  "name": "nearbuy-backend-node",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "db:create": "node src/db/createDb.js",
+    "db:setup": "node src/db/setupSchema.js",
+    "db:seed": "node src/db/seed.js",
+    "db:images:check": "node src/db/checkImages.js",
+    "products:generate": "node src/scripts/generateProducts.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "pg": "^8.12.0"
+  }
+}

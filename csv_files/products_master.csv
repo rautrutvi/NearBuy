@@ -1,0 +1,51 @@
+name,brand,description,category,barcode,base_price,image_file
+Amul Taza Milk 1 L,Amul,"Fresh homogenized toned milk rich in calcium, protein, and essential vitamins.",Dairy & Eggs,8901262010012,68,amul-taza-milk-1l.jpg
+Gokul Full Cream Milk 500 ml,Gokul,Pure pasteurized full cream milk with rich creamy texture for tea and sweets.,Dairy & Eggs,8901262010029,35,gokul-full-cream-milk-500ml.jpg
+Mother Dairy Toned Milk 500 ml,Mother Dairy,Pasteurized toned milk packed with natural protein and essential daily nutrients.,Dairy & Eggs,8901262010036,29,mother-dairy-toned-milk-500ml.jpg
+Farm Eggs pack of 6,Farm Fresh,Fresh farm grade-A brown table eggs high in natural protein and omega-3.,Dairy & Eggs,8901262010043,54,eggs-6-pack.jpg
+Farm Eggs tray of 12,Farm Fresh,Economical tray of 12 fresh farm eggs for wholesome daily breakfast cooking.,Dairy & Eggs,8901262010050,100,eggs-12-tray.jpg
+Amul Butter 100 g,Amul,Classic salted pure butter made from fresh dairy milk cream.,Dairy & Eggs,8901262010067,58,amul-butter-100g.jpg
+Amul Cheese Slices 200 g,Amul,"Rich processed cheddar cheese slices ideal for sandwiches, toasts, and burgers.",Dairy & Eggs,8901262010074,150,amul-cheese-slices-200g.jpg
+Amul Fresh Paneer 200 g,Amul,Soft and fresh malai cottage cheese block for traditional curries and starters.,Dairy & Eggs,8901262010081,95,amul-fresh-paneer-200g.jpg
+Mother Dairy Curd 400 g,Mother Dairy,Thick natural cultured curd with creamy texture and healthy probiotic benefits.,Dairy & Eggs,8901262010098,40,mother-dairy-curd-400g.jpg
+Britannia White Bread 400 g,Britannia,Soft and fluffy sliced white sandwich bread baked fresh daily.,Bread & Bakery,8901262010104,45,britannia-white-bread-400g.jpg
+Modern Brown Bread 400 g,Modern,Wholesome whole wheat brown bread packed with dietary fibre.,Bread & Bakery,8901262010111,50,modern-brown-bread-400g.jpg
+Harvest Gold Sandwich Bread,Harvest Gold,Large soft bread slices tailored for breakfast sandwiches and golden toasts.,Bread & Bakery,8901262010128,45,harvest-gold-sandwich-bread.jpg
+Pav Buns pack of 6,Local Bakery,"Fresh and airy bakery pav buns perfect for vada pav, pav bhaji, and misal.",Bread & Bakery,8901262010135,30,pav-buns-6pcs.jpg
+Maggi 2-Minute Masala Noodles 70 g,Maggi,Iconic Indian instant noodles enriched with roasted spices and iron.,Instant & Breakfast,8901262010142,14,maggi-masala-noodles-70g.jpg
+Sunfeast Yippee Magic Masala,Sunfeast,Non-sticky round noodles infused with a blend of exotic Indian spices.,Instant & Breakfast,8901262010159,14,yippee-magic-masala-noodles.jpg
+Top Ramen Curry Noodles,Top Ramen,Delicious flat instant curry noodles offering a rich savory spicy broth.,Instant & Breakfast,8901262010166,14,top-ramen-curry-noodles.jpg
+Kellogg's Corn Flakes 250 g,Kellogg's,Crispy golden toasted corn flakes packed with 8 essential vitamins and minerals.,Instant & Breakfast,8901262010173,120,kelloggs-corn-flakes-250g.jpg
+Saffola Masala Oats 40 g,Saffola,Savory whole grain oats with authentic Indian spices and crunchy veggie bits.,Instant & Breakfast,8901262010180,20,saffola-masala-oats-40g.jpg
+Parle-G Biscuits,Parle,India's favourite milk and wheat glucose biscuits for morning tea time.,Snacks,8901262010197,10,parle-g-biscuits-100g.jpg
+Britannia Good Day Cashew,Britannia,Rich buttery cookies packed with crunchy roasted cashew nut pieces.,Snacks,8901262010203,30,britannia-good-day-cashew.jpg
+Britannia Marie Gold,Britannia,Crisp and light tea-time biscuits enriched with 10 essential vitamins.,Snacks,8901262010210,30,britannia-marie-gold.jpg
+Oreo Biscuits,Cadbury,Crunchy chocolate sandwich cookies filled with smooth sweet vanilla cream.,Snacks,8901262010227,30,oreo-biscuits.jpg
+Lay's Classic Salted,Lay's,Thin crispy potato chips lightly sprinkled with pure sea salt.,Snacks,8901262010234,20,lays-classic-salted.jpg
+Kurkure Masala Munch,Kurkure,Crunchy corn and rice puffs seasoned with a tangy fiery Indian spice kick.,Snacks,8901262010241,20,kurkure-masala-munch.jpg
+Haldiram's Aloo Bhujia 200 g,Haldiram's,Traditional crispy spiced potato noodle namkeen seasoned with mint and lemon.,Snacks,8901262010258,60,haldirams-aloo-bhujia-200g.jpg
+Bingo Mad Angles,Bingo,Triangle shaped crunchy corn snack bursting with tangy achari masti flavour.,Snacks,8901262010265,20,bingo-mad-angles.jpg
+Cadbury Dairy Milk,Cadbury,Smooth and creamy milk chocolate bar melting with rich cocoa goodness.,Snacks,8901262010272,20,cadbury-dairy-milk.jpg
+Tata Tea Gold 250 g,Tata Tea,Exquisite blend of rich CTC tea granules with gently rolled aromatic long leaves.,Beverages,8901262010289,150,tata-tea-gold-250g.jpg
+Brooke Bond Red Label 250 g,Brooke Bond,Fine quality black tea delivering strong taste and rich red liquor in every sip.,Beverages,8901262010296,130,red-label-tea-250g.jpg
+Nescafe Classic 50 g,Nescafe,100% pure instant coffee powder delivering rich aroma and bold morning flavour.,Beverages,8901262010302,190,nescafe-classic-50g.jpg
+Bru Instant Coffee 50 g,Bru,Aromatic coffee-chicory blend crafted from select roasted plantation beans.,Beverages,8901262010319,170,bru-instant-coffee-50g.jpg
+Real Fruit Power Mango 1 L,Real,Refreshing fruit beverage made with sweet ripe mangoes and enriched with vitamin C.,Beverages,8901262010326,110,real-mango-juice-1l.jpg
+Coca-Cola 750 ml,Coca-Cola,Sparkling carbonated cola beverage with an uplifting crisp refreshing bite.,Beverages,8901262010333,40,coca-cola-750ml.jpg
+Bisleri Water 1 L,Bisleri,Purified packaged drinking water with added essential minerals and 10-step purity.,Beverages,8901262010340,20,bisleri-water-1l.jpg
+Aashirvaad Atta 5 kg,Aashirvaad,100% pure whole wheat stone ground chakki atta for soft and fluffy rotis.,Staples,8901262010357,290,aashirvaad-atta-5kg.jpg
+India Gate Basmati Rice 1 kg,India Gate,"Aged fragrant long grain basmati rice ideal for everyday biryani, pulao, and fried rice.",Staples,8901262010364,140,india-gate-basmati-rice-1kg.jpg
+Tata Sampann Toor Dal 1 kg,Tata Sampann,Unpolished high protein yellow pigeon pea dal naturally dried with no chemical polish.,Staples,8901262010371,170,tata-sampann-toor-dal-1kg.jpg
+Tata Sampann Moong Dal 500 g,Tata Sampann,"Unpolished split yellow moong lentils, nutrient rich and easily digestible for daily meals.",Staples,8901262010388,90,tata-sampann-moong-dal-500g.jpg
+Madhur Sugar 1 kg,Madhur,Sulphur-free refined white sugar crystals processed with sparkling pure hygiene.,Staples,8901262010395,50,madhur-sugar-1kg.jpg
+Tata Salt 1 kg,Tata,Vacuum evaporated iodized salt essential for proper mental development and taste.,Staples,8901262010401,28,tata-salt-1kg.jpg
+Fortune Sunflower Oil 1 L,Fortune,Light and healthy refined sunflower cooking oil enriched with vitamins A and D.,Oils & Spices,8901262010418,135,fortune-sunflower-oil-1l.jpg
+Saffola Gold Oil 1 L,Saffola,Pro-heart blended cooking oil with natural antioxidant oryzanol for everyday fitness.,Oils & Spices,8901262010425,175,saffola-gold-oil-1l.jpg
+Everest Turmeric Powder 100 g,Everest,Pure vibrant turmeric powder with high curcumin content and rich golden aroma.,Oils & Spices,8901262010432,35,everest-turmeric-powder-100g.jpg
+Everest Red Chilli Powder 100 g,Everest,Fiery ground red chilli powder delivering bright natural colour and authentic hot punch.,Oils & Spices,8901262010449,65,everest-red-chilli-powder-100g.jpg
+MDH Garam Masala 100 g,MDH,Classic blend of aromatic whole Indian spices roasted to elevate rich gravies and curries.,Oils & Spices,8901262010456,85,mdh-garam-masala-100g.jpg
+Catch Cumin Seeds 100 g,Catch,Machine cleaned whole jeera seeds releasing strong earthy aroma upon tempering.,Oils & Spices,8901262010463,70,catch-cumin-seeds-100g.jpg
+Vim Dishwash Bar,Vim,Lemon-powered degreasing dishwash bar that removes tough burnt grease with ease.,Household & Personal Care,8901262010470,25,vim-dishwash-bar-300g.jpg
+Surf Excel Easy Wash 1 kg,Surf Excel,Advanced detergent powder that dissolves rapidly and removes tough stains in one wash.,Household & Personal Care,8901262010487,130,surf-excel-easy-wash-1kg.jpg
+Dettol Handwash 200 ml,Dettol,Antibacterial liquid handwash pump bottle providing trusted 99.9% germ protection.,Household & Personal Care,8901262010494,99,dettol-handwash-200ml.jpg
+Colgate Strong Teeth 100 g,Colgate,Calcium boost fluoride toothpaste providing all-day cavity defence and fresh breath.,Household & Personal Care,8901262010500,60,colgate-strong-teeth-100g.jpg

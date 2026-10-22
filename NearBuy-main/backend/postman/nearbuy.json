@@ -1,0 +1,446 @@
+{
+  "info": {
+    "_postman_id": "c1f7b8e2-9b22-4809-b695-123456789abc",
+    "name": "NearBuy API Collection",
+    "description": "Comprehensive Postman collection for NearBuy Backend API (Phases A-G)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Phase A - Auth",
+      "item": [
+        {
+          "name": "Signup Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@test.com\",\n  \"password\": \"pass123\",\n  \"role\": \"CUSTOMER\",\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/signup", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signup"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@test.com\",\n  \"password\": \"pass123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase B - Shops",
+      "item": [
+        {
+          "name": "Public - Get Approved Shops",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/shops", "host": ["{{baseUrl}}"], "path": ["api", "shops"] }
+          }
+        },
+        {
+          "name": "Public - Get Shop By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/shops/1", "host": ["{{baseUrl}}"], "path": ["api", "shops", "1"] }
+          }
+        },
+        {
+          "name": "Public - Nearby Shops (Haversine)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shops/nearby?lat=19.467&lng=72.804&radiusKm=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shops", "nearby"],
+              "query": [
+                { "key": "lat", "value": "19.467" },
+                { "key": "lng", "value": "72.804" },
+                { "key": "radiusKm", "value": "5" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Shopkeeper - Create Shop",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"My New Store\",\n  \"address\": \"Station Road, Virar West\",\n  \"latitude\": 19.4645,\n  \"longitude\": 72.8050,\n  \"category\": \"Grocery\",\n  \"openingHours\": \"08:00 - 22:00\",\n  \"imageUrl\": \"https://example.com/shop.jpg\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/shops", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "shops"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Update Shop",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"My Updated Store\",\n  \"address\": \"Station Road, Ward 4\",\n  \"latitude\": 19.4645,\n  \"longitude\": 72.8050,\n  \"category\": \"Grocery\",\n  \"openingHours\": \"07:00 - 22:00\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/shops/1", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "shops", "1"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Get My Shop",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/shops/mine", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "shops", "mine"] }
+          }
+        },
+        {
+          "name": "Admin - Get Pending Shops",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/shops/pending", "host": ["{{baseUrl}}"], "path": ["api", "admin", "shops", "pending"] }
+          }
+        },
+        {
+          "name": "Admin - Verify Shop",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APPROVED\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/shops/1/verify", "host": ["{{baseUrl}}"], "path": ["api", "admin", "shops", "1", "verify"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase C - Products",
+      "item": [
+        {
+          "name": "Public - Get Products of Shop",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/shops/1/products", "host": ["{{baseUrl}}"], "path": ["api", "shops", "1", "products"] }
+          }
+        },
+        {
+          "name": "Public - Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/search?query=torch&category=Safety%20Equipment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "search"],
+              "query": [
+                { "key": "query", "value": "torch" },
+                { "key": "category", "value": "Safety Equipment" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Shopkeeper - Add Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Emergency Lantern\",\n  \"description\": \"Solar and USB rechargeable\",\n  \"price\": 399.00,\n  \"quantity\": 20,\n  \"category\": \"Safety Equipment\",\n  \"barcode\": \"8904243009999\",\n  \"lowStockThreshold\": 5\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/products", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "products"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - List Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/products", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "products"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Low Stock Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/products/low-stock", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "products", "low-stock"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Update Stock Delta",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"delta\": 10\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/products/1/stock", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "products", "1", "stock"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/products/1", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "products", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase D - Reservations",
+      "item": [
+        {
+          "name": "Customer - Create Reservation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shopId\": 1,\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/customer/reservations", "host": ["{{baseUrl}}"], "path": ["api", "customer", "reservations"] }
+          }
+        },
+        {
+          "name": "Customer - Get My Reservations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/customer/reservations", "host": ["{{baseUrl}}"], "path": ["api", "customer", "reservations"] }
+          }
+        },
+        {
+          "name": "Customer - Pay Reservation (Mock)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/customer/reservations/1/pay", "host": ["{{baseUrl}}"], "path": ["api", "customer", "reservations", "1", "pay"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Get Reservations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/reservations", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "reservations"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Update Status (READY / PICKED_UP)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"READY\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/reservations/1/status", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "reservations", "1", "status"] }
+          }
+        },
+        {
+          "name": "Shopkeeper - Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/stats", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "stats"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase E - Reviews",
+      "item": [
+        {
+          "name": "Customer - Submit Verified Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shopId\": 1,\n  \"rating\": 5,\n  \"comment\": \"Quick pickup and items in perfect condition!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/customer/reviews", "host": ["{{baseUrl}}"], "path": ["api", "customer", "reviews"] }
+          }
+        },
+        {
+          "name": "Public - Get Shop Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/shops/1/reviews", "host": ["{{baseUrl}}"], "path": ["api", "shops", "1", "reviews"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase F - Flood Zones",
+      "item": [
+        {
+          "name": "Authenticated - Report Flood Zone",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitude\": 19.4670,\n  \"longitude\": 72.8038,\n  \"radiusMeters\": 300.0,\n  \"description\": \"Waterlogging under railway subway, vehicles cannot pass\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/reports/flood", "host": ["{{baseUrl}}"], "path": ["api", "reports", "flood"] }
+          }
+        },
+        {
+          "name": "Public - Active Flood Zones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/flood-zones/active", "host": ["{{baseUrl}}"], "path": ["api", "flood-zones", "active"] }
+          }
+        },
+        {
+          "name": "Admin - Pending Flood Zones",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/flood-zones/pending", "host": ["{{baseUrl}}"], "path": ["api", "admin", "flood-zones", "pending"] }
+          }
+        },
+        {
+          "name": "Admin - Verify Flood Zone",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"VERIFIED\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/flood-zones/1/verify", "host": ["{{baseUrl}}"], "path": ["api", "admin", "flood-zones", "1", "verify"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Phase G - Scan & Sell and Admin",
+      "item": [
+        {
+          "name": "Shopkeeper - Scan & Sell (Barcode)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"barcode\": \"8901058900928\",\n  \"quantity\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/shopkeeper/scan-sell", "host": ["{{baseUrl}}"], "path": ["api", "shopkeeper", "scan-sell"] }
+          }
+        },
+        {
+          "name": "Admin - List All Users (Paginated)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin - Suspend / Activate User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"active\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/admin/users/2/status", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "2", "status"] }
+          }
+        },
+        {
+          "name": "Admin - Platform Statistics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/stats", "host": ["{{baseUrl}}"], "path": ["api", "admin", "stats"] }
+          }
+        }
+      ]
+    }
+  ]
+}
